@@ -14,8 +14,6 @@ from py_dmm import DMMClient
 
 
 def main() -> None:
-    """Main example function."""
-
     api_key = os.getenv("DMM_API_KEY")
     affiliate_key = os.getenv("DMM_AFFILIATE_KEY")
 

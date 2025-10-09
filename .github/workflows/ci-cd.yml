@@ -93,7 +93,7 @@ jobs:
 
       - name: Check for known security vulnerabilities with safety
         run: |
-          safety check
+          safety scan
 
   build:
     name: Build Package

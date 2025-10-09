@@ -14,8 +14,6 @@ from py_dmm import DMMClient
 
 
 def main() -> None:
-    """Main example function."""
-
     api_key = os.getenv("DMM_API_KEY")
     affiliate_key = os.getenv("DMM_AFFILIATE_KEY")
 
@@ -30,6 +28,12 @@ def main() -> None:
     dmm_client = DMMClient(api_key=api_key, affiliate_id=affiliate_key)
 
     print(dmm_client)
+
+    products = dmm_client.get_products(
+        site="FANZA", keyword="ABP-477", floor="dvd", service="mono"
+    )
+
+    print(list(map(lambda item: item.maker_product, products.result.items)))
 
 
 if __name__ == "__main__":

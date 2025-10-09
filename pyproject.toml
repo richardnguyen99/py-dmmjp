@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py-dmm"
-version = "0.0.1"
+version = "0.0.2"
 description = "A Python client library for the DMM API"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -98,7 +98,7 @@ known_first_party = ["py_dmm"]
 
 # mypy configuration
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
@@ -112,6 +112,7 @@ warn_no_return = true
 warn_unreachable = true
 strict_equality = true
 show_error_codes = true
+
 
 [[tool.mypy.overrides]]
 module = ["requests.*"]
