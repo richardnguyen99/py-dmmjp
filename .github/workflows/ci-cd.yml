@@ -43,23 +43,23 @@ jobs:
 
       - name: Run type checking with mypy
         run: |
-          mypy py_dmm
+          mypy py_dmmjp
 
       - name: Run linting with pylint
         run: |
-          pylint py_dmm
+          pylint py_dmmjp
 
       - name: Check code formatting with black
         run: |
-          black --check py_dmm tests
+          black --check py_dmmjp tests
 
       - name: Check import sorting with isort
         run: |
-          isort --check-only py_dmm tests
+          isort --check-only py_dmmjp tests
 
       - name: Run tests with pytest
         run: |
-          pytest tests/ -v --cov=py_dmm --cov-report=xml --cov-report=html
+          pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html
 
       - name: Upload coverage to Codecov
         if: matrix.python-version == '3.8'
@@ -89,7 +89,7 @@ jobs:
 
       - name: Run security scan with bandit
         run: |
-          bandit -r py_dmm -f json -o bandit-report.json
+          bandit -r py_dmmjp -f json -o bandit-report.json
 
       - name: Run Safety CLI to check for vulnerabilities
         uses: pyupio/safety-action@v1
