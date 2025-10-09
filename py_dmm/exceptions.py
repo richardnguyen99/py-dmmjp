@@ -2,7 +2,7 @@
 Exception classes for the py-dmm library.
 """
 
-from typing import Optional, Any
+from typing import Any, Optional
 
 
 class DMMError(Exception):

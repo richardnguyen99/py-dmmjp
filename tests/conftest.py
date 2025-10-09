@@ -1,6 +1,7 @@
 """Test configuration and fixtures."""
 
 import pytest
+
 from py_dmm import DMMClient
 
 

@@ -2,13 +2,13 @@
 Main client class for the py-dmm library.
 """
 
-import requests
 import json
+from typing import Any, Dict, Literal, Optional, cast
+
+import requests
 import requests.exceptions
 
-from typing import Optional, Dict, Any, Literal, cast
-
-from .exceptions import DMMError, DMMAPIError, DMMAuthError
+from .exceptions import DMMAPIError, DMMAuthError, DMMError
 from .product import ApiResponse
 
 

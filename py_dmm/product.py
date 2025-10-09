@@ -2,9 +2,9 @@
 Data models for the py-dmm library.
 """
 
-from typing import List, Optional, Dict, Any
 from dataclasses import dataclass, field
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 
 @dataclass

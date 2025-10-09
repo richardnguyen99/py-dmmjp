@@ -11,21 +11,21 @@ __email__ = "richard@richardhnguyen.com"
 __license__ = "MIT"
 
 from .client import DMMClient
-from .exceptions import DMMError, DMMAPIError, DMMAuthError
+from .exceptions import DMMAPIError, DMMAuthError, DMMError
 from .product import (
-    Product,
+    ApiRequest,
     ApiResponse,
     ApiResult,
-    ApiRequest,
-    RequestParameters,
-    SearchResult,
-    Review,
-    ImageURL,
-    SampleImages,
-    Prices,
-    ItemInfo,
-    ItemDetails,
     Directory,
+    ImageURL,
+    ItemDetails,
+    ItemInfo,
+    Prices,
+    Product,
+    RequestParameters,
+    Review,
+    SampleImages,
+    SearchResult,
 )
 
 __all__ = [
