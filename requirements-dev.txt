@@ -1,3 +1,4 @@
+-i https://pkgs.safetycli.com/repository/self-3932f/project/py-dmm/pypi/simple/
 # Development dependencies
 -r requirements.txt
 

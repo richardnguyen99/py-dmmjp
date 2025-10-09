@@ -98,16 +98,17 @@ class DMMClient:
         except requests.exceptions.HTTPError as e:
             if response.status_code == 401:
                 raise DMMAuthError("Invalid API key or authentication failed") from e
-            elif response.status_code == 403:
+
+            if response.status_code == 403:
                 raise DMMAuthError(
                     "Access forbidden - check your API key permissions"
                 ) from e
-            else:
-                raise DMMAPIError(
-                    f"HTTP {response.status_code}: {response.text}",
-                    status_code=response.status_code,
-                    response_data=response.text,
-                ) from e
+
+            raise DMMAPIError(
+                f"HTTP {response.status_code}: {response.text}",
+                status_code=response.status_code,
+                response_data=response.text,
+            ) from e
         except requests.exceptions.RequestException as e:
             raise DMMAPIError(f"Request failed: {str(e)}") from e
 
@@ -177,27 +178,21 @@ class DMMClient:
 
     def get_floors(self) -> None:
         """API that can get the floor list,"""
-        pass
 
     def get_actresses(self) -> None:
         """API that can get actress information."""
-        pass
 
     def get_genres(self) -> None:
         """API that can get the genre list."""
-        pass
 
     def get_makers(self) -> None:
         """API that retrieves a list of makers."""
-        pass
 
     def get_series(self) -> None:
         """API that retrieves a list of series."""
-        pass
 
     def get_authors(self) -> None:
         """API that retrieves a list of authors."""
-        pass
 
     def close(self) -> None:
         """Explicitly close the HTTP session."""

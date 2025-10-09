@@ -91,9 +91,10 @@ jobs:
         run: |
           bandit -r py_dmm -f json -o bandit-report.json
 
-      - name: Check for known security vulnerabilities with safety
-        run: |
-          safety scan
+      - name: Run Safety CLI to check for vulnerabilities
+        uses: pyupio/safety-action@v1
+        with:
+          api-key: ${{ secrets.SAFETY_API_KEY }}
 
   build:
     name: Build Package
