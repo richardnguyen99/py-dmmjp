@@ -1,4 +1,4 @@
-# py-dmm
+# py-dmmjp
 
 [![PyPI version](https://badge.fury.io/py/py-dmm.svg)](https://badge.fury.io/py/py-dmm)
 [![Python Support](https://img.shields.io/pypi/pyversions/py-dmm.svg)](https://pypi.org/project/py-dmm/)
@@ -23,13 +23,13 @@ A Python client library for the DMM (Digital Media Mart) API with full type hint
 Install py-dmm using pip:
 
 ```bash
-pip install py-dmm
+pip install py-dmmjp
 ```
 
 For development installation with all optional dependencies:
 
 ```bash
-pip install py-dmm[dev]
+pip install py-dmmjp[dev]
 ```
 
 ## Quick Start
@@ -227,7 +227,7 @@ To use this library, you need a DMM API key. You can obtain one by:
 
    ```bash
    git clone https://github.com/richardnguyen99/py-dmm.git
-   cd py-dmm
+   cd py-dmmjp
    ```
 
 2. Install development dependencies:

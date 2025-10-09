@@ -2,7 +2,7 @@
 
 import pytest
 
-from py_dmm import DMMClient
+from py_dmmjp import DMMClient
 
 
 @pytest.fixture

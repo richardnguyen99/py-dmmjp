@@ -10,7 +10,7 @@ import sys
 # Add the parent directory to the path to import py_dmm
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from py_dmm import DMMClient
+from py_dmmjp import DMMClient
 
 
 def main() -> None:
