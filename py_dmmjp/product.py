@@ -43,11 +43,12 @@ class SampleImages:
     """Represents sample image data."""
 
     sample_s: Optional[Dict[str, List[str]]] = None
+    sample_l: Optional[Dict[str, List[str]]] = None
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "SampleImages":
         """Create SampleImages from dictionary."""
-        return cls(sample_s=data.get("sample_s"))
+        return cls(sample_s=data.get("sample_s"), sample_l=data.get("sample_l"))
 
 
 @dataclass
@@ -152,7 +153,7 @@ class Product:
     maker_product: Optional[str] = None
     stock: Optional[str] = None
 
-    iteminfo: Optional[ItemDetails] = None
+    item_info: Optional[ItemDetails] = None
     directory: List[Directory] = field(default_factory=list)
 
     _raw_data: Optional[Dict[str, Any]] = field(default=None, repr=False)
@@ -195,7 +196,7 @@ class Product:
             Review.from_dict(data.get("review", {})) if data.get("review") else None
         )
 
-        iteminfo = (
+        item_info = (
             ItemDetails.from_dict(data.get("iteminfo", {}))
             if data.get("iteminfo")
             else None
@@ -225,7 +226,7 @@ class Product:
             jancode=data.get("jancode"),
             maker_product=data.get("maker_product"),
             stock=data.get("stock"),
-            iteminfo=iteminfo,
+            item_info=item_info,
             directory=directory,
             _raw_data=data.copy(),
         )
@@ -267,32 +268,32 @@ class Product:
     @property
     def genres(self) -> List[ItemInfo]:
         """Get product genres."""
-        return self.iteminfo.genre if self.iteminfo else []
+        return self.item_info.genre if self.item_info else []
 
     @property
     def actresses(self) -> List[ItemInfo]:
         """Get product actresses."""
-        return self.iteminfo.actress if self.iteminfo else []
+        return self.item_info.actress if self.item_info else []
 
     @property
     def makers(self) -> List[ItemInfo]:
         """Get product makers."""
-        return self.iteminfo.maker if self.iteminfo else []
+        return self.item_info.maker if self.item_info else []
 
     @property
     def series(self) -> List[ItemInfo]:
         """Get product series."""
-        return self.iteminfo.series if self.iteminfo else []
+        return self.item_info.series if self.item_info else []
 
     @property
     def directors(self) -> List[ItemInfo]:
         """Get product directors."""
-        return self.iteminfo.director if self.iteminfo else []
+        return self.item_info.director if self.item_info else []
 
     @property
     def labels(self) -> List[ItemInfo]:
         """Get product labels."""
-        return self.iteminfo.label if self.iteminfo else []
+        return self.item_info.label if self.item_info else []
 
     @property
     def sample_images(self) -> List[str]:

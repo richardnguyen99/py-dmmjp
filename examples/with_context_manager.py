@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# pylint: disable=missing-function-docstring,missing-module-docstring
+# pylint: disable=duplicate-code
+
 """
 Usage of the py-dmm library with context manager
 """

@@ -1,7 +1,7 @@
 # py-dmmjp
 
-[![PyPI version](https://badge.fury.io/py/py-dmm.svg)](https://badge.fury.io/py/py-dmm)
-[![Python Support](https://img.shields.io/pypi/pyversions/py-dmm.svg)](https://pypi.org/project/py-dmm/)
+[![PyPI version](https://badge.fury.io/py/py-dmmjp.svg)](https://badge.fury.io/py/py-dmmjp)
+[![Python Support](https://img.shields.io/pypi/pyversions/py-dmmjp.svg)](https://pypi.org/project/py-dmmjp/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
@@ -11,7 +11,7 @@ A Python client library for the DMM (Digital Media Mart) API with full type hint
 ## Features
 
 - 🔍 **Product Search**: Search for products with various filters and parameters
-- 📦 **Product Details**: Retrieve detailed information about specific products  
+- 📦 **Product Details**: Retrieve detailed information about specific products
 - 🏷️ **Genre/Category Support**: Browse and filter by categories and genres
 - 🔒 **Type Safety**: Full type hints support with mypy validation
 - ⚡ **Async-Ready**: Built with modern Python practices
@@ -20,7 +20,7 @@ A Python client library for the DMM (Digital Media Mart) API with full type hint
 
 ## Installation
 
-Install py-dmm using pip:
+Install py-dmmjp using pip:
 
 ```bash
 pip install py-dmmjp
@@ -226,7 +226,7 @@ To use this library, you need a DMM API key. You can obtain one by:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/richardnguyen99/py-dmm.git
+   git clone https://github.com/richardnguyen99/py-dmmjp.git
    cd py-dmmjp
    ```
 
@@ -266,7 +266,7 @@ The project uses several tools to maintain code quality:
 # Format code with black
 black py_dmm tests
 
-# Sort imports with isort  
+# Sort imports with isort
 isort py_dmm tests
 
 # Type checking with mypy
@@ -313,15 +313,6 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
 
 ## Support
 
-- 📖 [Documentation](https://py-dmm.readthedocs.io/)
-- 🐛 [Issue Tracker](https://github.com/richardnguyen99/py-dmm/issues)
-- 💬 [Discussions](https://github.com/richardnguyen99/py-dmm/discussions)
-
-## Related Projects
-
-- [DMM API Documentation](https://affiliate.dmm.com/api/)
-- [DMM Affiliate Program](https://affiliate.dmm.com/)
-
----
-
-Made with ❤️ by [Richard Nguyen](https://github.com/richardnguyen99)
+- 📖 [Documentation](https://py-dmmjp.readthedocs.io/)
+- 🐛 [Issue Tracker](https://github.com/richardnguyen99/py-dmmjp/issues)
+- 💬 [Discussions](https://github.com/richardnguyen99/py-dmmjp/discussions)

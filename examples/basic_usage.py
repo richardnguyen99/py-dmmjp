@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# pylint: disable=missing-function-docstring,missing-module-docstring
+# pylint: disable=duplicate-code
+
 """
 Example usage of the py-dmm library.
 """
@@ -29,11 +32,38 @@ def main() -> None:
 
     print(dmm_client)
 
-    products = dmm_client.get_products(
+    res = dmm_client.get_products(
         site="FANZA", keyword="ABP-477", floor="dvd", service="mono"
     )
 
-    print(list(map(lambda item: item.maker_product, products.result.items)))
+    # direct access to the raw dictionary response
+    print(res.raw_response, end="\n\n")
+
+    # access the request metadata
+    print(res.request, end="\n\n")
+
+    # access the list of products
+    for product in res.products:
+        print("Product ID:", product.content_id, end="\n")
+
+    # access the total count of products found
+    print("Total products found:", res.total_products, end="\n\n")
+
+    # access the first product's details
+    if res.products:
+        first_product = res.products[0]
+        print("First Product Details:")
+        print(" - Title:", first_product.title)
+        print(" - Image URL:", first_product.image_url)
+        print(" - Floor Name:", first_product.floor_name)
+        print(" - Price:", first_product.prices)
+        print(" - Review:", first_product.review)
+        print(" - Sample Images:", first_product.sample_image_url)
+        print(" - Actresses: ", list(map(lambda a: a.name, first_product.actresses)))
+        print(" - Genres: ", list(map(lambda g: (g.id, g.name), first_product.genres)))
+        print(" - Maker ID:", first_product.makers)
+        print(" - Series:", first_product.series)
+        print(" - Maker Product:", first_product.maker_product)
 
 
 if __name__ == "__main__":
