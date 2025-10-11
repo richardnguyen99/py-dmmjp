@@ -157,29 +157,25 @@ jobs:
           password: ${{ secrets.PYPI_API_TOKEN }}
 
   publish-test:
-    name: Publish to Test PyPI
+    name: Publish Python 🐍 distribution 📦 to TestPyPIPublish to Test PyPI
     runs-on: ubuntu-latest
     needs: [test, security, build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    environment: test-pypi
+
+    environment:
+      name: test-pypi
+      url: https://test.pypi.org/p/py-dmmjp
+
+    permissions:
+      id-token: write # IMPORTANT: mandatory for trusted publishing
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Download build artifacts
+      - name: Download all the dists
         uses: actions/download-artifact@v4
         with:
-          name: dist
+          name: python-package-distributions
           path: dist/
-
-      - name: Publish to Test PyPI
+      - name: Publish distribution 📦 to TestPyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
           repository-url: https://test.pypi.org/legacy/
