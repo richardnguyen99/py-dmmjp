@@ -32,26 +32,20 @@ def main() -> None:
 
     print(dmm_client)
 
-    res = dmm_client.get_products(
+    products = dmm_client.get_products(
         site="FANZA", keyword="ABP-477", floor="dvd", service="mono"
     )
 
-    # direct access to the raw dictionary response
-    print(res.raw_response, end="\n\n")
-
-    # access the request metadata
-    print(res.request, end="\n\n")
-
     # access the list of products
-    for product in res.products:
+    for product in products:
         print("Product ID:", product.content_id, end="\n")
 
     # access the total count of products found
-    print("Total products found:", res.total_products, end="\n\n")
+    print("Total products found:", len(products), end="\n\n")
 
     # access the first product's details
-    if res.products:
-        first_product = res.products[0]
+    if products:
+        first_product = products[0]
         print("First Product Details:")
         print(" - Title:", first_product.title)
         print(" - Image URL:", first_product.image_url)

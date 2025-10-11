@@ -16,6 +16,9 @@ from .product import (
     ApiRequest,
     ApiResponse,
     ApiResult,
+    Campaign,
+    CDInfo,
+    Delivery,
     Directory,
     ImageURL,
     ItemDetails,
@@ -24,8 +27,11 @@ from .product import (
     Product,
     RequestParameters,
     Review,
+    SampleImage,
     SampleImages,
+    SampleMovieURL,
     SearchResult,
+    TachiyomiInfo,
 )
 
 __all__ = [
@@ -41,9 +47,15 @@ __all__ = [
     "SearchResult",
     "Review",
     "ImageURL",
+    "SampleImage",
     "SampleImages",
+    "SampleMovieURL",
+    "TachiyomiInfo",
     "Prices",
+    "Delivery",
     "ItemInfo",
     "ItemDetails",
     "Directory",
+    "CDInfo",
+    "Campaign",
 ]

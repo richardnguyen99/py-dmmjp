@@ -3,13 +3,13 @@ Main client class for the py-dmm library.
 """
 
 import json
-from typing import Any, Dict, Literal, Optional, cast
+from typing import Any, Dict, List, Literal, Optional, cast
 
 import requests
 import requests.exceptions
 
 from .exceptions import DMMAPIError, DMMAuthError, DMMError
-from .product import ApiResponse
+from .product import Product
 
 
 class DMMClient:
@@ -79,6 +79,7 @@ class DMMClient:
             DMMAPIError: If the API request fails.
             DMMAuthError: If authentication fails.
         """
+
         url = f"{self._base_url}{endpoint}"
 
         if params is None:
@@ -121,55 +122,137 @@ class DMMClient:
         self,
         *,
         site: Literal["FANZA", "DMM.com"],
-        service: Optional[str],
-        floor: Optional[str],
+        service: Optional[str] = None,
+        floor: Optional[str] = None,
         keyword: Optional[str] = None,
         hits: int = 20,
         offset: int = 1,
         sort: Optional[str] = None,
+        cid: Optional[str] = None,
+        article: Optional[List[str]] = None,
+        article_id: Optional[List[str]] = None,
+        gte_date: Optional[str] = None,
+        lte_date: Optional[str] = None,
+        mono_stock: Optional[str] = None,
         **kwargs: Any,
-    ) -> ApiResponse:
+    ) -> List[Product]:
         """
-        API that allows you to get information about FANZA products.
+        Retrieve product information from the DMM API.
 
-        See more: https://affiliate.dmm.com/api/v3/itemlist.html
+        This method fetches products from the DMM API and returns a simple list
+        of Product objects, handling the API response internally.
 
         Args:
-            site (str): Site to search (`FANZA` or `DMM.com`)
-            service (str, optional): Service code that the products can be retrieve from. Can be obtained from Floor API
-            floor (str, optional): Floor code that the products can be retrieved from. Can be obtained from Floor API
-            keyword (str, optional): Search keyword. Can be title, actress, product id, maker id, etc.
-            hits (int, optional): Number of results to return (default: 20)
-            offset (int, optional): Starting position (default: 1)
-            sort (str, optional): Sort order (default: "rank")
-            **kwargs: Additional parameters
+            site: Site to search. Either "FANZA" for adult content or "DMM.com" for general content.
+            service: Service code that the products can be retrieved from.
+                    Can be obtained from Floor API.
+            floor: Floor code that the products can be retrieved from.
+                   Can be obtained from Floor API.
+            keyword: Search keyword. Can be title, actress name, product ID, maker ID, etc.
+            hits: Number of results to return. Default is 20, maximum is 100.
+            offset: Starting position for results. Default is 1, maximum is 50000.
+            sort: Sort order for results. Options:
+                - "rank": Popularity (default)
+                - "price": Price (high to low)
+                - "-price": Price (low to high)
+                - "date": Release date
+                - "review": Rating
+                - "match": Relevance
+            cid: Product ID (content_id) for specific product lookup.
+            article: Filter categories for refined search. Options:
+                - "actress": Filter by actress
+                - "author": Filter by author
+                - "genre": Filter by genre
+                - "series": Filter by series
+                - "maker": Filter by maker
+            article_id: Filter IDs corresponding to article categories.
+                       Obtainable from respective search APIs.
+            gte_date: Release date filter (from) in ISO8601 format (YYYY-MM-DDTHH:MM:SS).
+                     Filter products released on or after this date.
+            lte_date: Release date filter (to) in ISO8601 format (YYYY-MM-DDTHH:MM:SS).
+                     Filter products released on or before this date.
+            mono_stock: Stock filter for retail services. Options:
+                - "stock": In stock items
+                - "reserve": Pre-order items (in stock)
+                - "reserve_empty": Pre-order items (waiting list)
+                - "mono": DMM direct sales only
+                - "dmp": Marketplace items only
+            **kwargs: Additional parameters for extended functionality.
 
         Returns:
-            ApiResponse containing the product data and metadata
+            List[Product]: List of Product objects containing product information.
 
         Raises:
-            DMMAPIError: If the API request fails
-            DMMAuthError: If authentication fails
+            DMMAPIError: If the API request fails or returns an error.
+            DMMAuthError: If authentication fails or API key is invalid.
+
+        Example:
+            >>> client = DMMClient(api_key="your_key", affiliate_id="your_id")
+            >>> products = client.get_products(
+            ...     site="FANZA",
+            ...     service="digital",
+            ...     floor="videoa",
+            ...     keyword="AIKA",
+            ...     hits=10,
+            ...     sort="review"
+            ... )
+            >>> print(f"Found {len(products)} products")
+            >>> for product in products:
+            ...     print(f"- {product.title}")
         """
-        params = {
+
+        # pylint: disable=too-many-locals
+
+        params: dict[str, Any] = {
             "site": site,
-            "service": service,
-            "floor": floor,
             "hits": hits,
             "offset": offset,
         }
 
+        if service:
+            params["service"] = service
+        if floor:
+            params["floor"] = floor
         if keyword:
             params["keyword"] = keyword
-
         if sort:
             params["sort"] = sort
+        if cid:
+            params["cid"] = cid
+        if gte_date:
+            params["gte_date"] = gte_date
+        if lte_date:
+            params["lte_date"] = lte_date
+        if mono_stock:
+            params["mono_stock"] = mono_stock
+
+        if article:
+            for i, cat in enumerate(article):
+                params[f"article[{i}]"] = cat
+
+        if article_id:
+            for i, aid in enumerate(article_id):
+                params[f"article_id[{i}]"] = aid
 
         params.update(kwargs)
 
         try:
             response_data = self._make_request("/ItemList", params)
-            return ApiResponse.from_dict(response_data)
+
+            if "result" not in response_data:
+                raise DMMAPIError("Invalid API response: missing 'result' field")
+
+            result = response_data["result"]
+
+            status = result.get("status", 200)
+            if status != 200:
+                raise DMMAPIError(f"API returned error status: {status}")
+
+            items = result.get("items", [])
+            products = [Product.from_dict(item) for item in items]
+
+            return products
+
         except Exception as e:
             if isinstance(e, (DMMError, DMMAPIError, DMMAuthError)):
                 raise
@@ -177,36 +260,89 @@ class DMMClient:
             raise DMMAPIError(f"Failed to get products: {str(e)}") from e
 
     def get_floors(self) -> None:
-        """API that can get the floor list,"""
+        """
+        API that retrieves the floor list.
+
+        This method will return available floors/categories
+        that can be used in the get_products() method.
+        """
 
     def get_actresses(self) -> None:
-        """API that can get actress information."""
+        """
+        API that retrieves actress information.
+
+        This method will return actress data including IDs and names
+        that can be used for filtering in the get_products() method.
+        """
 
     def get_genres(self) -> None:
-        """API that can get the genre list."""
+        """
+        API that retrieves the genre list.
+
+        This method will return available genres/categories
+        that can be used for filtering in the get_products() method.
+        """
 
     def get_makers(self) -> None:
-        """API that retrieves a list of makers."""
+        """
+        API that retrieves a list of makers/studios.
+
+        This method will return maker information including IDs and names
+        that can be used for filtering in the get_products() method.
+        """
 
     def get_series(self) -> None:
-        """API that retrieves a list of series."""
+        """
+        API that retrieves a list of series.
+
+        This method will return series information including IDs and names
+        that can be used for filtering in the get_products() method.
+        """
 
     def get_authors(self) -> None:
-        """API that retrieves a list of authors."""
+        """
+        API that retrieves a list of authors/creators.
+
+        This method will return author information including IDs and names
+        that can be used for filtering in the get_products() method.
+        """
 
     def close(self) -> None:
-        """Explicitly close the HTTP session."""
+        """
+        Explicitly close the HTTP session.
+        """
+
         self._session.close()
 
     def __del__(self) -> None:
-        """Destructor to ensure the session is closed."""
+        """
+        Destructor to ensure the session is closed.
+        """
+
         if hasattr(self, "_session"):
             self.close()
 
     def __enter__(self) -> "DMMClient":
-        """Context manager entry."""
+        """
+        Context manager entry.
+
+        Allows using the client with the 'with' statement for automatic
+        resource management.
+
+        Returns:
+            DMMClient: The client instance for use in the context.
+        """
         return self
 
     def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
-        """Context manager exit."""
+        """
+        Context manager exit.
+
+        Automatically closes the session when exiting the 'with' block.
+
+        Args:
+            exc_type: Exception type if an exception occurred.
+            exc_val: Exception value if an exception occurred.
+            exc_tb: Exception traceback if an exception occurred.
+        """
         self.close()
