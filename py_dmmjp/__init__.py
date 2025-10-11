@@ -5,7 +5,7 @@ This package provides a simple and intuitive interface for interacting with
 the DMM (Digital Media Mart) API.
 """
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 __author__ = "Richard Nguyen"
 __email__ = "richard@richardhnguyen.com"
 __license__ = "MIT"
