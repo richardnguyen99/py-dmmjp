@@ -37,5 +37,6 @@ repos:
     rev: v1.3.0
     hooks:
       - id: mypy
-        additional_dependencies: [types-requests]
-        args: [--config-file=mypy.ini]
+        additional_dependencies:
+          [types-requests, types-pytest-lazy-fixture, pytest]
+        args: [--config-file, mypy.ini]

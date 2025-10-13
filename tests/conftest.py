@@ -17,6 +17,7 @@ def mock_affiliate_key() -> str:
     return "test_affiliate_key_67890"
 
 
+# pylint: disable=redefined-outer-name
 @pytest.fixture
 def dmm_client(mock_api_key: str, mock_affiliate_key: str) -> DMMClient:
     """Provide a DMMClient instance for testing."""

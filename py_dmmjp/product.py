@@ -1,4 +1,5 @@
 """
+
 Data models for the py-dmm library.
 """
 
@@ -13,14 +14,14 @@ class Review:
     """Represents product review data."""
 
     count: int
-    average: str
+    average: float
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Review":
         """Create Review from dictionary."""
 
         return cls(
-            count=int(data.get("count", 0)), average=str(data.get("average", "0"))
+            count=int(data.get("count", 0)), average=float(data.get("average", "0"))
         )
 
 
@@ -29,8 +30,13 @@ class ImageURL:
     """Represents product image URLs in different sizes."""
 
     list: Optional[str] = None
+    "List page image URL (e.g., http://pics.dmm.co.jp/digital/video/15dss00145/15dss00145pt.jpg)"
+
     small: Optional[str] = None
+    "Small image URL for thumbnails (e.g., http://pics.dmm.co.jp/digital/video/15dss00145/15dss00145ps.jpg)"
+
     large: Optional[str] = None
+    "Large image URL for detailed view (e.g., http://pics.dmm.co.jp/digital/video/15dss00145/15dss00145pl.jpg)"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "ImageURL":
@@ -45,7 +51,8 @@ class ImageURL:
 class SampleImage:
     """Represents individual sample image data."""
 
-    image: str
+    image: List[str] = field(default_factory=list)
+    "List of sample image URLs."
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "SampleImage":
@@ -58,26 +65,18 @@ class SampleImage:
 class SampleImages:
     """Represents product sample image collections in different sizes."""
 
-    sample_s: List[SampleImage] = field(default_factory=list)
-    sample_l: List[SampleImage] = field(default_factory=list)
+    sample_s: SampleImage = field(default_factory=SampleImage)
+    "Small sample images list (e.g., 'http://pics.dmm.co.jp/digital/video/15dss00145/15dss00145-1.jpg')"
+
+    sample_l: SampleImage = field(default_factory=SampleImage)
+    "Large sample images list (e.g., 'http://pics.dmm.co.jp/digital/video/15dss00145/15dss00145jp-1.jpg')"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "SampleImages":
         """Create SampleImages from dictionary."""
-        sample_s = []
-        sample_l = []
 
-        if "sample_s" in data and "image" in data["sample_s"]:
-            sample_s = [
-                SampleImage.from_dict({"image": img})
-                for img in data["sample_s"]["image"]
-            ]
-
-        if "sample_l" in data and "image" in data["sample_l"]:
-            sample_l = [
-                SampleImage.from_dict({"image": img})
-                for img in data["sample_l"]["image"]
-            ]
+        sample_s = SampleImage.from_dict(data.get("sample_s", {}))
+        sample_l = SampleImage.from_dict(data.get("sample_l", {}))
 
         return cls(sample_s=sample_s, sample_l=sample_l)
 
@@ -87,11 +86,22 @@ class SampleMovieURL:
     """Represents sample video URLs and compatibility information."""
 
     size_476_306: Optional[str] = None
+    "Sample video URL in 476x306 resolution (e.g., 'http://cc3001.dmm.co.jp/litevideo/freepv/15dss00145_mhb_w.mp4')"
+
     size_560_360: Optional[str] = None
+    "Sample video URL in 560x360 resolution (e.g., 'http://cc3001.dmm.co.jp/litevideo/freepv/15dss00145_dm_w.mp4')"
+
     size_644_414: Optional[str] = None
+    "Sample video URL in 644x414 resolution (e.g., 'http://cc3001.dmm.co.jp/litevideo/freepv/15dss00145_dmb_w.mp4')"
+
     size_720_480: Optional[str] = None
+    "Sample video URL in 720x480 resolution (e.g., 'http://cc3001.dmm.co.jp/litevideo/freepv/15dss00145_sm_w.mp4')"
+
     pc_flag: Optional[int] = None
+    "PC compatibility flag (1 for compatible, 0 for not compatible)"
+
     sp_flag: Optional[int] = None
+    "Smartphone compatibility flag (1 for compatible, 0 for not compatible)"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "SampleMovieURL":
@@ -112,7 +122,10 @@ class TachiyomiInfo:
     """Represents product preview information and links."""
 
     url: Optional[str] = None
+    "Direct preview page URL (e.g., 'http://www.dmm.co.jp/dc/doujin/-/detail/=/cid=d_048416/')"
+
     affiliate_url: Optional[str] = None
+    "Affiliate preview page URL with tracking parameters"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "TachiyomiInfo":
@@ -129,7 +142,10 @@ class Delivery:
     """Represents product delivery options and pricing."""
 
     type: str
+    "Delivery type (e.g., 'download', 'streaming', 'rental')"
+
     price: str
+    "Delivery price with currency symbol (e.g., '¥1980', '¥500')"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Delivery":
@@ -146,8 +162,13 @@ class Prices:
     """Represents product pricing and delivery information."""
 
     price: Optional[str] = None
+    "Current sale price with currency symbol (e.g., '¥1584', '¥980')"
+
     list_price: Optional[str] = None
+    "Original list price before discount (e.g., '¥1980', '¥1500')"
+
     deliveries: List[Delivery] = field(default_factory=list)
+    "Available delivery options with their respective pricing"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Prices":
@@ -193,8 +214,13 @@ class ItemInfo:
     """Represents detailed information about product-related items."""
 
     id: int
+    "Unique identifier for the item (e.g., 12345, 67890)"
+
     name: str
+    "Item name in Japanese (e.g., 'アダルト', 'S1 NO.1 STYLE', '明日花キララ')"
+
     ruby: Optional[str] = None
+    "Phonetic reading in hiragana/katakana (e.g., 'あだると', 'あすかきらら')"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "ItemInfo":
@@ -210,16 +236,37 @@ class ItemDetails:
     """Represents comprehensive product metadata and categorization information."""
 
     genre: List[ItemInfo] = field(default_factory=list)
+    "Product genres/categories (e.g., 'アダルト', 'ドラマ', 'コメディ')"
+
     series: List[ItemInfo] = field(default_factory=list)
+    "Series information (e.g., 'S1 NO.1 STYLE', '本中', 'プレステージ')"
+
     maker: List[ItemInfo] = field(default_factory=list)
+    "Production company/studio (e.g., 'エスワン ナンバーワンスタイル', 'プレステージ')"
+
     actress: List[ItemInfo] = field(default_factory=list)
+    "Featured actresses (e.g., '明日花キララ', '桃乃木かな', '三上悠亜')"
+
     actor: List[ItemInfo] = field(default_factory=list)
+    "Featured actors (e.g., '森林原人', 'イケメン翔', 'ダイ')"
+
     director: List[ItemInfo] = field(default_factory=list)
+    "Directors (e.g., 'きとるね川口', '本田教仁')"
+
     author: List[ItemInfo] = field(default_factory=list)
+    "Authors for written content (e.g., manga/book authors)"
+
     label: List[ItemInfo] = field(default_factory=list)
+    "Publishing label/brand (e.g., 'S1 NO.1 STYLE', 'プレステージ')"
+
     type: List[ItemInfo] = field(default_factory=list)
+    "Content type classification (e.g., 'ダウンロード', 'ストリーミング')"
+
     color: List[ItemInfo] = field(default_factory=list)
+    "Color attributes for physical products (e.g., 'ブラック', 'ホワイト')"
+
     size: List[ItemInfo] = field(default_factory=list)
+    "Size attributes for physical products (e.g., 'M', 'L', 'XL')"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "ItemDetails":
@@ -255,6 +302,7 @@ class CDInfo:
     """Represents CD-specific product information."""
 
     kind: Optional[str] = None
+    "CD type classification (e.g., 'album', 'single', 'compilation')"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "CDInfo":
@@ -268,7 +316,10 @@ class Directory:
     """Represents breadcrumb navigation directory information."""
 
     id: int
+    "Directory/category ID for navigation (e.g., 1001, 2002)"
+
     name: str
+    "Directory/category name in Japanese (e.g., 'ビデオ', 'DVD', 'アダルト')"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Directory":
@@ -282,8 +333,13 @@ class Campaign:
     """Represents promotional campaign information for products."""
 
     date_begin: Optional[str] = None
+    "Campaign start date (e.g., '2023-10-01', '2024-03-15')"
+
     date_end: Optional[str] = None
+    "Campaign end date (e.g., '2023-10-31', '2024-03-31')"
+
     title: Optional[str] = None
+    "Campaign title/description in Japanese (e.g., '半額セール', '新作キャンペーン')"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Campaign":
@@ -387,6 +443,7 @@ class Product:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Product":
         """
+
         Create a Product instance from a dictionary.
 
         Args:
@@ -496,6 +553,7 @@ class Product:
 
     def to_dict(self) -> Dict[str, Any]:
         """
+
         Convert the Product instance to a dictionary.
 
         Returns:
@@ -559,70 +617,84 @@ class Product:
     @property
     def series(self) -> List[ItemInfo]:
         """Get product series."""
+
         return self.item_info.series if self.item_info else []
 
     @property
     def directors(self) -> List[ItemInfo]:
         """Get product directors."""
+
         return self.item_info.director if self.item_info else []
 
     @property
     def authors(self) -> List[ItemInfo]:
         """Get product authors."""
+
         return self.item_info.author if self.item_info else []
 
     @property
     def labels(self) -> List[ItemInfo]:
         """Get product labels."""
+
         return self.item_info.label if self.item_info else []
 
     @property
     def types(self) -> List[ItemInfo]:
         """Get product types."""
+
         return self.item_info.type if self.item_info else []
 
     @property
     def colors(self) -> List[ItemInfo]:
         """Get product colors."""
+
         return self.item_info.color if self.item_info else []
 
     @property
     def sizes(self) -> List[ItemInfo]:
         """Get product sizes."""
+
         return self.item_info.size if self.item_info else []
 
     @property
     def sample_images(self) -> List[str]:
         """Get sample image URLs."""
+
         if self.sample_image_url and self.sample_image_url.sample_s:
-            return [img.image for img in self.sample_image_url.sample_s]
+            return list(self.sample_image_url.sample_s.image)
+
         return []
 
     @property
     def sample_images_large(self) -> List[str]:
         """Get large sample image URLs."""
+
         if self.sample_image_url and self.sample_image_url.sample_l:
-            return [img.image for img in self.sample_image_url.sample_l]
+            return list(self.sample_image_url.sample_l.image)
         return []
 
     @property
     def current_price(self) -> Optional[int]:
         """Get current price as integer."""
+
         return self.prices.price_int if self.prices else None
 
     @property
     def original_price(self) -> Optional[int]:
         """Get original list price as integer."""
+
         return self.prices.list_price_int if self.prices else None
 
     @property
     def review_count(self) -> int:
         """Get review count."""
+
         return self.review.count if self.review else 0
 
     @property
     def review_average(self) -> Optional[float]:
         """Get average review score as float."""
+
         if self.review and self.review.average:
             try:
                 return float(self.review.average)
@@ -634,20 +706,35 @@ class Product:
 @dataclass
 class RequestParameters:
     """
+
     Represents the request parameters from the API response.
     """
 
     api_id: str
+    "DMM API identifier for the request (e.g., 'your_api_id')"
+
     affiliate_id: str
+    "Affiliate program identifier (e.g., 'affiliate_code-001')"
+
     site: str
+    "Site code for DMM services (e.g., 'DMM.co.jp', 'DMM.com')"
+
     service: str
+    "Service type (e.g., 'digital', 'mono', 'pcgame')"
+
     floor: str
+    "Floor/section code (e.g., 'videoa', 'dvd', 'book')"
+
     keyword: Optional[str] = None
+    "Search keyword if applicable (e.g., 'アダルト', '新作')"
+
     output: str = "json"
+    "Response format, typically 'json' or 'xml'"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "RequestParameters":
         """Create RequestParameters from dictionary."""
+
         return cls(
             api_id=data.get("api_id", ""),
             affiliate_id=data.get("affiliate_id", ""),
@@ -663,11 +750,13 @@ class RequestParameters:
 class ApiRequest:
     """Represents the request section of the API response."""
 
-    parameters: RequestParameters  # Request parameters
+    parameters: RequestParameters
+    "Request parameters used for the API call"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "ApiRequest":
         """Create ApiRequest from dictionary."""
+
         return cls(parameters=RequestParameters.from_dict(data.get("parameters", {})))
 
 
@@ -676,10 +765,19 @@ class ApiResult:
     """Represents the result section of the API response."""
 
     status: int
+    "HTTP status code of the API response (e.g., 200, 404, 500)"
+
     result_count: int
+    "Number of products returned in current response (e.g., 20, 50)"
+
     total_count: int
+    "Total number of products matching the search criteria (e.g., 1500, 3200)"
+
     first_position: int
+    "Position of first item in the overall result set (e.g., 1, 21, 41)"
+
     items: List[Product] = field(default_factory=list)
+    "List of product items returned by the API"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "ApiResult":
@@ -700,13 +798,19 @@ class ApiResult:
 class ApiResponse:
     """Represents the complete API response from DMM."""
 
-    request: ApiRequest  # Request information
-    result: ApiResult  # Result information
+    request: ApiRequest
+    "Request information including parameters used for the API call"
+
+    result: ApiResult
+    "Result data containing products and metadata"
+
     _raw_response: Optional[Dict[str, Any]] = field(default=None, repr=False)
+    "Complete raw API response data (internal use, not displayed)"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "ApiResponse":
         """
+
         Create ApiResponse from the full API response dictionary.
 
         Args:
@@ -758,14 +862,24 @@ class SearchResult:
     """Represents search results from the DMM API (legacy compatibility)."""
 
     products: List[Product]
+    "List of products returned from the search"
+
     total_count: int
+    "Total number of products matching the search criteria (e.g., 1500, 3200)"
+
     page: int = 1
+    "Current page number in pagination (e.g., 1, 2, 3)"
+
     page_size: int = 20
+    "Number of products per page (e.g., 20, 50, 100)"
+
     total_pages: int = 1
+    "Total number of pages available (e.g., 75 pages for 1500 products with 20 per page)"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "SearchResult":
         """
+
         Create a SearchResult instance from a dictionary.
 
         Args:
