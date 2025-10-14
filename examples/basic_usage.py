@@ -59,6 +59,24 @@ def main() -> None:
         print(" - Series:", first_product.series)
         print(" - Maker Product:", first_product.maker_product)
 
+    single_product = dmm_client.get_product_by_cid("mird00127", "FANZA")
+
+    if single_product:
+        print("\nSingle Product Details:")
+        print(" - Title:", single_product.title)
+        print(" - Image URL:", single_product.image_url)
+        print(" - Floor Name:", single_product.floor_name)
+        print(" - Price:", single_product.prices)
+        print(" - Review:", single_product.review)
+        print(" - Sample Images:", single_product.sample_image_url)
+        print(" - Actresses: ", list(map(lambda a: a.name, single_product.actresses)))
+        print(" - Genres: ", list(map(lambda g: (g.id, g.name), single_product.genres)))
+        print(" - Maker ID:", single_product.makers)
+        print(" - Series:", single_product.series)
+        print(" - Maker Product:", single_product.maker_product)
+    else:
+        print("Product with content ID 'mird00127' not found.")
+
 
 if __name__ == "__main__":
     main()

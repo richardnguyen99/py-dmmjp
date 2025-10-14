@@ -279,6 +279,36 @@ class DMMClient:
 
             raise DMMAPIError(f"Failed to get products: {str(e)}") from e
 
+    def get_product_by_cid(
+        self, cid: str, site: Literal["FANZA", "DMM.com"]
+    ) -> Optional[Product]:
+        """
+        Retrieve a single product by its content ID (cid).
+
+        This method fetches a specific product from the DMM API using its content ID.
+
+        Args:
+            cid: The content ID of the product to retrieve.
+            site: Site to search. Either "FANZA" for adult content or "DMM.com" for general content.
+
+        Returns:
+            Optional[Product]: The Product object if found, otherwise None.
+        Raises:
+            DMMAPIError: If the API request fails or returns an error.
+            DMMAuthError: If authentication fails or API key is invalid.
+        Example:
+            >>> client = DMMClient(api_key="your_key", affiliate_id="your_id")
+            >>> product = client.get_product_by_cid(cid="ABP-477", site="FANZA")
+            >>> if product:
+            ...     print(f"Product Title: {product.title}")
+            ... else:
+            ...     print("Product not found")
+        """
+
+        products = self.get_products(site=site, cid=cid, hits=1)
+
+        return products[0] if products else None
+
     def get_floors(self) -> None:
         """
         API that retrieves the floor list.
