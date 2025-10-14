@@ -53,6 +53,10 @@ class ProductTestBase:
         """Test maker information parsing."""
 
     @abstractmethod
+    def test_product_item_info_manufactures(self, product_data: Dict[str, Any]) -> None:
+        """Test manufacture information parsing."""
+
+    @abstractmethod
     def test_product_to_dict(self, product_data: Dict[str, Any]) -> None:
         """Test converting product back to dictionary."""
 

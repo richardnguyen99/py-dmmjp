@@ -2,7 +2,7 @@
 Tests for Digital Video products (service=digital, floor=videoa).
 """
 
-# pylint: disable=duplicate-code
+# pylint: disable=duplicate-code,too-many-public-methods,line-too-long
 # mypy: disable-error-code="no-untyped-def"
 
 from datetime import datetime
@@ -101,6 +101,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_product_basic_fields(self, product_data):
         """Test digital video product basic fields."""
+
         product = Product.from_dict(product_data)
 
         assert product.service_code == "digital"
@@ -116,6 +117,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_product_sample_images(self, product_data):
         """Test that digital products have both small and large sample images."""
+
         product = Product.from_dict(product_data)
 
         assert product.sample_image_url is not None
@@ -135,6 +137,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_product_pricing_data(self, product_data):
         """Test digital product's complex pricing with multiple delivery options."""
+
         product = Product.from_dict(product_data)
 
         assert product.prices is not None
@@ -158,6 +161,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_product_item_info_genres(self, product_data):
         """Test digital video product genres."""
+
         product = Product.from_dict(product_data)
 
         genres = product.genres
@@ -172,6 +176,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_product_date_parsing(self, product_data):
         """Test date parsing with seconds."""
+
         product = Product.from_dict(product_data)
 
         expected_date = datetime(2025, 6, 6, 0, 0, 32)
@@ -179,6 +184,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_product_image_urls(self, product_data):
         """Test digital product image URLs."""
+
         product = Product.from_dict(product_data)
 
         assert product.image_url is not None
@@ -189,6 +195,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_product_item_info_actresses(self, product_data):
         """Test digital video product actresses."""
+
         product = Product.from_dict(product_data)
 
         actresses = product.actresses
@@ -199,6 +206,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_product_item_info_makers(self, product_data):
         """Test digital video product makers."""
+
         product = Product.from_dict(product_data)
 
         makers = product.makers
@@ -206,8 +214,20 @@ class TestDigitalVideoProduct(ProductTestBase):
         assert makers[0].id == 3152
         assert makers[0].name == "エスワン ナンバーワンスタイル"
 
+    def test_product_item_info_manufactures(self, product_data):
+        """Test digital video product manufactures."""
+
+        product = Product.from_dict(product_data)
+
+        assert hasattr(product.item_info, "manufacture") if product.item_info else True
+        manufactures = (
+            getattr(product.item_info, "manufacture", []) if product.item_info else []
+        )
+        assert len(manufactures) == 0
+
     def test_product_to_dict(self, product_data):
         """Test converting digital product to dictionary."""
+
         product = Product.from_dict(product_data)
         result_dict = product.to_dict()
 
@@ -217,6 +237,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_product_raw_data_access(self, product_data):
         """Test access to raw digital API data."""
+
         product = Product.from_dict(product_data)
 
         raw_data = product.raw_data
@@ -226,6 +247,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_sample_images_large(self, product_data):
         """Test large sample images for digital products."""
+
         product = Product.from_dict(product_data)
 
         assert product.sample_image_url is not None
@@ -233,6 +255,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_sample_movie_url(self, product_data):
         """Test sample movie URLs for digital products."""
+
         product = Product.from_dict(product_data)
 
         assert product.sample_movie_url is not None
@@ -241,6 +264,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_optional_fields(self, product_data):
         """Test optional fields for digital products."""
+
         product = Product.from_dict(product_data)
 
         assert product.number is None
@@ -254,6 +278,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_item_info_categories(self, product_data):
         """Test item info categories for digital products."""
+
         product = Product.from_dict(product_data)
 
         assert len(product.genres) > 0
@@ -271,6 +296,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_convenience_properties(self, product_data):
         """Test convenience properties for digital products."""
+
         product = Product.from_dict(product_data)
 
         assert product.review_count == 14
@@ -282,6 +308,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_nested_objects(self, product_data):
         """Test nested objects for digital products."""
+
         product = Product.from_dict(product_data)
 
         assert product.image_url is not None
@@ -296,12 +323,14 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_directory_structure(self, product_data):
         """Test directory structure for digital products."""
+
         product = Product.from_dict(product_data)
 
         assert len(product.directory) == 0
 
     def test_pricing_structure(self, product_data):
         """Test pricing structure for digital products."""
+
         product = Product.from_dict(product_data)
 
         assert product.prices is not None
@@ -313,6 +342,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_delivery_options(self, product_data):
         """Test delivery options for digital products."""
+
         product = Product.from_dict(product_data)
 
         assert product.prices is not None
@@ -326,6 +356,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_product_fields(self, product_data):
         """Test product fields for digital products."""
+
         product = Product.from_dict(product_data)
 
         assert product.service_code == "digital"
@@ -349,6 +380,7 @@ class TestDigitalVideoProduct(ProductTestBase):
 
     def test_product_review_data(self, product_data):
         """Test review data for digital products."""
+
         product = Product.from_dict(product_data)
 
         assert product.review is not None

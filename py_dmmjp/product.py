@@ -147,6 +147,9 @@ class Delivery:
     price: str
     "Delivery price with currency symbol (e.g., '¥1980', '¥500')"
 
+    list_price: str
+    "Original list price before discount (e.g., '¥1980', '¥1500')"
+
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Delivery":
         """Create Delivery from dictionary."""
@@ -154,6 +157,7 @@ class Delivery:
         return cls(
             type=data.get("type", ""),
             price=data.get("price", ""),
+            list_price=data.get("list_price", ""),
         )
 
 
@@ -268,18 +272,30 @@ class ItemDetails:
     size: List[ItemInfo] = field(default_factory=list)
     "Size attributes for physical products (e.g., 'M', 'L', 'XL')"
 
+    manufacture: List[ItemInfo] = field(default_factory=list)
+    "Manufacturer information for physical products (e.g., 'ソニー', 'パナソニック')"
+
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "ItemDetails":
         """Create ItemDetails from dictionary."""
 
         def parse_items(key: str) -> List[ItemInfo]:
             items = data.get(key, [])
+
             if isinstance(items, list):
                 return [ItemInfo.from_dict(item) for item in items]
 
             if isinstance(items, dict):
                 return [ItemInfo.from_dict(items)]
 
+            return []
+
+        def parse_manufacture() -> List[ItemInfo]:
+            items = data.get("manufacturer", data.get("manufacture", []))
+            if isinstance(items, list):
+                return [ItemInfo.from_dict(item) for item in items]
+            if isinstance(items, dict):
+                return [ItemInfo.from_dict(items)]
             return []
 
         return cls(
@@ -294,6 +310,7 @@ class ItemDetails:
             type=parse_items("type"),
             color=parse_items("color"),
             size=parse_items("size"),
+            manufacture=parse_manufacture(),
         )
 
 
@@ -380,7 +397,7 @@ class Product:
     title: str
     "Product title"
 
-    volume: Optional[int] = None
+    volume: Optional[int | Any] = None
     "Runtime in minutes for videos or page count for books (e.g., 350, 150)"
 
     number: Optional[int] = None
@@ -434,7 +451,7 @@ class Product:
     cdinfo: Optional[CDInfo] = None
     "CD-specific information for music products (album/single type)"
 
-    campaign: Optional[Campaign] = None
+    campaign: Optional[List[Campaign]] = None
     "Active promotional campaign information with dates and title"
 
     _raw_data: Optional[Dict[str, Any]] = field(default=None, repr=False)
@@ -506,11 +523,31 @@ class Product:
             CDInfo.from_dict(data.get("cdinfo", {})) if data.get("cdinfo") else None
         )
 
-        campaign = (
-            Campaign.from_dict(data.get("campaign", {}))
-            if data.get("campaign")
-            else None
-        )
+        campaign = None
+        if "campaign" in data and data["campaign"]:
+            campaign_data = data["campaign"]
+            if isinstance(campaign_data, list):
+                campaign = [Campaign.from_dict(c) for c in campaign_data]
+            elif isinstance(campaign_data, dict):
+                campaign = [Campaign.from_dict(campaign_data)]
+
+        volume = None
+        if "volume" in data and data["volume"]:
+            volume_data = data["volume"]
+
+            try:
+                volume = int(volume_data)
+            except (ValueError, TypeError):
+                volume = volume_data
+
+        number = None
+        if "number" in data and data["number"]:
+            number_data = data["number"]
+
+            try:
+                number = int(number_data)
+            except (ValueError, TypeError):
+                number = number_data
 
         directory = []
         if "directory" in data:
@@ -529,8 +566,8 @@ class Product:
             content_id=data.get("content_id", ""),
             product_id=data.get("product_id", ""),
             title=data.get("title", ""),
-            volume=data.get("volume"),
-            number=data.get("number"),
+            volume=volume,
+            number=number,
             url=data.get("URL"),
             affiliate_url=data.get("affiliateURL"),
             image_url=image_url,
@@ -607,6 +644,12 @@ class Product:
         """Get product actors."""
 
         return self.item_info.actor if self.item_info else []
+
+    @property
+    def manufactures(self) -> List[ItemInfo]:
+        """Get product manufacturers."""
+
+        return self.item_info.manufacture if self.item_info else []
 
     @property
     def makers(self) -> List[ItemInfo]:
@@ -700,6 +743,7 @@ class Product:
                 return float(self.review.average)
             except ValueError:
                 return None
+
         return None
 
 

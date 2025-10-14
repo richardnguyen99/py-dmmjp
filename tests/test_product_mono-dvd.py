@@ -2,7 +2,7 @@
 Tests for DVD products (service=mono, floor=dvd).
 """
 
-# pylint: disable=duplicate-code
+# pylint: disable=duplicate-code,too-many-public-methods,line-too-long
 # mypy: disable-error-code="no-untyped-def"
 
 from datetime import datetime
@@ -21,6 +21,7 @@ class TestMonoDVDProduct(ProductTestBase):
     @pytest.fixture
     def product_data(self) -> Dict[str, Any]:
         """DVD product data from DMM API response."""
+
         return {
             "service_code": "mono",
             "service_name": "通販",
@@ -84,6 +85,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_product_basic_fields(self, product_data):
         """Test creating DVD Product from dictionary data."""
+
         product = Product.from_dict(product_data)
 
         assert product.service_code == "mono"
@@ -103,12 +105,14 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_product_date_parsing(self, product_data):
         """Test date parsing in DVD Product."""
+
         product = Product.from_dict(product_data)
         expected_date = datetime(2025, 8, 20, 0, 0, 1)
         assert product.date == expected_date
 
     def test_product_review_data(self, product_data):
         """Test DVD review data parsing."""
+
         product = Product.from_dict(product_data)
 
         assert product.review is not None
@@ -120,6 +124,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_product_pricing_data(self, product_data):
         """Test DVD pricing data parsing."""
+
         product = Product.from_dict(product_data)
 
         assert product.prices is not None
@@ -131,6 +136,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_product_image_urls(self, product_data):
         """Test DVD image URL parsing."""
+
         product = Product.from_dict(product_data)
 
         assert product.image_url is not None
@@ -149,6 +155,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_product_sample_images(self, product_data):
         """Test DVD sample image parsing."""
+
         product = Product.from_dict(product_data)
 
         assert product.sample_image_url is not None
@@ -163,6 +170,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_product_item_info_genres(self, product_data):
         """Test DVD genre information parsing."""
+
         product = Product.from_dict(product_data)
 
         genres = product.genres
@@ -174,6 +182,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_product_item_info_actresses(self, product_data):
         """Test DVD actress information parsing."""
+
         product = Product.from_dict(product_data)
 
         actresses = product.actresses
@@ -184,6 +193,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_product_item_info_makers(self, product_data):
         """Test DVD maker information parsing."""
+
         product = Product.from_dict(product_data)
 
         makers = product.makers
@@ -191,19 +201,32 @@ class TestMonoDVDProduct(ProductTestBase):
         assert makers[0].id == 1509
         assert makers[0].name == "ムーディーズ"
 
+    def test_product_item_info_manufactures(self, product_data):
+        "Test mono dvd product manufactures."
+
+        product = Product.from_dict(product_data)
+
+        assert hasattr(product.item_info, "manufacture") if product.item_info else True
+        manufactures = (
+            getattr(product.item_info, "manufacture", []) if product.item_info else []
+        )
+        assert len(manufactures) == 0
+
     def test_product_to_dict(self, product_data):
         """Test converting DVD Product back to dictionary."""
+
         product = Product.from_dict(product_data)
         result_dict = product.to_dict()
 
         assert result_dict["service_code"] == "mono"
         assert result_dict["content_id"] == "tkmird261"
         assert result_dict["title"] == product.title
-        assert result_dict["volume"] == "160"
+        assert result_dict["volume"] == 160
         assert result_dict["date"] == "2025/08/20 00:00"
 
     def test_product_raw_data_access(self, product_data):
         """Test access to raw DVD API data."""
+
         product = Product.from_dict(product_data)
 
         raw_data = product.raw_data
@@ -213,6 +236,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_sample_images_large(self, product_data):
         """Test large sample images for DVD products."""
+
         product = Product.from_dict(product_data)
 
         assert product.sample_image_url is not None
@@ -220,12 +244,14 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_sample_movie_url(self, product_data):
         """Test sample movie URLs for DVD products."""
+
         product = Product.from_dict(product_data)
 
         assert product.sample_movie_url is None
 
     def test_optional_fields(self, product_data):
         """Test optional fields for DVD products."""
+
         product = Product.from_dict(product_data)
 
         assert product.number is None
@@ -237,6 +263,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_item_info_categories(self, product_data):
         """Test item info categories for DVD products."""
+
         product = Product.from_dict(product_data)
 
         assert len(product.genres) > 0
@@ -254,6 +281,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_convenience_properties(self, product_data):
         """Test convenience properties for DVD products."""
+
         product = Product.from_dict(product_data)
 
         assert product.review_count == 7
@@ -265,6 +293,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_nested_objects(self, product_data):
         """Test nested objects for DVD products."""
+
         product = Product.from_dict(product_data)
 
         assert product.image_url is not None
@@ -279,6 +308,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_directory_structure(self, product_data):
         """Test directory structure for DVD products."""
+
         product = Product.from_dict(product_data)
 
         assert len(product.directory) == 1
@@ -287,6 +317,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_pricing_structure(self, product_data):
         """Test pricing structure for DVD products."""
+
         product = Product.from_dict(product_data)
 
         assert product.prices is not None
@@ -298,6 +329,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_delivery_options(self, product_data):
         """Test delivery options for DVD products."""
+
         product = Product.from_dict(product_data)
 
         assert product.prices is not None
@@ -305,6 +337,7 @@ class TestMonoDVDProduct(ProductTestBase):
 
     def test_product_fields(self, product_data):
         """Test product fields for DVD products."""
+
         product = Product.from_dict(product_data)
 
         assert product.service_code == "mono"
