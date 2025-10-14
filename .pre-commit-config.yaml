@@ -38,5 +38,5 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies:
-          [types-requests, types-pytest-lazy-fixture, pytest]
+          [types-requests, types-pytest-lazy-fixture, pytest, python-dotenv]
         args: [--config-file, mypy.ini]

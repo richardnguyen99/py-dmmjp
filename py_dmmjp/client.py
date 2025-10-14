@@ -118,6 +118,26 @@ class DMMClient:
         except ValueError as e:
             raise DMMAPIError("Error while formatting DMM Response") from e
 
+    @property
+    def app_id(self) -> str:
+        """
+        Get the API key used by the client.
+
+        Returns:
+            The API key as a string.
+        """
+        return self._api_key
+
+    @property
+    def affiliate_id(self) -> str:
+        """
+        Get the affiliate ID used by the client.
+
+        Returns:
+            The affiliate ID as a string.
+        """
+        return self._affiliate_id
+
     def get_products(
         self,
         *,
