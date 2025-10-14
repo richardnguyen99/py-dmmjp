@@ -309,6 +309,39 @@ class DMMClient:
 
         return products[0] if products else None
 
+    def get_product_by_product_id(
+        self, product_id: str, site: Literal["FANZA", "DMM.com"]
+    ) -> Optional[Product]:
+        """
+        Retrieve a single product by its product ID such as "ABP-477", "MIRD-127", etc.
+
+        Args:
+            product_id: The product ID of the product to retrieve.
+        Returns:
+            Optional[Product]: The Product object if found, otherwise None.
+        """
+
+        def __predicate(p: Product) -> bool:
+            if p.maker_product:
+                if p.maker_product.lower() == product_id.lower():
+                    return True
+
+                # some response product ids drop leading zeroes after the dash
+                if "-" in p.maker_product:
+                    prefix, suffix = p.maker_product.split("-", 1)
+
+                    if len(suffix) == 2:
+                        new_maker_product = f"{prefix}-0{suffix}"
+
+                        return new_maker_product.lower() == product_id.lower()
+
+            return False
+
+        products = self.get_products(site=site, keyword=product_id)
+        product = next((p for p in products if __predicate(p)), None)
+
+        return product
+
     def get_floors(self) -> None:
         """
         API that retrieves the floor list.

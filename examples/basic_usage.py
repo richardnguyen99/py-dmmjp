@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# pylint: disable=missing-function-docstring,missing-module-docstring
+# pylint: disable=missing-function-docstring,missing-module-docstring,too-many-statements
 # pylint: disable=duplicate-code
 
 """
@@ -76,6 +76,24 @@ def main() -> None:
         print(" - Maker Product:", single_product.maker_product)
     else:
         print("Product with content ID 'mird00127' not found.")
+
+    maker_product = dmm_client.get_product_by_product_id("KEED-077", "FANZA")
+
+    if maker_product:
+        print("\nmaker Product Details:")
+        print(" - Title:", maker_product.title)
+        print(" - Image URL:", maker_product.image_url)
+        print(" - Floor Name:", maker_product.floor_name)
+        print(" - Price:", maker_product.prices)
+        print(" - Review:", maker_product.review)
+        print(" - Sample Images:", maker_product.sample_image_url)
+        print(" - Actresses: ", list(map(lambda a: a.name, maker_product.actresses)))
+        print(" - Genres: ", list(map(lambda g: (g.id, g.name), maker_product.genres)))
+        print(" - Maker ID:", maker_product.makers)
+        print(" - Series:", maker_product.series)
+        print(" - Maker Product:", maker_product.maker_product)
+    else:
+        print("Product with product ID 'KEED-077' not found.")
 
 
 if __name__ == "__main__":

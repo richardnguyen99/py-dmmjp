@@ -648,3 +648,196 @@ class TestDMMClientWithProductIntegration:
         assert "BAD REQUEST" in str(exc_info.value) or "Invalid Request Error" in str(
             exc_info.value
         )
+
+    def test_product_by_product_id(self, dmm_client):
+        """Test retrieving a single product by its product ID (maker_product)."""
+
+        product_id = "PPPE-064"
+        product = dmm_client.get_product_by_product_id(product_id, site="FANZA")
+
+        assert product is not None
+        assert isinstance(product, Product)
+
+        assert product.service_code == "mono"
+        assert product.service_name == "通販"
+        assert product.floor_code == "dvd"
+        assert product.floor_name == "DVD"
+        assert product.category_name == "DVD通販"
+        assert product.content_id == "pppe064"
+        assert product.product_id == "pppe064"
+        assert product.title is not None
+        assert "あいつが母と結婚した理由は私でした" in product.title
+        assert "夕美しおん" in product.title
+        assert product.volume == 120
+
+        assert product.review is not None
+        assert product.review.count == 8
+        assert product.review.average == 3.38
+        assert product.review_count == 8
+        assert product.review_average == 3.38
+
+        assert product.url is not None
+        assert product.affiliate_url is not None
+        assert "pppe064" in product.url
+
+        assert product.image_url is not None
+        assert product.image_url.list is not None
+        assert product.image_url.small is not None
+        assert product.image_url.large is not None
+        assert "pppe064pt.jpg" in product.image_url.list
+
+        assert product.sample_image_url is not None
+        assert len(product.sample_images) == 12
+        assert all("pppe00064-" in img for img in product.sample_images)
+
+        assert product.prices is not None
+        assert product.prices.price == "2622"
+        assert product.prices.list_price == "3278"
+        assert product.current_price == 2622
+        assert product.original_price == 3278
+
+        assert product.date is not None
+        assert product.date.year == 2022
+        assert product.date.month == 8
+        assert product.date.day == 16
+
+        assert product.item_info is not None
+        assert len(product.genres) == 7
+        assert len(product.series) == 1
+        assert len(product.makers) == 1
+        assert len(product.actresses) == 1
+        assert len(product.labels) == 1
+
+        genre_names = [g.name for g in product.genres]
+        assert "中出し" in genre_names
+        assert "フェラ" in genre_names
+        assert "巨乳" in genre_names
+        assert "潮吹き" in genre_names
+        assert "パイズリ" in genre_names
+        assert "単体作品" in genre_names
+
+        assert product.series[0].name == "妻が帰省した一週間早熟な巨乳連れ子を絶倫チ○ポでピストン調教"
+        assert product.makers[0].name == "OPPAI"
+        assert product.actresses[0].name == "夕美しおん"
+        assert product.actresses[0].ruby == "ゆうみしおん"
+        assert product.labels[0].name == "OPPAI"
+
+        assert product.jancode == "4549831864413"
+        assert product.maker_product == "PPPE-064"
+        assert product.stock == "empty"
+
+        assert len(product.directory) == 1
+        assert product.directory[0].name == "DVD"
+
+        assert product.raw_data is not None
+        assert product.raw_data["content_id"] == "pppe064"
+
+    def test_product_by_product_id_with_zero_padding(self, dmm_client):
+        """Test retrieving a single product by product ID that requires zero padding."""
+
+        product_id = "KEED-077"
+        product = dmm_client.get_product_by_product_id(product_id, site="FANZA")
+
+        assert product is not None
+        assert isinstance(product, Product)
+
+        assert product.service_code == "mono"
+        assert product.service_name == "通販"
+        assert product.floor_code == "dvd"
+        assert product.floor_name == "DVD"
+        assert product.category_name == "DVD通販"
+        assert product.content_id == "h_086keed77"
+        assert product.product_id == "h_086keed77"
+        assert product.title is not None
+        assert "娘が不在中、娘の彼氏に無理やり中出しされ発情した彼女の母親" in product.title
+        assert "君島みお" in product.title
+        assert product.volume == 90
+
+        assert product.review is not None
+        assert product.review.count == 4
+        assert product.review.average == 3.75
+        assert product.review_count == 4
+        assert product.review_average == 3.75
+
+        assert product.url is not None
+        assert product.affiliate_url is not None
+        assert "h_086keed77" in product.url
+
+        assert product.image_url is not None
+        assert product.image_url.list is not None
+        assert product.image_url.small is not None
+        assert product.image_url.large is not None
+        assert "h_086keed77pt.jpg" in product.image_url.list
+
+        assert product.sample_image_url is not None
+        assert len(product.sample_images) == 10
+        assert all("h_086keed77-" in img for img in product.sample_images)
+
+        assert product.prices is not None
+        assert product.prices.price == "2967"
+        assert product.prices.list_price == "4180"
+        assert product.current_price == 2967
+        assert product.original_price == 4180
+
+        assert product.date is not None
+        assert product.date.year == 2022
+        assert product.date.month == 9
+        assert product.date.day == 29
+
+        assert product.item_info is not None
+        assert len(product.genres) == 6
+        assert len(product.series) == 1
+        assert len(product.makers) == 1
+        assert len(product.actresses) == 1
+        assert len(product.directors) == 1
+        assert len(product.labels) == 1
+
+        genre_names = [g.name for g in product.genres]
+        assert "寝取り・寝取られ・NTR" in genre_names
+        assert "人妻・主婦" in genre_names
+        assert "熟女" in genre_names
+        assert "中出し" in genre_names
+        assert "単体作品" in genre_names
+
+        assert product.series[0].name == "娘が不在中、娘の彼氏に無理やり中出しされ発情した彼女の母親"
+        assert product.makers[0].name == "センタービレッジ"
+        assert product.actresses[0].name == "君島みお"
+        assert product.actresses[0].ruby == "きみじまみお"
+        assert product.directors[0].name == "湊谷"
+        assert product.directors[0].ruby == "みなとや"
+        assert product.labels[0].name == "花園（センタービレッジ）"
+
+        assert product.jancode == "4573228571981"
+        assert product.maker_product == "KEED-77"
+        assert product.stock == "empty"
+
+        assert len(product.directory) == 1
+        assert product.directory[0].name == "DVD"
+
+        assert product.raw_data is not None
+        assert product.raw_data["content_id"] == "h_086keed77"
+
+    def test_product_by_product_id_nonexistent(self, dmm_client):
+        """Test retrieving a product with non-existent product ID returns None."""
+
+        nonexistent_product_id = "NONEXISTENT-999"
+        product = dmm_client.get_product_by_product_id(
+            nonexistent_product_id, site="FANZA"
+        )
+
+        assert product is None
+
+    def test_product_by_product_id_invalid_site(self, dmm_client):
+        """Test retrieving a product by product ID with invalid site."""
+
+        from py_dmmjp.exceptions import DMMAPIError
+
+        product_id = "PPPE-064"
+
+        with pytest.raises(DMMAPIError) as exc_info:
+            dmm_client.get_product_by_product_id(product_id, site="INVALID_SITE")
+
+        assert "400" in str(exc_info.value)
+        assert "BAD REQUEST" in str(exc_info.value) or "Invalid Request Error" in str(
+            exc_info.value
+        )
