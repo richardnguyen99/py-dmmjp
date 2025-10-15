@@ -3,7 +3,7 @@
 -r requirements.txt
 
 # Code formatting and linting
-black>=22.0.0
+black==23.3.0
 mypy>=0.991
 pylint>=2.15.0
 isort>=5.10.0

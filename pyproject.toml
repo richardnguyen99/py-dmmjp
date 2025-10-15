@@ -94,7 +94,7 @@ extend-exclude = '''
 profile = "black"
 multi_line_output = 3
 line_length = 88
-known_first_party = ["py_dmm"]
+known_first_party = ["py_dmmjp", "tests"]
 
 # mypy configuration
 [tool.mypy]
