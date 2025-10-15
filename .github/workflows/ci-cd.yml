@@ -10,6 +10,8 @@ on:
 
 env:
   PYTHON_VERSION: "3.8"
+  APP_ID: ${{ secrets.APP_ID }}
+  AFFILIATE_ID: ${{ secrets.AFF_ID }}
 
 jobs:
   test:
