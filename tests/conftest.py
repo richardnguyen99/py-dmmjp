@@ -1,5 +1,9 @@
 """Test configuration and fixtures."""
 
+# pylint: disable=redefined-outer-name
+
+import os
+
 import pytest
 
 from py_dmmjp import DMMClient
@@ -15,12 +19,6 @@ def mock_api_key() -> str:
 def mock_affiliate_key() -> str:
     """Provide a mock affiliate key for testing."""
     return "test_affiliate_key_67890"
-
-
-@pytest.fixture
-def dmm_client(mock_api_key: str, mock_affiliate_key: str) -> DMMClient:
-    """Provide a DMMClient instance for testing."""
-    return DMMClient(api_key=mock_api_key, affiliate_id=mock_affiliate_key)
 
 
 @pytest.fixture
@@ -51,3 +49,33 @@ def mock_response_data() -> dict:
             ],
         }
     }
+
+
+def get_env_or_skip(var_name: str) -> str:
+    """Get environment variable or skip test if not found."""
+
+    value = os.getenv(var_name)
+    if not value:
+        pytest.skip(f"Environment variable {var_name} not set")
+    return value
+
+
+@pytest.fixture
+def app_id() -> str:
+    """Get APP_ID from environment or skip test."""
+
+    return get_env_or_skip("APP_ID")
+
+
+@pytest.fixture
+def aff_id() -> str:
+    """Get AFF_ID from environment or skip test."""
+
+    return get_env_or_skip("AFF_ID")
+
+
+@pytest.fixture
+def dmm_client(app_id: str, aff_id: str) -> DMMClient:
+    """Create DMM client using environment variables."""
+
+    return DMMClient(api_key=app_id, affiliate_id=aff_id)

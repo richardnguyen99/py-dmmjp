@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py-dmmjp"
-version = "0.0.3"
+version = "0.0.4"
 description = "A Python client library for the DMM API"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -94,7 +94,7 @@ extend-exclude = '''
 profile = "black"
 multi_line_output = 3
 line_length = 88
-known_first_party = ["py_dmm"]
+known_first_party = ["py_dmmjp", "tests"]
 
 # mypy configuration
 [tool.mypy]

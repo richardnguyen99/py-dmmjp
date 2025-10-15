@@ -10,6 +10,8 @@ on:
 
 env:
   PYTHON_VERSION: "3.8"
+  APP_ID: ${{ secrets.APP_ID }}
+  AFFILIATE_ID: ${{ secrets.AFF_ID }}
 
 jobs:
   test:
@@ -56,6 +58,13 @@ jobs:
       - name: Check import sorting with isort
         run: |
           isort --check-only py_dmmjp tests
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_APP_ID: "something"
+          envkey_AFF_ID: "something"
+          file_name: .env
 
       - name: Run tests with pytest
         run: |

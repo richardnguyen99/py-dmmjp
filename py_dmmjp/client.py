@@ -118,6 +118,26 @@ class DMMClient:
         except ValueError as e:
             raise DMMAPIError("Error while formatting DMM Response") from e
 
+    @property
+    def app_id(self) -> str:
+        """
+        Get the API key used by the client.
+
+        Returns:
+            The API key as a string.
+        """
+        return self._api_key
+
+    @property
+    def affiliate_id(self) -> str:
+        """
+        Get the affiliate ID used by the client.
+
+        Returns:
+            The affiliate ID as a string.
+        """
+        return self._affiliate_id
+
     def get_products(
         self,
         *,
@@ -258,6 +278,76 @@ class DMMClient:
                 raise
 
             raise DMMAPIError(f"Failed to get products: {str(e)}") from e
+
+    def get_product_by_cid(
+        self, cid: str, site: Literal["FANZA", "DMM.com"]
+    ) -> Optional[Product]:
+        """
+        Retrieve a single product by its content ID (cid).
+
+        This method fetches a specific product from the DMM API using its content ID.
+
+        Args:
+            cid: The content ID of the product to retrieve.
+            site: Site to search. Either "FANZA" for adult content or "DMM.com" for general content.
+
+        Returns:
+            Optional[Product]: The Product object if found, otherwise None.
+        Raises:
+            DMMAPIError: If the API request fails or returns an error.
+            DMMAuthError: If authentication fails or API key is invalid.
+        Example:
+            >>> client = DMMClient(api_key="your_key", affiliate_id="your_id")
+            >>> product = client.get_product_by_cid(cid="ABP-477", site="FANZA")
+            >>> if product:
+            ...     print(f"Product Title: {product.title}")
+            ... else:
+            ...     print("Product not found")
+        """
+
+        products = self.get_products(site=site, cid=cid, hits=1)
+
+        return products[0] if products else None
+
+    def get_product_by_product_id(
+        self, product_id: str, site: Literal["FANZA", "DMM.com"]
+    ) -> Optional[Product]:
+        """
+        Retrieve a single product by its product ID such as "ABP-477", "MIRD-127", etc.
+
+        Args:
+            product_id: The product ID of the product to retrieve.
+        Returns:
+            Optional[Product]: The Product object if found, otherwise None.
+        Example:
+            >>> client = DMMClient(api_key="your_key", affiliate_id="your_id")
+            >>> product = client.get_product_by_product_id(product_id="ABP-477", site="FANZA")
+            >>> if product:
+            ...     print(f"Product Title: {product.title}")
+            ... else:
+            ...     print("Product not found")
+        """
+
+        def __predicate(p: Product) -> bool:
+            if p.maker_product:
+                if p.maker_product.lower() == product_id.lower():
+                    return True
+
+                # some response product ids drop leading zeroes after the dash
+                if "-" in p.maker_product:
+                    prefix, suffix = p.maker_product.split("-", 1)
+
+                    if len(suffix) == 2:
+                        new_maker_product = f"{prefix}-0{suffix}"
+
+                        return new_maker_product.lower() == product_id.lower()
+
+            return False
+
+        products = self.get_products(site=site, keyword=product_id)
+        product = next((p for p in products if __predicate(p)), None)
+
+        return product
 
     def get_floors(self) -> None:
         """
