@@ -59,12 +59,12 @@ jobs:
         run: |
           isort --check-only py_dmmjp tests
 
-      - name: Create a local .env file
-        run: |
-          touch .env
-          echo "APP_ID=x" > .env
-          echo "AFFILIATE_ID=x" > .env
-          cat .env
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_APP_ID: "something"
+          envkey_AFF_ID: "something"
+          file_name: .env
 
       - name: Run tests with pytest
         run: |
