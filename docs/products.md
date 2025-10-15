@@ -8,9 +8,9 @@ See: [https://affiliate.dmm.com/api/v3/itemlist.html](https://affiliate.dmm.com/
 
 | Parameter Name | Parameter Key | Required | Sample Value | Description |
 |---|---|---|---|---|
-| API ID | `api_id` | ✓ | | ID assigned during registration |
-| Affiliate ID | `affiliate_id` | ✓ | `affiliate-990` | Affiliate ID from 990-999 assigned during registration |
-| Site | `site` | ✓ | `FANZA` | General (DMM.com) or Adult (FANZA) |
+| API ID | `api_id` | ○ | | ID assigned during registration |
+| Affiliate ID | `affiliate_id` | ○ | `affiliate-990` | Affiliate ID from 990-999 assigned during registration |
+| Site | `site` | ○ | `FANZA` | General (DMM.com) or Adult (FANZA) |
 | Service | `service` | | `digital` | Service code obtained from [Floor API](/api/v3/floorlist.html) |
 | Floor | `floor` | | `videoa` | Floor code obtained from [Floor API](/api/v3/floorlist.html) |
 | Number of Results | `hits` | | `20` | Default: 20, Maximum: 100 |
