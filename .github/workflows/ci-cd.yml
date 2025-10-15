@@ -62,8 +62,9 @@ jobs:
       - name: Create a local .env file
         run: |
           touch .env
-          echo "APP_ID=x" >> .env
-          echo "AFFILIATE_ID=x" >> .env
+          echo "APP_ID=x" > .env
+          echo "AFFILIATE_ID=x" > .env
+          cat .env
 
       - name: Run tests with pytest
         run: |
