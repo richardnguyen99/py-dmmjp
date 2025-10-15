@@ -6,7 +6,7 @@ Data models for the py-dmm library.
 import re
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 
 @dataclass
@@ -397,10 +397,10 @@ class Product:
     title: str
     "Product title"
 
-    volume: Optional[int | Any] = None
+    volume: Optional[Union[int, str]] = None
     "Runtime in minutes for videos or page count for books (e.g., 350, 150)"
 
-    number: Optional[int] = None
+    number: Optional[Union[int, str]] = None
     "Volume number for series content (e.g., 3)"
 
     date: Optional[datetime] = None
