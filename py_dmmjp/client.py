@@ -319,6 +319,13 @@ class DMMClient:
             product_id: The product ID of the product to retrieve.
         Returns:
             Optional[Product]: The Product object if found, otherwise None.
+        Example:
+            >>> client = DMMClient(api_key="your_key", affiliate_id="your_id")
+            >>> product = client.get_product_by_product_id(product_id="ABP-477", site="FANZA")
+            >>> if product:
+            ...     print(f"Product Title: {product.title}")
+            ... else:
+            ...     print("Product not found")
         """
 
         def __predicate(p: Product) -> bool:

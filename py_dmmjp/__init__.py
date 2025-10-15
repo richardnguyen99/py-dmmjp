@@ -1,11 +1,11 @@
 """
-py-dmm: A Python client library for the DMM API.
+py-dmmjp: A Python client library for the DMM API.
 
 This package provides a simple and intuitive interface for interacting with
-the DMM (Digital Media Mart) API.
+the DMM-JP API.
 """
 
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 __author__ = "Richard Nguyen"
 __email__ = "richard@richardhnguyen.com"
 __license__ = "MIT"
