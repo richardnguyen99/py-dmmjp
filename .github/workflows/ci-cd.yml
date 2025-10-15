@@ -62,8 +62,8 @@ jobs:
       - name: Create a local .env file
         run: |
           touch .env
-          echo "APP_ID=${{ secrets.APP_ID }}" >> .env
-          echo "AFFILIATE_ID=${{ secrets.AFFILIATE_ID }}" >> .env
+          echo "APP_ID=x" >> .env
+          echo "AFFILIATE_ID=x" >> .env
 
       - name: Run tests with pytest
         run: |
