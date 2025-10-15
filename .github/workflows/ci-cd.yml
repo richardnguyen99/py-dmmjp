@@ -59,6 +59,11 @@ jobs:
         run: |
           isort --check-only py_dmmjp tests
 
+      - name: Create a local .env file
+        run: |
+          echo "APP_ID=${{ env.APP_ID }}" >> .env
+          echo "AFFILIATE_ID=${{ env.AFFILIATE_ID }}" >> .env
+
       - name: Run tests with pytest
         run: |
           pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html
