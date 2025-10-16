@@ -1,4 +1,9 @@
-"""Integration tests for DMM floor API functionality."""
+"""
+Integration tests for DMM floor API functionality.
+"""
+
+# pylint: disable=redefined-outer-name,import-outside-toplevel,too-many-statements,too-many-public-methods
+# mypy: disable-error-code=attr-defined
 
 from typing import List
 
