@@ -5,7 +5,7 @@ This package provides a simple and intuitive interface for interacting with
 the DMM-JP API.
 """
 
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 __author__ = "Richard Nguyen"
 __email__ = "richard@richardhnguyen.com"
 __license__ = "MIT"
