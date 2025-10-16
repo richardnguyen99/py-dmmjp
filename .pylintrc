@@ -46,6 +46,7 @@ disable=
     missing-module-docstring,
     # Type issues (handled by mypy)
     unsubscriptable-object,
+    duplicate-code,
 
 [REPORTS]
 # Template used to display messages
