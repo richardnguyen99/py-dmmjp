@@ -10,6 +10,7 @@ import requests.exceptions
 
 from .actress import Actress, ActressSearchParams, ActressSearchResponse
 from .exceptions import DMMAPIError, DMMAuthError, DMMError
+from .floor import FloorListResponse, Site
 from .product import Product, ProductSearchParams
 
 try:
@@ -312,13 +313,49 @@ class DMMClient:
 
         return product
 
-    def get_floors(self) -> None:
+    def get_floors(self) -> List[Site]:
         """
-        API that retrieves the floor list.
+        Retrieve the floor list from the DMM API.
 
-        This method will return available floors/categories
-        that can be used in the get_products() method.
+        This method fetches all available floors, sites, and services from the DMM API and returns a flat list of Floor objects.
+
+        Returns:
+            List[Service]: List of Service objects containing floor information.
+
+        Raises:
+            DMMAPIError: If the API request fails or returns an error.
+            DMMAuthError: If authentication fails or API key is invalid.
+
+        Example:
+            >>> client = DMMClient(api_key="your_key", affiliate_id="your_id")
+            ... floors = client.get_floors()
+            ... print(f"Found {len(floors)} floors")
+            ... for site in floors:
+            ...     print(f"- {site.name} ({site.code})")
+            ...     for service in site.services:
+            ...         print(f"  Service: {service.name} ({service.code})")
+            ...         for floor in service.floors:
+            ...             print(f"    Floor: {floor.name} ({floor.code})")
+            ...
         """
+
+        params: Dict[str, Any] = {}
+
+        try:
+            response_data = self._make_request("/FloorList", params)
+
+            if "result" not in response_data:
+                raise DMMAPIError("Invalid API response: missing 'result' field")
+
+            floor_response = FloorListResponse.from_dict(response_data)
+            sites = floor_response.result.sites
+
+            return sites
+
+        except Exception as e:
+            if isinstance(e, (DMMError, DMMAPIError, DMMAuthError)):
+                raise
+            raise DMMAPIError(f"Failed to get floors: {str(e)}") from e
 
     def get_actresses(
         self,
