@@ -3,53 +3,14 @@ Main client class for the py-dmm library.
 """
 
 import json
-from typing import Any, Dict, List, Literal, Optional, TypedDict, Unpack, cast
+from typing import Any, Dict, List, Literal, Optional, Unpack, cast
 
 import requests
 import requests.exceptions
 
-from .actress import Actress, ActressSearchResponse
+from .actress import Actress, ActressSearchParams, ActressSearchResponse
 from .exceptions import DMMAPIError, DMMAuthError, DMMError
-from .product import Product
-
-
-class ActressSearchParams(TypedDict, total=False):
-    """Type definition for actress search parameters."""
-
-    initial: str
-    actress_id: int
-    keyword: str
-    gte_bust: int
-    lte_bust: int
-    gte_waist: int
-    lte_waist: int
-    gte_hip: int
-    lte_hip: int
-    gte_height: int
-    lte_height: int
-    gte_birthday: str
-    lte_birthday: str
-    hits: int
-    offset: int
-    sort: str
-
-
-class ProductSearchParams(TypedDict, total=False):
-    """Type definition for product search parameters."""
-
-    site: Literal["FANZA", "DMM.com"]
-    service: str
-    floor: str
-    keyword: str
-    hits: int
-    offset: int
-    sort: str
-    cid: str
-    article: List[str]
-    article_id: List[str]
-    gte_date: str
-    lte_date: str
-    mono_stock: str
+from .product import Product, ProductSearchParams
 
 
 class DMMClient:

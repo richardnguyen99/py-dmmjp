@@ -3,9 +3,30 @@ Data models for the DMM Actress Search API.
 """
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, TypedDict
 
 from .commons import ApiRequest
+
+
+class ActressSearchParams(TypedDict, total=False):
+    """Type definition for actress search parameters."""
+
+    initial: str
+    actress_id: int
+    keyword: str
+    gte_bust: int
+    lte_bust: int
+    gte_waist: int
+    lte_waist: int
+    gte_hip: int
+    lte_hip: int
+    gte_height: int
+    lte_height: int
+    gte_birthday: str
+    lte_birthday: str
+    hits: int
+    offset: int
+    sort: str
 
 
 @dataclass

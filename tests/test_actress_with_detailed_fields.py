@@ -2,6 +2,9 @@
 Test for actress search functionality with detailed actress data.
 """
 
+# pylint: disable=duplicate-code,too-many-public-methods,line-too-long
+# mypy: disable-error-code="no-untyped-def"
+
 from typing import Any, Dict
 
 import pytest

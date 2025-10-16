@@ -6,9 +6,27 @@ Data models for the py-dmm library.
 import re
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, TypedDict, Union
 
 from .commons import ApiRequest
+
+
+class ProductSearchParams(TypedDict, total=False):
+    """Type definition for product search parameters."""
+
+    site: Literal["FANZA", "DMM.com"]
+    service: str
+    floor: str
+    keyword: str
+    hits: int
+    offset: int
+    sort: str
+    cid: str
+    article: List[str]
+    article_id: List[str]
+    gte_date: str
+    lte_date: str
+    mono_stock: str
 
 
 @dataclass
