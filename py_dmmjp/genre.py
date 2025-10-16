@@ -11,7 +11,6 @@ from .commons import ApiRequest
 class GenreSearchParams(TypedDict, total=False):
     """Type definition for genre search parameters."""
 
-    floor_id: str
     initial: str
     hits: int
     offset: int

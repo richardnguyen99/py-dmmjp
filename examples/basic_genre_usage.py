@@ -32,6 +32,13 @@ def main() -> None:
 
     print(dmm_client)
 
+    genres = dmm_client.get_genres(74)
+
+    for genre in genres:
+        print(f"{genre.name}")
+        print(f" - ID: {genre.genre_id}")
+        print(f" - Ruby: {genre.ruby}")
+
 
 if __name__ == "__main__":
     main()

@@ -434,7 +434,9 @@ class DMMClient:
 
             raise DMMAPIError(f"Failed to get actresses: {str(e)}") from e
 
-    def get_genres(self, **kwargs: Unpack["GenreSearchParams"]) -> List["Genre"]:
+    def get_genres(
+        self, floor_id: int, **kwargs: Unpack["GenreSearchParams"]
+    ) -> List["Genre"]:
         """
         Retrieve genre information from the DMM API.
 
@@ -467,7 +469,10 @@ class DMMClient:
             ...     print(f"- {genre.name} ({genre.genre_id})")
         """
 
-        params: Dict[str, Any] = {}
+        if not floor_id or not isinstance(floor_id, int):
+            raise DMMAPIError("floor_id is required and must be a non-zero integer")
+
+        params: Dict[str, Any] = {"floor_id": floor_id}
         params.update(kwargs)
 
         try:
