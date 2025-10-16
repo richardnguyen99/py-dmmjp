@@ -3,7 +3,15 @@ Main client class for the py-dmm library.
 """
 
 import json
-from typing import Any, Dict, List, Literal, Optional, Unpack, cast
+from typing import (  # pylint: disable=no-name-in-module
+    Any,
+    Dict,
+    List,
+    Literal,
+    Optional,
+    Unpack,
+    cast,
+)
 
 import requests
 import requests.exceptions
