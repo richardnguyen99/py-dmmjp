@@ -16,10 +16,10 @@ responses>=0.22.0
 python-dotenv==1.0.0
 
 # Development tools
-pre-commit>=2.20.0
-twine>=4.0.0
-build>=0.8.0
-setuptools>=65.0.0
+pre-commit
+twine
+build
+setuptools
 
 # Documentation
 sphinx>=5.0.0

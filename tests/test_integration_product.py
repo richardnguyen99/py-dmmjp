@@ -528,7 +528,7 @@ class TestDMMClientWithProductIntegration:
         assert product.date.day == 27
 
         assert product.item_info is not None
-        assert len(product.genres) == 11
+        assert len(product.genres) == 12
         assert len(product.makers) == 1
         assert len(product.authors) == 2
 

@@ -5,15 +5,22 @@ This package provides a simple and intuitive interface for interacting with
 the DMM-JP API.
 """
 
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 __author__ = "Richard Nguyen"
 __email__ = "richard@richardhnguyen.com"
 __license__ = "MIT"
 
+from .actress import (
+    Actress,
+    ActressImageURL,
+    ActressListURL,
+    ActressSearchResponse,
+    ActressSearchResult,
+)
 from .client import DMMClient
+from .commons import ApiRequest, RequestParameters
 from .exceptions import DMMAPIError, DMMAuthError, DMMError
 from .product import (
-    ApiRequest,
     ApiResponse,
     ApiResult,
     Campaign,
@@ -25,7 +32,6 @@ from .product import (
     ItemInfo,
     Prices,
     Product,
-    RequestParameters,
     Review,
     SampleImage,
     SampleImages,
@@ -58,4 +64,9 @@ __all__ = [
     "Directory",
     "CDInfo",
     "Campaign",
+    "Actress",
+    "ActressImageURL",
+    "ActressListURL",
+    "ActressSearchResponse",
+    "ActressSearchResult",
 ]

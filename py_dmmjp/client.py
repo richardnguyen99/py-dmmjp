@@ -8,8 +8,17 @@ from typing import Any, Dict, List, Literal, Optional, cast
 import requests
 import requests.exceptions
 
+from .actress import Actress, ActressSearchParams, ActressSearchResponse
 from .exceptions import DMMAPIError, DMMAuthError, DMMError
-from .product import Product
+from .product import Product, ProductSearchParams
+
+try:
+    from typing import Unpack
+except ImportError:
+    try:  # Python 3.10+
+        from typing_extensions import Unpack
+    except ImportError:
+        Unpack = None  # type: ignore[assignment]
 
 
 class DMMClient:
@@ -140,21 +149,7 @@ class DMMClient:
 
     def get_products(
         self,
-        *,
-        site: Literal["FANZA", "DMM.com"],
-        service: Optional[str] = None,
-        floor: Optional[str] = None,
-        keyword: Optional[str] = None,
-        hits: int = 20,
-        offset: int = 1,
-        sort: Optional[str] = None,
-        cid: Optional[str] = None,
-        article: Optional[List[str]] = None,
-        article_id: Optional[List[str]] = None,
-        gte_date: Optional[str] = None,
-        lte_date: Optional[str] = None,
-        mono_stock: Optional[str] = None,
-        **kwargs: Any,
+        **kwargs: Unpack[ProductSearchParams],
     ) -> List[Product]:
         """
         Retrieve product information from the DMM API.
@@ -197,7 +192,7 @@ class DMMClient:
                 - "reserve_empty": Pre-order items (waiting list)
                 - "mono": DMM direct sales only
                 - "dmp": Marketplace items only
-            **kwargs: Additional parameters for extended functionality.
+            **kwargs: Additional product search parameters (typed as ProductSearchParams).
 
         Returns:
             List[Product]: List of Product objects containing product information.
@@ -221,39 +216,7 @@ class DMMClient:
             ...     print(f"- {product.title}")
         """
 
-        # pylint: disable=too-many-locals
-
-        params: dict[str, Any] = {
-            "site": site,
-            "hits": hits,
-            "offset": offset,
-        }
-
-        if service:
-            params["service"] = service
-        if floor:
-            params["floor"] = floor
-        if keyword:
-            params["keyword"] = keyword
-        if sort:
-            params["sort"] = sort
-        if cid:
-            params["cid"] = cid
-        if gte_date:
-            params["gte_date"] = gte_date
-        if lte_date:
-            params["lte_date"] = lte_date
-        if mono_stock:
-            params["mono_stock"] = mono_stock
-
-        if article:
-            for i, cat in enumerate(article):
-                params[f"article[{i}]"] = cat
-
-        if article_id:
-            for i, aid in enumerate(article_id):
-                params[f"article_id[{i}]"] = aid
-
+        params: Dict[str, Any] = {}
         params.update(kwargs)
 
         try:
@@ -263,9 +226,9 @@ class DMMClient:
                 raise DMMAPIError("Invalid API response: missing 'result' field")
 
             result = response_data["result"]
-
             status = result.get("status", 200)
-            if status != 200:
+
+            if status not in (200, "200"):
                 raise DMMAPIError(f"API returned error status: {status}")
 
             items = result.get("items", [])
@@ -357,13 +320,81 @@ class DMMClient:
         that can be used in the get_products() method.
         """
 
-    def get_actresses(self) -> None:
+    def get_actresses(
+        self,
+        **kwargs: Unpack[ActressSearchParams],
+    ) -> List[Actress]:
         """
-        API that retrieves actress information.
+        Retrieve actress information from the DMM API.
 
-        This method will return actress data including IDs and names
-        that can be used for filtering in the get_products() method.
+        This method fetches actresses from the DMM API and returns a list
+        of Actress objects, handling the API response internally.
+
+        Args:
+            initial: Specify 50-sound in UTF-8 (e.g., 'あ', 'か').
+            actress_id: Specific actress ID to retrieve.
+            keyword: Search keyword in UTF-8 (e.g., 'あさみ').
+            gte_bust: Bust measurement equal or greater than (cm).
+            lte_bust: Bust measurement equal or less than (cm).
+            gte_waist: Waist measurement equal or greater than (cm).
+            lte_waist: Waist measurement equal or less than (cm).
+            gte_hip: Hip measurement equal or greater than (cm).
+            lte_hip: Hip measurement equal or less than (cm).
+            gte_height: Height equal or greater than (cm).
+            lte_height: Height equal or less than (cm).
+            gte_birthday: Birthday filter (from) in YYYY-MM-DD format.
+            lte_birthday: Birthday filter (to) in YYYY-MM-DD format.
+            hits: Number of results to return. Default is 20, maximum is 100.
+            offset: Starting position for results. Default is 1.
+            sort: Sort order. Options: 'name', '-name', 'bust', '-bust',
+                  'waist', '-waist', 'hip', '-hip', 'height', '-height',
+                  'birthday', '-birthday', 'id', '-id'.
+            **kwargs: Additional actress search parameters (typed as ActressSearchParams).
+
+        Returns:
+            List[Actress]: List of Actress objects containing actress information.
+
+        Raises:
+            DMMAPIError: If the API request fails or returns an error.
+            DMMAuthError: If authentication fails or API key is invalid.
+
+        Example:
+            >>> client = DMMClient(api_key="your_key", affiliate_id="your_id")
+            >>> actresses = client.get_actresses(
+            ...     keyword="あさみ",
+            ...     gte_bust=80,
+            ...     lte_bust=100,
+            ...     hits=10,
+            ...     sort="bust"
+            ... )
+            >>> print(f"Found {len(actresses)} actresses")
+            >>> for actress in actresses:
+            ...     print(f"- {actress.name} (ID: {actress.id})")
         """
+
+        params: Dict[str, Any] = {}
+        params.update(kwargs)
+
+        try:
+            response_data = self._make_request("/ActressSearch", params)
+
+            if "result" not in response_data:
+                raise DMMAPIError("Invalid API response: missing 'result' field")
+
+            result = response_data["result"]
+            status = result.get("status", 200)
+
+            if status not in (200, "200"):
+                raise DMMAPIError(f"API returned error status: {status}")
+
+            actress_response = ActressSearchResponse.from_dict(response_data)
+            return actress_response.actresses
+
+        except Exception as e:
+            if isinstance(e, (DMMError, DMMAPIError, DMMAuthError)):
+                raise
+
+            raise DMMAPIError(f"Failed to get actresses: {str(e)}") from e
 
     def get_genres(self) -> None:
         """
