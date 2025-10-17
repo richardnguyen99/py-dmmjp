@@ -5,7 +5,7 @@ This package provides a simple and intuitive interface for interacting with
 the DMM-JP API.
 """
 
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 __author__ = "Richard Nguyen"
 __email__ = "richard@richardhnguyen.com"
 __license__ = "MIT"
@@ -41,6 +41,7 @@ from .product import (
     SearchResult,
     TachiyomiInfo,
 )
+from .series import Series, SeriesSearchResponse, SeriesSearchResult
 
 __all__ = [
     "DMMClient",
@@ -79,4 +80,7 @@ __all__ = [
     "Genre",
     "GenreSearchResponse",
     "GenreSearchResult",
+    "Series",
+    "SeriesSearchResponse",
+    "SeriesSearchResult",
 ]
