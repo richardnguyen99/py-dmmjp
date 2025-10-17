@@ -21,6 +21,7 @@ from .client import DMMClient
 from .commons import ApiRequest, RequestParameters
 from .exceptions import DMMAPIError, DMMAuthError, DMMError
 from .floor import Floor, FloorListResponse, FloorListResult, Service, Site
+from .genre import Genre, GenreSearchResponse, GenreSearchResult
 from .product import (
     ApiResponse,
     ApiResult,
@@ -75,4 +76,7 @@ __all__ = [
     "Service",
     "FloorListResponse",
     "FloorListResult",
+    "Genre",
+    "GenreSearchResponse",
+    "GenreSearchResult",
 ]
