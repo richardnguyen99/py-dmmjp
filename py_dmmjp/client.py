@@ -9,6 +9,7 @@ import requests
 import requests.exceptions
 
 from .actress import Actress, ActressSearchParams, ActressSearchResponse
+from .author import Author, AuthorSearchParams, AuthorSearchResponse
 from .exceptions import DMMAPIError, DMMAuthError, DMMError
 from .floor import FloorListResponse, Site
 from .genre import Genre, GenreSearchParams, GenreSearchResponse
@@ -563,13 +564,67 @@ class DMMClient:
                 raise
             raise DMMAPIError(f"Failed to get series: {str(e)}") from e
 
-    def get_authors(self) -> None:
+    def get_authors(
+        self, floor_id: int, **kwargs: Unpack[AuthorSearchParams]
+    ) -> List[Author]:
         """
-        API that retrieves a list of authors/creators.
+        Retrieve author information from the DMM API.
 
-        This method will return author information including IDs and names
-        that can be used for filtering in the get_products() method.
+        This method fetches authors from the DMM API based on floor ID and returns a list
+        of Author objects, handling the API response internally.
+
+        Args:
+            floor_id: Floor ID available from Floor Search API (required).
+            initial: Specify author name phonetic reading in UTF-8 (e.g., 'う', 'あ').
+            hits: Number of results to return. Default is 100, maximum is 500.
+            offset: Search start position. Default is 1.
+            **kwargs: Additional author search parameters (typed as AuthorSearchParams).
+
+        Returns:
+            List[Author]: List of Author objects containing author information.
+
+        Raises:
+            DMMAPIError: If the API request fails or returns an error.
+            DMMAuthError: If authentication fails or API key is invalid.
+
+        Example:
+            >>> client = DMMClient(api_key="your_key", affiliate_id="your_id")
+            >>> authors = client.get_authors(
+            ...     floor_id=27,
+            ...     initial="う",
+            ...     hits=10
+            ... )
+            >>> print(f"Found {len(authors)} authors")
+            >>> for author in authors:
+            ...     print(f"- {author.name} ({author.author_id})")
         """
+
+        if not floor_id or not isinstance(floor_id, int):
+            raise DMMAPIError("floor_id is required and must be a non-zero integer")
+
+        params: Dict[str, Any] = {"floor_id": floor_id}
+        params.update(kwargs)
+
+        try:
+            response_data = self._make_request("/AuthorSearch", params)
+
+            if "result" not in response_data:
+                raise DMMAPIError("Invalid API response: missing 'result' field")
+
+            result = response_data["result"]
+            status = result.get("status", 200)
+
+            if status not in (200, "200"):
+                raise DMMAPIError(f"API returned error status: {status}")
+
+            author_response = AuthorSearchResponse.from_dict(response_data)
+
+            return author_response.authors
+
+        except Exception as e:
+            if isinstance(e, (DMMError, DMMAPIError, DMMAuthError)):
+                raise
+            raise DMMAPIError(f"Failed to get authors: {str(e)}") from e
 
     def close(self) -> None:
         """
