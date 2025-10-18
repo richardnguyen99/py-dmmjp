@@ -33,7 +33,10 @@ def main() -> None:
     print(dmm_client)
 
     products = dmm_client.get_products(
-        site="FANZA", keyword="ABP-477", floor="dvd", service="mono"
+        site="FANZA",
+        keyword="ABP-477",
+        floor="dvd",
+        service="mono",
     )
 
     # access the list of products

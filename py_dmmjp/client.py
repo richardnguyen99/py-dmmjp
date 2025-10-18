@@ -13,14 +13,12 @@ from .exceptions import DMMAPIError, DMMAuthError, DMMError
 from .floor import FloorListResponse, Site
 from .genre import Genre, GenreSearchParams, GenreSearchResponse
 from .product import Product, ProductSearchParams
+from .series import Series, SeriesSearchParams, SeriesSearchResponse
 
 try:
     from typing import Unpack
 except ImportError:
-    try:  # Python 3.10+
-        from typing_extensions import Unpack
-    except ImportError:
-        Unpack = None  # type: ignore[assignment]
+    from typing_extensions import Unpack
 
 
 class DMMClient:
@@ -503,13 +501,67 @@ class DMMClient:
         that can be used for filtering in the get_products() method.
         """
 
-    def get_series(self) -> None:
+    def get_series(
+        self, floor_id: int, **kwargs: Unpack["SeriesSearchParams"]
+    ) -> List["Series"]:
         """
-        API that retrieves a list of series.
+        Retrieve series information from the DMM API.
 
-        This method will return series information including IDs and names
-        that can be used for filtering in the get_products() method.
+        This method fetches series from the DMM API based on floor ID and returns a list
+        of Series objects, handling the API response internally.
+
+        Args:
+            floor_id: Floor ID available from Floor Search API (required).
+            initial: Specify 50-sound in UTF-8 (e.g., 'あ', 'お').
+            hits: Number of results to return. Default is 100, maximum is 500.
+            offset: Search start position. Default is 1.
+            **kwargs: Additional series search parameters (typed as SeriesSearchParams).
+
+        Returns:
+            List[Series]: List of Series objects containing series information.
+
+        Raises:
+            DMMAPIError: If the API request fails or returns an error.
+            DMMAuthError: If authentication fails or API key is invalid.
+
+        Example:
+            >>> client = DMMClient(api_key="your_key", affiliate_id="your_id")
+            >>> series = client.get_series(
+            ...     floor_id=27,
+            ...     initial="お",
+            ...     hits=10
+            ... )
+            >>> print(f"Found {len(series)} series")
+            >>> for s in series:
+            ...     print(f"- {s.name} ({s.series_id})")
         """
+
+        if not floor_id or not isinstance(floor_id, int):
+            raise DMMAPIError("floor_id is required and must be a non-zero integer")
+
+        params: Dict[str, Any] = {"floor_id": floor_id}
+        params.update(kwargs)
+
+        try:
+            response_data = self._make_request("/SeriesSearch", params)
+
+            if "result" not in response_data:
+                raise DMMAPIError("Invalid API response: missing 'result' field")
+
+            result = response_data["result"]
+            status = result.get("status", 200)
+
+            if status not in (200, "200"):
+                raise DMMAPIError(f"API returned error status: {status}")
+
+            series_response = SeriesSearchResponse.from_dict(response_data)
+
+            return series_response.series
+
+        except Exception as e:
+            if isinstance(e, (DMMError, DMMAPIError, DMMAuthError)):
+                raise
+            raise DMMAPIError(f"Failed to get series: {str(e)}") from e
 
     def get_authors(self) -> None:
         """
