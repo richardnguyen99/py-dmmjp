@@ -5,7 +5,7 @@ This package provides a simple and intuitive interface for interacting with
 the DMM-JP API.
 """
 
-__version__ = "0.0.9"
+__version__ = "0.0.10"
 __author__ = "Richard Nguyen"
 __email__ = "richard@richardhnguyen.com"
 __license__ = "MIT"
@@ -23,6 +23,7 @@ from .commons import ApiRequest, RequestParameters
 from .exceptions import DMMAPIError, DMMAuthError, DMMError
 from .floor import Floor, FloorListResponse, FloorListResult, Service, Site
 from .genre import Genre, GenreSearchResponse, GenreSearchResult
+from .maker import Maker, MakerSearchResponse, MakerSearchResult
 from .product import (
     ApiResponse,
     ApiResult,
@@ -87,4 +88,7 @@ __all__ = [
     "Author",
     "AuthorSearchResponse",
     "AuthorSearchResult",
+    "Maker",
+    "MakerSearchResponse",
+    "MakerSearchResult",
 ]
