@@ -13,6 +13,7 @@ from .author import Author, AuthorSearchParams, AuthorSearchResponse
 from .exceptions import DMMAPIError, DMMAuthError, DMMError
 from .floor import FloorListResponse, Site
 from .genre import Genre, GenreSearchParams, GenreSearchResponse
+from .maker import Maker, MakerSearchParams, MakerSearchResponse
 from .product import Product, ProductSearchParams
 from .series import Series, SeriesSearchParams, SeriesSearchResponse
 
@@ -494,13 +495,67 @@ class DMMClient:
                 raise
             raise DMMAPIError(f"Failed to get genres: {str(e)}") from e
 
-    def get_makers(self) -> None:
+    def get_makers(
+        self, floor_id: int, **kwargs: Unpack[MakerSearchParams]
+    ) -> List[Maker]:
         """
-        API that retrieves a list of makers/studios.
+        Retrieve maker information from the DMM API.
 
-        This method will return maker information including IDs and names
-        that can be used for filtering in the get_products() method.
+        This method fetches makers from the DMM API based on floor ID and returns a list
+        of Maker objects, handling the API response internally.
+
+        Args:
+            floor_id: Floor ID available from Floor Search API (required).
+            initial: Specify 50-sound in UTF-8 (e.g., 'あ', 'む').
+            hits: Number of results to return. Default is 100, maximum is 500.
+            offset: Search start position. Default is 1.
+            **kwargs: Additional maker search parameters (typed as MakerSearchParams).
+
+        Returns:
+            List[Maker]: List of Maker objects containing maker information.
+
+        Raises:
+            DMMAPIError: If the API request fails or returns an error.
+            DMMAuthError: If authentication fails or API key is invalid.
+
+        Example:
+            >>> client = DMMClient(api_key="your_key", affiliate_id="your_id")
+            >>> makers = client.get_makers(
+            ...     floor_id=43,
+            ...     initial="あ",
+            ...     hits=10
+            ... )
+            >>> print(f"Found {len(makers)} makers")
+            >>> for maker in makers:
+            ...     print(f"- {maker.name} ({maker.maker_id})")
         """
+
+        if not floor_id or not isinstance(floor_id, int):
+            raise DMMAPIError("floor_id is required and must be a non-zero integer")
+
+        params: Dict[str, Any] = {"floor_id": floor_id}
+        params.update(kwargs)
+
+        try:
+            response_data = self._make_request("/MakerSearch", params)
+
+            if "result" not in response_data:
+                raise DMMAPIError("Invalid API response: missing 'result' field")
+
+            result = response_data["result"]
+            status = result.get("status", 200)
+
+            if status not in (200, "200"):
+                raise DMMAPIError(f"API returned error status: {status}")
+
+            maker_response = MakerSearchResponse.from_dict(response_data)
+
+            return maker_response.makers
+
+        except Exception as e:
+            if isinstance(e, (DMMError, DMMAPIError, DMMAuthError)):
+                raise
+            raise DMMAPIError(f"Failed to get makers: {str(e)}") from e
 
     def get_series(
         self, floor_id: int, **kwargs: Unpack["SeriesSearchParams"]
