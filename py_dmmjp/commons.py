@@ -2,7 +2,7 @@
 Common data models shared across different DMM API endpoints.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any, Dict
 
 
@@ -18,7 +18,7 @@ class RequestParameters:
     affiliate_id: str
     "Affiliate program identifier (e.g., 'affiliate_code-001')"
 
-    _params: Dict[str, Any] = {}
+    _params: Dict[str, Any] = field(default_factory=dict)
     "Dictionary containing all request parameters"
 
     def __getitem__(self, key: str) -> Any:
