@@ -68,15 +68,12 @@ jobs:
 
       - name: Run tests with pytest
         run: |
-          pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html
+          pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch
 
-      - name: Upload coverage to Codecov
-        if: matrix.python-version == '3.8'
-        uses: codecov/codecov-action@v3
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
         with:
-          file: ./coverage.xml
-          flags: unittests
-          name: codecov-umbrella
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   security:
     name: Security Scan

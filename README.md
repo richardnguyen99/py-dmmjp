@@ -2,6 +2,7 @@
 
 [![PyPI version](https://badge.fury.io/py/py-dmmjp.svg)](https://badge.fury.io/py/py-dmmjp)
 [![Python Support](https://img.shields.io/pypi/pyversions/py-dmmjp.svg)](https://pypi.org/project/py-dmmjp/)
+[![codecov](https://codecov.io/github/richardnguyen99/py-dmmjp/graph/badge.svg?token=K8bIVURAv9)](https://codecov.io/github/richardnguyen99/py-dmmjp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
