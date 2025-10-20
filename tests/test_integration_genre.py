@@ -3,6 +3,7 @@ Integration tests for DMM genre API functionality.
 """
 
 from typing import List
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -253,3 +254,38 @@ class TestDMMClientWithGenreIntegration:
 
         assert isinstance(genres_a, list)
         assert isinstance(genres_ka, list)
+
+    def test_error_missing_result_field(self, dmm_client: DMMClient) -> None:
+        """Test error handling when API response is missing result field."""
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = '{"genres": [], "count": 0}'
+        mock_response.raise_for_status = MagicMock()
+
+        # pylint: disable=W0212
+        with patch.object(dmm_client._session, "get", return_value=mock_response):
+            with pytest.raises(DMMAPIError) as exc_info:
+                dmm_client.get_genres(floor_id=43)
+
+            assert "missing 'result' field" in str(exc_info.value)
+
+    def test_error_generic_exception_wrapped(self, dmm_client: DMMClient) -> None:
+        """Test that generic exceptions are wrapped in DMMAPIError."""
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = '{"result": {"status": 200, "genre": []}}'
+        mock_response.raise_for_status = MagicMock()
+
+        # pylint: disable=W0212
+        with patch.object(dmm_client._session, "get", return_value=mock_response):
+            with patch(
+                "py_dmmjp.client.GenreSearchResponse.from_dict",
+                side_effect=TypeError("Type mismatch"),
+            ):
+                with pytest.raises(DMMAPIError) as exc_info:
+                    dmm_client.get_genres(floor_id=43)
+
+                assert "Failed to get genres" in str(exc_info.value)
+                assert "Type mismatch" in str(exc_info.value)

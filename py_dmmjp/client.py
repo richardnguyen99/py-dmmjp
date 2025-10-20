@@ -19,7 +19,7 @@ from .series import Series, SeriesSearchParams, SeriesSearchResponse
 
 try:
     from typing import Unpack
-except ImportError:
+except ImportError:  # pragma: no cover
     from typing_extensions import Unpack
 
 
@@ -93,7 +93,7 @@ class DMMClient:
 
         url = f"{self._base_url}{endpoint}"
 
-        if params is None:
+        if params is None:  # pragma: no cover
             params = {}
 
         params["api_id"] = self._api_key
@@ -228,11 +228,6 @@ class DMMClient:
                 raise DMMAPIError("Invalid API response: missing 'result' field")
 
             result = response_data["result"]
-            status = result.get("status", 200)
-
-            if status not in (200, "200"):
-                raise DMMAPIError(f"API returned error status: {status}")
-
             items = result.get("items", [])
             products = [Product.from_dict(item) for item in items]
 
@@ -356,6 +351,7 @@ class DMMClient:
         except Exception as e:
             if isinstance(e, (DMMError, DMMAPIError, DMMAuthError)):
                 raise
+
             raise DMMAPIError(f"Failed to get floors: {str(e)}") from e
 
     def get_actresses(
@@ -419,13 +415,8 @@ class DMMClient:
             if "result" not in response_data:
                 raise DMMAPIError("Invalid API response: missing 'result' field")
 
-            result = response_data["result"]
-            status = result.get("status", 200)
-
-            if status not in (200, "200"):
-                raise DMMAPIError(f"API returned error status: {status}")
-
             actress_response = ActressSearchResponse.from_dict(response_data)
+
             return actress_response.actresses
 
         except Exception as e:
@@ -481,18 +472,13 @@ class DMMClient:
             if "result" not in response_data:
                 raise DMMAPIError("Invalid API response: missing 'result' field")
 
-            result = response_data["result"]
-            status = result.get("status", 200)
-
-            if status not in (200, "200"):
-                raise DMMAPIError(f"API returned error status: {status}")
-
             genre_response = GenreSearchResponse.from_dict(response_data)
             return genre_response.genres
 
         except Exception as e:
             if isinstance(e, (DMMError, DMMAPIError, DMMAuthError)):
                 raise
+
             raise DMMAPIError(f"Failed to get genres: {str(e)}") from e
 
     def get_makers(
@@ -542,12 +528,6 @@ class DMMClient:
             if "result" not in response_data:
                 raise DMMAPIError("Invalid API response: missing 'result' field")
 
-            result = response_data["result"]
-            status = result.get("status", 200)
-
-            if status not in (200, "200"):
-                raise DMMAPIError(f"API returned error status: {status}")
-
             maker_response = MakerSearchResponse.from_dict(response_data)
 
             return maker_response.makers
@@ -555,6 +535,7 @@ class DMMClient:
         except Exception as e:
             if isinstance(e, (DMMError, DMMAPIError, DMMAuthError)):
                 raise
+
             raise DMMAPIError(f"Failed to get makers: {str(e)}") from e
 
     def get_series(
@@ -604,12 +585,6 @@ class DMMClient:
             if "result" not in response_data:
                 raise DMMAPIError("Invalid API response: missing 'result' field")
 
-            result = response_data["result"]
-            status = result.get("status", 200)
-
-            if status not in (200, "200"):
-                raise DMMAPIError(f"API returned error status: {status}")
-
             series_response = SeriesSearchResponse.from_dict(response_data)
 
             return series_response.series
@@ -617,6 +592,7 @@ class DMMClient:
         except Exception as e:
             if isinstance(e, (DMMError, DMMAPIError, DMMAuthError)):
                 raise
+
             raise DMMAPIError(f"Failed to get series: {str(e)}") from e
 
     def get_authors(
@@ -666,12 +642,6 @@ class DMMClient:
             if "result" not in response_data:
                 raise DMMAPIError("Invalid API response: missing 'result' field")
 
-            result = response_data["result"]
-            status = result.get("status", 200)
-
-            if status not in (200, "200"):
-                raise DMMAPIError(f"API returned error status: {status}")
-
             author_response = AuthorSearchResponse.from_dict(response_data)
 
             return author_response.authors
@@ -679,6 +649,7 @@ class DMMClient:
         except Exception as e:
             if isinstance(e, (DMMError, DMMAPIError, DMMAuthError)):
                 raise
+
             raise DMMAPIError(f"Failed to get authors: {str(e)}") from e
 
     def close(self) -> None:

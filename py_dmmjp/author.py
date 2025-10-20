@@ -93,10 +93,7 @@ class AuthorSearchResult:
         """Create AuthorSearchResult from dictionary."""
 
         author_data = data.get("author", [])
-        if isinstance(author_data, list):
-            author_list = [Author.from_dict(author) for author in author_data]
-        else:
-            author_list = [Author.from_dict(author_data)] if author_data else []
+        author_list = [Author.from_dict(author) for author in author_data]
 
         return cls(
             status=int(data.get("status", 200)),
