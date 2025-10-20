@@ -67,6 +67,9 @@ jobs:
           file_name: .env
 
       - name: Run tests with pytest
+        env:
+          APP_ID: ${{ secrets.APP_ID }}
+          AFF_ID: ${{ secrets.AFF_ID }}
         run: |
           pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch
 
