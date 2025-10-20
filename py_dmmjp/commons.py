@@ -46,6 +46,7 @@ class RequestParameters:
 
         if key in ("api_id", "affiliate_id"):
             return True
+
         return key in self._params
 
     def get(self, key: str, default: Any = None) -> Any:
