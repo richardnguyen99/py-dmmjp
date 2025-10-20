@@ -9,7 +9,7 @@ from typing import Any, Dict
 @dataclass
 class RequestParameters:
     """
-    Represents the request parameters from the API response.
+    Represents the readonly request parameters from the API response.
     """
 
     api_id: str
@@ -31,16 +31,6 @@ class RequestParameters:
 
         return self._params.get(key)
 
-    def __setitem__(self, key: str, value: Any) -> None:
-        """Allow dictionary-style setting of parameters."""
-
-        if key == "api_id":
-            self.api_id = value
-        elif key == "affiliate_id":
-            self.affiliate_id = value
-        else:
-            self._params[key] = value
-
     def __contains__(self, key: str) -> bool:
         """Check if a parameter exists."""
 
@@ -54,8 +44,10 @@ class RequestParameters:
 
         if key == "api_id":
             return self.api_id
+
         if key == "affiliate_id":
             return self.affiliate_id
+
         return self._params.get(key, default)
 
     @classmethod

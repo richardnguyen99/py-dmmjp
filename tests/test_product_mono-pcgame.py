@@ -33,7 +33,7 @@ class TestMonoPCGameProduct(ProductTestBase):
             "title": "【完全受注生産】ANIM.teamMM 寝取ラレ寝取ラセ欲ばりセット～人気の若妻からオギャれるママまでネットリ堪能できちゃう厳選5本パック～",
             "review": {"count": 6, "average": "5.00"},
             "URL": "https://www.dmm.co.jp/mono/pcgame/-/detail/=/cid=1915anm446/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fpcgame%2F-%2Fdetail%2F%3D%2Fcid%3D1915anm446%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fpcgame%2F-%2Fdetail%2F%3D%2Fcid%3D1915anm446%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/mono/game/1915anm446/1915anm446pt.jpg",
                 "small": "https://pics.dmm.co.jp/mono/game/1915anm446/1915anm446ps.jpg",

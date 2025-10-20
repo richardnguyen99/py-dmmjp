@@ -25,7 +25,7 @@ class TestAuthorFigure(AuthorTestBase):
             "name": "愛上陸",
             "ruby": "あいうえおか",
             "list_url": "https://al.dmm.com/?"
-            "lurl=https%3A%2F%2Fwww.dmm.com%2Fmono%2Ffigure%2F-%2Flist%2F%3D%2Farticle%3Dauthor%2Fid%3D259140%2F&af_id=10278-996&ch=api",
+            "lurl=https%3A%2F%2Fwww.dmm.com%2Fmono%2Ffigure%2F-%2Flist%2F%3D%2Farticle%3Dauthor%2Fid%3D259140%2F&af_id=***REDACTED_AFF_ID***&ch=api",
         }
 
     def test_author_basic_fields(self, author_data: Dict[str, Any]) -> None:
@@ -301,8 +301,8 @@ class TestAuthorSearchResponseFigure(AuthorSearchResponseTestBase):
         return {
             "request": {
                 "parameters": {
-                    "api_id": "UrwskPfkqQ0DuVry2gYL",
-                    "affiliate_id": "10278-996",
+                    "api_id": "***REDACTED_APP_ID***",
+                    "affiliate_id": "***REDACTED_AFF_ID***",
                     "floor_id": "94",
                     "hits": "10",
                 }

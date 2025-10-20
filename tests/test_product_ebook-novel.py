@@ -33,7 +33,7 @@ class TestEbookNovelProduct(ProductTestBase):
             "title": "ゴエティア・ショック",
             "review": {"count": 7, "average": "2.86"},
             "URL": "https://book.dmm.co.jp/product/6220320/s741asnxe00009/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Fproduct%2F6220320%2Fs741asnxe00009%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Fproduct%2F6220320%2Fs741asnxe00009%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://ebook-assets.dmm.co.jp/digital/e-book/s741asnxe00009/s741asnxe00009pt.jpg",
                 "small": "https://ebook-assets.dmm.co.jp/digital/e-book/s741asnxe00009/s741asnxe00009ps.jpg",

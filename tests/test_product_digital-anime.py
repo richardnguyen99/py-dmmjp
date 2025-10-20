@@ -35,7 +35,7 @@ class TestDigitalAnimeProduct(ProductTestBase):
             "review": {"count": 7, "average": "5.00"},
             "URL": "https://video.dmm.co.jp/anime/content/?id=h_1379jdxa57770",
             "affiliateURL": "https://al.fanza.co.jp/?"
-            + "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fanime%2Fcontent%2F%3Fid%3Dh_1379jdxa57770&af_id=10278-996&ch=api",
+            + "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fanime%2Fcontent%2F%3Fid%3Dh_1379jdxa57770&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/digital/video/h_1379jdxa57770/h_1379jdxa57770pt.jpg",
                 "small": "https://pics.dmm.co.jp/digital/video/h_1379jdxa57770/h_1379jdxa57770ps.jpg",
@@ -92,10 +92,10 @@ class TestDigitalAnimeProduct(ProductTestBase):
                 },
             },
             "sampleMovieURL": {
-                "size_476_306": "https://www.dmm.co.jp/litevideo/-/part/=/cid=h_1379jdxa57770/size=476_306/affi_id=10278-996/",
-                "size_560_360": "https://www.dmm.co.jp/litevideo/-/part/=/cid=h_1379jdxa57770/size=560_360/affi_id=10278-996/",
-                "size_644_414": "https://www.dmm.co.jp/litevideo/-/part/=/cid=h_1379jdxa57770/size=644_414/affi_id=10278-996/",
-                "size_720_480": "https://www.dmm.co.jp/litevideo/-/part/=/cid=h_1379jdxa57770/size=720_480/affi_id=10278-996/",
+                "size_476_306": "https://www.dmm.co.jp/litevideo/-/part/=/cid=h_1379jdxa57770/size=476_306/affi_id=***REDACTED_AFF_ID***/",
+                "size_560_360": "https://www.dmm.co.jp/litevideo/-/part/=/cid=h_1379jdxa57770/size=560_360/affi_id=***REDACTED_AFF_ID***/",
+                "size_644_414": "https://www.dmm.co.jp/litevideo/-/part/=/cid=h_1379jdxa57770/size=644_414/affi_id=***REDACTED_AFF_ID***/",
+                "size_720_480": "https://www.dmm.co.jp/litevideo/-/part/=/cid=h_1379jdxa57770/size=720_480/affi_id=***REDACTED_AFF_ID***/",
                 "pc_flag": 1,
                 "sp_flag": 1,
             },

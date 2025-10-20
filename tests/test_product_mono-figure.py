@@ -32,7 +32,7 @@ class TestMonoFigureProduct(ProductTestBase):
             "product_id": "fig_2510021531441",
             "title": "氷見山珖",
             "URL": "https://www.dmm.co.jp/mono/figure/-/detail/=/cid=fig_2510021531441/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Ffigure%2F-%2Fdetail%2F%3D%2Fcid%3Dfig_2510021531441%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Ffigure%2F-%2Fdetail%2F%3D%2Fcid%3Dfig_2510021531441%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/mono/figure/fig_2510021531441/fig_2510021531441pt.jpg",
                 "small": "https://pics.dmm.co.jp/mono/figure/fig_2510021531441/fig_2510021531441ps.jpg",

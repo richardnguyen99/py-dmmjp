@@ -33,7 +33,7 @@ class TestMonoGoodsProduct(ProductTestBase):
             "title": "おなつゆ トイズハート",
             "review": {"count": 189, "average": "4.54"},
             "URL": "https://www.dmm.co.jp/mono/goods/-/detail/=/cid=lotion0727/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fgoods%2F-%2Fdetail%2F%3D%2Fcid%3Dlotion0727%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fgoods%2F-%2Fdetail%2F%3D%2Fcid%3Dlotion0727%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/mono/goods/lo0744/lo0744pt.jpg",
                 "small": "https://pics.dmm.co.jp/mono/goods/lo0744/lo0744ps.jpg",

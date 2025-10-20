@@ -33,7 +33,7 @@ class TestUnlimitedBookComicProduct(ProductTestBase):
             "title": "貼ったらヤレちゃう！？えろシール（単話）",
             "review": {"count": 5, "average": "5.00"},
             "URL": "https://unlimited.book.dmm.co.jp/products/b253atato02161/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Funlimited.book.dmm.co.jp%2Fproducts%2Fb253atato02161%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Funlimited.book.dmm.co.jp%2Fproducts%2Fb253atato02161%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://ebook-assets.dmm.co.jp/digital/e-book/b253atato02161/b253atato02161pt.jpg",
                 "small": "https://ebook-assets.dmm.co.jp/digital/e-book/b253atato02161/b253atato02161ps.jpg",

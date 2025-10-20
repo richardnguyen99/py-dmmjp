@@ -34,7 +34,7 @@ class TestMonoAnimeProduct(ProductTestBase):
             "volume": "20",
             "review": {"count": 1, "average": "3.00"},
             "URL": "https://www.dmm.co.jp/mono/anime/-/detail/=/cid=196glod0339t/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fanime%2F-%2Fdetail%2F%3D%2Fcid%3D196glod0339t%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fanime%2F-%2Fdetail%2F%3D%2Fcid%3D196glod0339t%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/mono/movie/adult/196glod0339t/196glod0339tpt.jpg",
                 "small": "https://pics.dmm.co.jp/mono/movie/adult/196glod0339t/196glod0339tps.jpg",

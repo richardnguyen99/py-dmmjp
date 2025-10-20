@@ -34,7 +34,7 @@ class TestDoujinDigitalTLProduct(ProductTestBase):
             "volume": "69",
             "review": {"count": 1, "average": "5.00"},
             "URL": "https://lovecul.dmm.co.jp/tl/-/detail/=/cid=d_668247/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Flovecul.dmm.co.jp%2Ftl%2F-%2Fdetail%2F%3D%2Fcid%3Dd_668247%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Flovecul.dmm.co.jp%2Ftl%2F-%2Fdetail%2F%3D%2Fcid%3Dd_668247%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://doujin-assets.dmm.co.jp/digital/comic/d_668247/d_668247pt.jpg",
                 "large": "https://doujin-assets.dmm.co.jp/digital/comic/d_668247/d_668247pl.jpg",

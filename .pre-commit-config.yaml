@@ -25,6 +25,13 @@ repos:
 
   - repo: local
     hooks:
+      - id: check-secrets
+        name: check-secrets
+        entry: python .pre-commit-hooks/check-secrets.py
+        language: system
+        pass_filenames: true
+        stages: [pre-commit]
+
       - id: pylint
         name: pylint
         entry: pylint

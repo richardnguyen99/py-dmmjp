@@ -34,7 +34,7 @@ class TestDoujinDigitalProduct(ProductTestBase):
             "volume": "78",
             "review": {"count": 20, "average": "5.00"},
             "URL": "https://www.dmm.co.jp/dc/doujin/-/detail/=/cid=d_643155/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fdc%2Fdoujin%2F-%2Fdetail%2F%3D%2Fcid%3Dd_643155%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fdc%2Fdoujin%2F-%2Fdetail%2F%3D%2Fcid%3Dd_643155%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://doujin-assets.dmm.co.jp/digital/comic/d_643155/d_643155pt.jpg",
                 "large": "https://doujin-assets.dmm.co.jp/digital/comic/d_643155/d_643155pl.jpg",

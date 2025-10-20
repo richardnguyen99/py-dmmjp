@@ -49,11 +49,11 @@ class TestActressWithDetailedFields(ActressTestBase):
             },
             "listURL": {
                 "digital": "https://al.fanza.co.jp/?"
-                "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1017139%2F&af_id=10278-996&ch=api",
+                "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 "monthly": "https://al.fanza.co.jp/?"
-                "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=10278-996&ch=api",
+                "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 "mono": "https://al.fanza.co.jp/?"
-                "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=10278-996&ch=api",
+                "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             },
         }
 
@@ -350,11 +350,11 @@ class TestActressSearchResultDetailedFields(ActressSearchResultTestBase):
                     },
                     "listURL": {
                         "digital": "https://al.fanza.co.jp/?"
-                        "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1017139%2F&af_id=10278-996&ch=api",
+                        "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                         "monthly": "https://al.fanza.co.jp/?"
-                        "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=10278-996&ch=api",
+                        "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                         "mono": "https://al.fanza.co.jp/?"
-                        "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=10278-996&ch=api",
+                        "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                     },
                 }
             ],
@@ -463,8 +463,8 @@ class TestActressSearchResponseDetailedFields(ActressSearchResponseTestBase):
         return {
             "request": {
                 "parameters": {
-                    "api_id": "UrwskPfkqQ0DuVry2gYL",
-                    "affiliate_id": "10278-996",
+                    "api_id": "***REDACTED_APP_ID***",
+                    "affiliate_id": "***REDACTED_AFF_ID***",
                     "actress_id": "1017139",
                 }
             },
@@ -492,9 +492,9 @@ class TestActressSearchResponseDetailedFields(ActressSearchResponseTestBase):
                             "large": "http://pics.dmm.co.jp/mono/actjpgs/hasumi_kurea.jpg",
                         },
                         "listURL": {
-                            "digital": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1017139%2F&af_id=10278-996&ch=api",
-                            "monthly": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=10278-996&ch=api",
-                            "mono": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=10278-996&ch=api",
+                            "digital": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api",
+                            "monthly": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api",
+                            "mono": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                         },
                     }
                 ],

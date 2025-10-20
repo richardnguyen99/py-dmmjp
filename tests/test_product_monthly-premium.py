@@ -34,7 +34,7 @@ class TestMonthlyPremiumProduct(ProductTestBase):
             "volume": "124",
             "review": {"count": 36, "average": "5.00"},
             "URL": "https://www.dmm.co.jp/monthly/premium/-/detail/=/cid=juq00978/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Fdetail%2F%3D%2Fcid%3Djuq00978%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Fdetail%2F%3D%2Fcid%3Djuq00978%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/digital/video/juq00978/juq00978pt.jpg",
                 "small": "https://pics.dmm.co.jp/digital/video/juq00978/juq00978ps.jpg",
@@ -71,10 +71,10 @@ class TestMonthlyPremiumProduct(ProductTestBase):
                 },
             },
             "sampleMovieURL": {
-                "size_476_306": "https://www.dmm.co.jp/litevideo/-/part/=/cid=juq00978/size=476_306/affi_id=10278-996/",
-                "size_560_360": "https://www.dmm.co.jp/litevideo/-/part/=/cid=juq00978/size=560_360/affi_id=10278-996/",
-                "size_644_414": "https://www.dmm.co.jp/litevideo/-/part/=/cid=juq00978/size=644_414/affi_id=10278-996/",
-                "size_720_480": "https://www.dmm.co.jp/litevideo/-/part/=/cid=juq00978/size=720_480/affi_id=10278-996/",
+                "size_476_306": "https://www.dmm.co.jp/litevideo/-/part/=/cid=juq00978/size=476_306/affi_id=***REDACTED_AFF_ID***/",
+                "size_560_360": "https://www.dmm.co.jp/litevideo/-/part/=/cid=juq00978/size=560_360/affi_id=***REDACTED_AFF_ID***/",
+                "size_644_414": "https://www.dmm.co.jp/litevideo/-/part/=/cid=juq00978/size=644_414/affi_id=***REDACTED_AFF_ID***/",
+                "size_720_480": "https://www.dmm.co.jp/litevideo/-/part/=/cid=juq00978/size=720_480/affi_id=***REDACTED_AFF_ID***/",
                 "pc_flag": 1,
                 "sp_flag": 1,
             },

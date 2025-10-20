@@ -169,7 +169,7 @@ See: [https://affiliate.dmm.com/api/v3/itemlist.html](https://affiliate.dmm.com/
           "average": "3.92"
         },
         "URL": "https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=sone156/",
-        "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Fdetail%2F%3D%2Fcid%3Dsone156%2F&af_id=10278-996&ch=api",
+        "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Fdetail%2F%3D%2Fcid%3Dsone156%2F&af_id=***REDACTED_AFF_ID***&ch=api",
         "imageURL": {
           "list": "https://pics.dmm.co.jp/mono/movie/adult/sone156/sone156pt.jpg",
           "small": "https://pics.dmm.co.jp/mono/movie/adult/sone156/sone156ps.jpg",

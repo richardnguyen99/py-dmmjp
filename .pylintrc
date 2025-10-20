@@ -3,10 +3,12 @@
 init-hook='import sys; sys.path.append(".")'
 
 # Files or directories to be skipped. They should be base names, not paths.
-ignore=tests
+ignore=.pre-commit-hooks
 
 # Add files or directories matching the regex patterns to the ignore-list
-ignore-patterns=^\.#
+ignore-patterns=
+
+
 
 # Use multiple processes to speed up Pylint. Specifying 0 will auto-detect the
 # number of processors available to use.

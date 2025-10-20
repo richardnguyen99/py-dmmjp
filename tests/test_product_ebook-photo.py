@@ -34,7 +34,7 @@ class TestEbookPhotoProduct(ProductTestBase):
             "volume": "146",
             "review": {"count": 1, "average": "5.00"},
             "URL": "https://book.dmm.co.jp/product/6203940/b600esgk33507/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Fproduct%2F6203940%2Fb600esgk33507%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Fproduct%2F6203940%2Fb600esgk33507%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://ebook-assets.dmm.co.jp/digital/e-book/b600esgk33507/b600esgk33507pt.jpg",
                 "small": "https://ebook-assets.dmm.co.jp/digital/e-book/b600esgk33507/b600esgk33507ps.jpg",
@@ -42,7 +42,7 @@ class TestEbookPhotoProduct(ProductTestBase):
             },
             "tachiyomi": {
                 "URL": "https://book.dmm.co.jp/tachiyomi/?cid=FRNfXRNVFW1RAQxaBQZWUhICXQUDDFQOThFfCUJYU1kCCERYCmkDXVcOHUxSVQ5eGApbXw0I&lin=1&sd=0",
-                "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Ftachiyomi%2F%3Fcid%3DFRNfXRNVFW1RAQxaBQZWUhICXQUDDFQOThFfCUJYU1kCCERYCmkDXVcOHUxSVQ5eGApbXw0I%26lin%3D1%26sd%3D0&af_id=10278-996&ch=api",
+                "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Ftachiyomi%2F%3Fcid%3DFRNfXRNVFW1RAQxaBQZWUhICXQUDDFQOThFfCUJYU1kCCERYCmkDXVcOHUxSVQ5eGApbXw0I%26lin%3D1%26sd%3D0&af_id=***REDACTED_AFF_ID***&ch=api",
             },
             "prices": {"price": "4180"},
             "date": "2025-09-19 00:00:02",

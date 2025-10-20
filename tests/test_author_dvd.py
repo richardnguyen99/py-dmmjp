@@ -25,7 +25,7 @@ class TestAuthorDVD(AuthorTestBase):
             "name": "乃南アサ",
             "ruby": "のなみあさ",
             "list_url": "https://al.dmm.com/?"
-            "lurl=https%3A%2F%2Fwww.dmm.com%2Fmono%2Fbook%2F-%2Flist%2F%3D%2Farticle%3Dauthor%2Fid%3D149999%2F&af_id=10278-996&ch=api",
+            "lurl=https%3A%2F%2Fwww.dmm.com%2Fmono%2Fbook%2F-%2Flist%2F%3D%2Farticle%3Dauthor%2Fid%3D149999%2F&af_id=***REDACTED_AFF_ID***&ch=api",
         }
 
     def test_author_basic_fields(self, author_data: Dict[str, Any]) -> None:
@@ -291,8 +291,8 @@ class TestAuthorSearchResponseDVD(AuthorSearchResponseTestBase):
         return {
             "request": {
                 "parameters": {
-                    "api_id": "UrwskPfkqQ0DuVry2gYL",
-                    "affiliate_id": "10278-996",
+                    "api_id": "***REDACTED_APP_ID***",
+                    "affiliate_id": "***REDACTED_AFF_ID***",
                     "floor_id": "74",
                     "offset": "10",
                 }
