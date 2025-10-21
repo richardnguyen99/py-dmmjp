@@ -8,8 +8,6 @@ ignore=.pre-commit-hooks
 # Add files or directories matching the regex patterns to the ignore-list
 ignore-patterns=
 
-
-
 # Use multiple processes to speed up Pylint. Specifying 0 will auto-detect the
 # number of processors available to use.
 jobs=0
@@ -18,7 +16,7 @@ jobs=0
 persistent=yes
 
 # Minimum Python version to use for version dependent checks
-py-version=3.8
+py-version=3.9
 
 # Discover python modules and packages in the file system subtree.
 recursive=yes

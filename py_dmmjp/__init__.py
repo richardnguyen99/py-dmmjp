@@ -5,6 +5,8 @@ This package provides a simple and intuitive interface for interacting with
 the DMM-JP API.
 """
 
+import sys
+
 __version__ = "0.0.11"
 __author__ = "Richard Nguyen"
 __email__ = "richard@richardhnguyen.com"
@@ -44,8 +46,14 @@ from .product import (
 )
 from .series import Series, SeriesSearchResponse, SeriesSearchResult
 
+if sys.version_info >= (3, 9):
+    from .async_client import AsyncDMMClient
+else:
+    AsyncDMMClient = None  # type: ignore
+
 __all__ = [
     "DMMClient",
+    "AsyncDMMClient",
     "DMMError",
     "DMMAPIError",
     "DMMAuthError",
