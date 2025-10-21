@@ -54,7 +54,12 @@ jobs:
 
       - name: Run linting with pylint
         run: |
-          pylint py_dmmjp
+          if [ "${{ matrix.python-version }}" == "3.8" ]; then
+            pylint py_dmmjp --ignore-patterns='.*async.*\.py'
+          else
+            pylint py_dmmjp
+          fi
+        shell: bash
 
       - name: Check code formatting with black
         run: |
@@ -76,7 +81,12 @@ jobs:
           APP_ID: ${{ secrets.APP_ID }}
           AFF_ID: ${{ secrets.AFF_ID }}
         run: |
-          pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch
+          if [ "${{ matrix.python-version }}" == "3.8" ]; then
+            pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch --ignore-glob='*async*'
+          else
+            pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch
+          fi
+        shell: bash
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
