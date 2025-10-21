@@ -159,8 +159,6 @@ jobs:
           path: dist/
       - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://pypi.org/legacy/
 
   publish-test:
     name: Publish Python 🐍 distribution 📦 to TestPyPIPublish to Test PyPI
