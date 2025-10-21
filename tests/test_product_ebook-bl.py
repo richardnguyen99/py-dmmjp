@@ -55,7 +55,7 @@ class TestEbookBLProduct(ProductTestBase):
                 "manufacture": [{"id": 56231, "name": "ナンバーナイン"}],
                 "author": [{"id": 256544, "name": "名原しょうこ"}],
             },
-            "number": "1",
+            "number": "x1",
         }
 
     def test_product_basic_fields(self, product_data):
@@ -204,7 +204,7 @@ class TestEbookBLProduct(ProductTestBase):
 
         product = Product.from_dict(product_data)
 
-        assert product.number == 1
+        assert product.number == "x1"
         assert product.jancode is None
         assert product.maker_product is None
         assert product.isbn is None
@@ -298,7 +298,7 @@ class TestEbookBLProduct(ProductTestBase):
         assert product.product_id == "k804annbn15621"
         assert product.title is not None
         assert product.volume == 65
-        assert product.number == 1
+        assert product.number == "x1"
         assert product.date is not None
         assert product.url is not None
         assert product.affiliate_url is not None

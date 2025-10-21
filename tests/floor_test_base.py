@@ -149,3 +149,110 @@ class SiteTestBase:
     @abstractmethod
     def test_site_hierarchy(self, site_data: Dict[str, Any]) -> None:
         """Test complete site-service-floor hierarchy."""
+
+
+class FloorListResponseTestBase:
+    """Abstract base class for FloorListResponse tests."""
+
+    @pytest.fixture
+    @abstractmethod
+    def full_api_response(self) -> Dict[str, Any]:
+        """Mock full API response data - must be implemented by subclasses."""
+
+    @abstractmethod
+    def test_response_basic_structure(self, full_api_response: Dict[str, Any]) -> None:
+        """Test basic response structure."""
+
+    @abstractmethod
+    def test_response_request_property(self, full_api_response: Dict[str, Any]) -> None:
+        """Test request property."""
+
+    @abstractmethod
+    def test_response_request_parameters(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        """Test request parameters."""
+
+    @abstractmethod
+    def test_response_result_property(self, full_api_response: Dict[str, Any]) -> None:
+        """Test result property."""
+
+    @abstractmethod
+    def test_response_sites_property(self, full_api_response: Dict[str, Any]) -> None:
+        """Test sites property."""
+
+    @abstractmethod
+    def test_response_raw_response_property(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        """Test raw_response property."""
+
+    @abstractmethod
+    def test_response_raw_response_immutability(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        """Test raw_response immutability."""
+
+    @abstractmethod
+    def test_response_sites_access_through_result(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        """Test sites access through result property."""
+
+    @abstractmethod
+    def test_response_nested_structure_integrity(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        """Test nested structure integrity."""
+
+    @abstractmethod
+    def test_response_site_names(self, full_api_response: Dict[str, Any]) -> None:
+        """Test site names."""
+
+    @abstractmethod
+    def test_response_service_names(self, full_api_response: Dict[str, Any]) -> None:
+        """Test service names."""
+
+    @abstractmethod
+    def test_response_floor_details(self, full_api_response: Dict[str, Any]) -> None:
+        """Test floor details."""
+
+    @abstractmethod
+    def test_response_with_empty_result(self) -> None:
+        """Test response with empty result."""
+
+    @abstractmethod
+    def test_response_from_dict_creates_deep_copy(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        """Test from_dict creates deep copy."""
+
+    @abstractmethod
+    def test_response_result_sites_type_consistency(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        """Test result sites type consistency."""
+
+    @abstractmethod
+    def test_response_raw_response_contains_all_data(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        """Test raw_response contains all data."""
+
+    @abstractmethod
+    def test_response_private_raw_response_not_in_repr(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        """Test private raw_response not in repr."""
+
+    @abstractmethod
+    def test_response_multiple_floors_per_service(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        """Test multiple floors per service."""
+
+    @abstractmethod
+    def test_response_fanza_site_structure(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        """Test FANZA site structure."""

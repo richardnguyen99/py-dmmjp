@@ -6,8 +6,14 @@ from typing import Any, Dict
 
 import pytest
 
-from py_dmmjp.floor import Floor, Service, Site
-from tests.floor_test_base import FloorTestBase, ServiceTestBase, SiteTestBase
+from py_dmmjp.commons import ApiRequest, RequestParameters
+from py_dmmjp.floor import Floor, FloorListResponse, FloorListResult, Service, Site
+from tests.floor_test_base import (
+    FloorListResponseTestBase,
+    FloorTestBase,
+    ServiceTestBase,
+    SiteTestBase,
+)
 
 
 class TestFloorWithRealData(FloorTestBase):
@@ -285,3 +291,232 @@ class TestSiteWithRealData(SiteTestBase):
         assert len(site.services[1].floors) == 2
         assert site.services[0].floors[0].code == "akb48"
         assert site.services[1].floors[0].code == "comic"
+
+
+class TestFloorListResponse(FloorListResponseTestBase):
+    """Test FloorListResponse class properties and attributes."""
+
+    @pytest.fixture
+    def full_api_response(self) -> Dict[str, Any]:
+        return {
+            "request": {
+                "parameters": {
+                    "api_id": "***REDACTED_APP_ID***",
+                    "affiliate_id": "***REDACTED_AFF_ID***",
+                }
+            },
+            "result": {
+                "site": [
+                    {
+                        "name": "DMM.com（一般）",
+                        "code": "DMM.com",
+                        "service": [
+                            {
+                                "name": "AKB48グループ",
+                                "code": "lod",
+                                "floor": [
+                                    {"id": "1", "name": "AKB48", "code": "akb48"},
+                                    {"id": "2", "name": "SKE48", "code": "ske48"},
+                                    {"id": "3", "name": "NMB48", "code": "nmb48"},
+                                ],
+                            },
+                            {
+                                "name": "DMMブックス",
+                                "code": "ebook",
+                                "floor": [
+                                    {"id": "19", "name": "コミック", "code": "comic"},
+                                    {"id": "20", "name": "写真集", "code": "photo"},
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        "name": "FANZA（アダルト）",
+                        "code": "FANZA",
+                        "service": [
+                            {
+                                "name": "動画",
+                                "code": "digital",
+                                "floor": [
+                                    {"id": "43", "name": "ビデオ", "code": "videoa"},
+                                    {"id": "44", "name": "素人", "code": "videoc"},
+                                ],
+                            }
+                        ],
+                    },
+                ]
+            },
+        }
+
+    def test_response_basic_structure(self, full_api_response: Dict[str, Any]) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        assert isinstance(response, FloorListResponse)
+        assert isinstance(response.request, ApiRequest)
+        assert isinstance(response.result, FloorListResult)
+
+    def test_response_request_property(self, full_api_response: Dict[str, Any]) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        assert response.request is not None
+        assert isinstance(response.request, ApiRequest)
+        assert isinstance(response.request.parameters, RequestParameters)
+
+    def test_response_request_parameters(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        params = response.request.parameters
+        assert params.api_id == "***REDACTED_APP_ID***"
+        assert params.affiliate_id == "***REDACTED_AFF_ID***"
+
+    def test_response_result_property(self, full_api_response: Dict[str, Any]) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        assert response.result is not None
+        assert isinstance(response.result, FloorListResult)
+        assert isinstance(response.result.sites, list)
+
+    def test_response_sites_property(self, full_api_response: Dict[str, Any]) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        sites = response.sites
+        assert isinstance(sites, list)
+        assert len(sites) == 2
+        assert all(isinstance(site, Site) for site in sites)
+
+    def test_response_raw_response_property(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        raw = response.raw_response
+        assert raw is not None
+        assert isinstance(raw, dict)
+        assert "request" in raw
+        assert "result" in raw
+
+    def test_response_raw_response_immutability(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        raw = response.raw_response
+        assert raw is not None
+        assert raw is not full_api_response
+        assert raw == full_api_response
+
+    def test_response_sites_access_through_result(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        assert response.sites == response.result.sites
+        assert len(response.sites) == len(response.result.sites)
+
+    def test_response_nested_structure_integrity(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        assert len(response.sites) == 2
+        assert len(response.sites[0].services) == 2
+        assert len(response.sites[1].services) == 1
+        assert len(response.sites[0].services[0].floors) == 3
+        assert len(response.sites[0].services[1].floors) == 2
+
+    def test_response_site_names(self, full_api_response: Dict[str, Any]) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        assert response.sites[0].name == "DMM.com（一般）"
+        assert response.sites[0].code == "DMM.com"
+        assert response.sites[1].name == "FANZA（アダルト）"
+        assert response.sites[1].code == "FANZA"
+
+    def test_response_service_names(self, full_api_response: Dict[str, Any]) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        dmm_services = response.sites[0].services
+        assert dmm_services[0].name == "AKB48グループ"
+        assert dmm_services[0].code == "lod"
+        assert dmm_services[1].name == "DMMブックス"
+        assert dmm_services[1].code == "ebook"
+
+    def test_response_floor_details(self, full_api_response: Dict[str, Any]) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        first_service = response.sites[0].services[0]
+        assert first_service.floors[0].id == "1"
+        assert first_service.floors[0].name == "AKB48"
+        assert first_service.floors[0].code == "akb48"
+
+    def test_response_with_empty_result(self) -> None:
+        empty_response = {
+            "request": {"parameters": {"api_id": "test", "affiliate_id": "test"}},
+            "result": {"site": []},
+        }
+        response = FloorListResponse.from_dict(empty_response)
+
+        assert isinstance(response, FloorListResponse)
+        assert len(response.sites) == 0
+        assert isinstance(response.result.sites, list)
+
+    def test_response_from_dict_creates_deep_copy(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        full_api_response["request"]["parameters"]["api_id"] = "modified"
+        assert response.request.parameters.api_id == "***REDACTED_APP_ID***"
+
+    def test_response_result_sites_type_consistency(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        for site in response.result.sites:
+            assert isinstance(site, Site)
+            for service in site.services:
+                assert isinstance(service, Service)
+                for floor in service.floors:
+                    assert isinstance(floor, Floor)
+
+    def test_response_raw_response_contains_all_data(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        raw = response.raw_response
+        assert raw is not None
+        assert raw["request"]["parameters"]["api_id"] == "***REDACTED_APP_ID***"
+        assert len(raw["result"]["site"]) == 2
+
+    def test_response_private_raw_response_not_in_repr(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        repr_str = repr(response)
+        assert "_raw_response" not in repr_str
+
+    def test_response_multiple_floors_per_service(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        akb_service = response.sites[0].services[0]
+        assert len(akb_service.floors) == 3
+        assert akb_service.floors[1].name == "SKE48"
+        assert akb_service.floors[2].name == "NMB48"
+
+    def test_response_fanza_site_structure(
+        self, full_api_response: Dict[str, Any]
+    ) -> None:
+        response = FloorListResponse.from_dict(full_api_response)
+
+        fanza_site = response.sites[1]
+        assert fanza_site.code == "FANZA"
+        assert len(fanza_site.services) == 1
+        assert fanza_site.services[0].code == "digital"
+        assert len(fanza_site.services[0].floors) == 2

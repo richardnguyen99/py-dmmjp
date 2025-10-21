@@ -89,10 +89,7 @@ class GenreSearchResult:
         """Create GenreSearchResult from dictionary."""
 
         genres_data = data.get("genre", [])
-        if isinstance(genres_data, list):
-            genres = [Genre.from_dict(genre) for genre in genres_data]
-        else:
-            genres = [Genre.from_dict(genres_data)] if genres_data else []
+        genres = [Genre.from_dict(genre) for genre in genres_data]
 
         return cls(
             status=int(data.get("status", 200)),

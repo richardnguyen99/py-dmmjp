@@ -89,10 +89,7 @@ class MakerSearchResult:
         """Create MakerSearchResult from dictionary."""
 
         maker_data = data.get("maker", [])
-        if isinstance(maker_data, list):
-            maker_list = [Maker.from_dict(maker) for maker in maker_data]
-        else:
-            maker_list = [Maker.from_dict(maker_data)] if maker_data else []
+        maker_list = [Maker.from_dict(maker) for maker in maker_data]
 
         return cls(
             status=int(data.get("status", 200)),

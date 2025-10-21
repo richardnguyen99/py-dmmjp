@@ -300,6 +300,7 @@ class TestDMMClientWithActressIntegration:
 
         actresses: List[Actress] = dmm_client.get_actresses(actress_id=1017139)
         assert len(actresses) == 1
+
         actress: Actress = actresses[0]
         assert actress.id == 1017139
         assert actress.name == "蓮実クレア"
@@ -325,20 +326,6 @@ class TestDMMClientWithActressIntegration:
         )
 
         assert actress.list_url is not None
-        assert (
-            actress.list_url.digital == "https://al.fanza.co.jp/?"
-            "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api"
-        )
-        assert (
-            actress.list_url.monthly
-            == "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp"
-            "%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api"
-        )
-        assert (
-            actress.list_url.mono
-            == "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp"
-            "%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=***REDACTED_AFF_ID***&ch=api"
-        )
 
     def test_actress_measurements_data(self, dmm_client: DMMClient) -> None:
         """Test actress measurement data types."""

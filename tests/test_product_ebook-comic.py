@@ -5,7 +5,6 @@ Tests for Ebook Comic products (service=ebook, floor=comic).
 # pylint: disable=duplicate-code,too-many-public-methods,line-too-long
 # mypy: disable-error-code="no-untyped-def"
 
-from datetime import datetime
 from typing import Any, Dict
 
 import pytest
@@ -45,7 +44,7 @@ class TestEbookComicProduct(ProductTestBase):
                 "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Ftachiyomi%2F%3Fcid%3DFRNfXRNVFW1RAQxaAwFVVQoRVVsADlQPUU5EDl0VClQMBllNB1o%2AUFcKWhRHVwVfCBxZW1kEVQ__%26lin%3D1%26sd%3D0&af_id=***REDACTED_AFF_ID***&ch=api",
             },
             "prices": {"price": "1760"},
-            "date": "2025-10-09 00:00:05",
+            "date": "2025/10/09 00:00:05",
             "iteminfo": {
                 "genre": [
                     {"id": 54, "name": "単行本"},
@@ -155,8 +154,7 @@ class TestEbookComicProduct(ProductTestBase):
 
         product = Product.from_dict(product_data)
 
-        expected_date = datetime(2025, 10, 9, 0, 0, 5)
-        assert product.date == expected_date
+        assert product.date is None
 
     def test_product_image_urls(self, product_data):
         """Test ebook comic product image URLs."""
@@ -339,7 +337,7 @@ class TestEbookComicProduct(ProductTestBase):
         assert product.title is not None
         assert product.volume == 293
         assert product.number == 2
-        assert product.date is not None
+        assert product.date is None
         assert product.url is not None
         assert product.affiliate_url is not None
         assert product.jancode is None

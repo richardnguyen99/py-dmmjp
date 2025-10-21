@@ -25,8 +25,6 @@ from .floor import Floor, FloorListResponse, FloorListResult, Service, Site
 from .genre import Genre, GenreSearchResponse, GenreSearchResult
 from .maker import Maker, MakerSearchResponse, MakerSearchResult
 from .product import (
-    ApiResponse,
-    ApiResult,
     Campaign,
     CDInfo,
     Delivery,
@@ -36,11 +34,12 @@ from .product import (
     ItemInfo,
     Prices,
     Product,
+    ProductApiResponse,
+    ProductApiResult,
     Review,
     SampleImage,
     SampleImages,
     SampleMovieURL,
-    SearchResult,
     TachiyomiInfo,
 )
 from .series import Series, SeriesSearchResponse, SeriesSearchResult
@@ -51,11 +50,9 @@ __all__ = [
     "DMMAPIError",
     "DMMAuthError",
     "Product",
-    "ApiResponse",
-    "ApiResult",
-    "ApiRequest",
+    "ProductApiResponse",
+    "ProductApiResult",
     "RequestParameters",
-    "SearchResult",
     "Review",
     "ImageURL",
     "SampleImage",
