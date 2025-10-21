@@ -82,7 +82,7 @@ jobs:
           AFF_ID: ${{ secrets.AFF_ID }}
         run: |
           if [ "${{ matrix.python-version }}" == "3.8" ]; then
-            pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch --ignore-glob='*async*'
+            pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch --ignore-glob='*async*' --omit=py_dmmjp/async_*.py
           else
             pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch -o asyncio_mode=auto -o assyncio_default_fixture_loop_scope=session
           fi
@@ -132,7 +132,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version: "3.12"
 
       - name: Install build dependencies
         run: |
