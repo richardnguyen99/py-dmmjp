@@ -9,8 +9,18 @@ from typing import Any, Dict
 
 import pytest
 
-from py_dmmjp.actress import Actress, ActressImageURL, ActressListURL
-from tests.actress_test_base import ActressTestBase
+from py_dmmjp.actress import (
+    Actress,
+    ActressImageURL,
+    ActressListURL,
+    ActressSearchResponse,
+    ActressSearchResult,
+)
+from tests.actress_test_base import (
+    ActressSearchResponseTestBase,
+    ActressSearchResultTestBase,
+    ActressTestBase,
+)
 
 
 class TestActressWithEmptyFields(ActressTestBase):
@@ -36,11 +46,11 @@ class TestActressWithEmptyFields(ActressTestBase):
                 "large": "http://pics.dmm.co.jp/mono/actjpgs/seto_kanna.jpg",
             },
             "listURL": {
-                "digital": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1099472%2F&af_id=10278-996&ch=api",
+                "digital": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1099472%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 "monthly": "https://al.fanza.co.jp/?"
-                "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1099472%2F&af_id=10278-996&ch=api",
+                "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1099472%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 "mono": "https://al.fanza.co.jp/?"
-                "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1099472%2F&af_id=10278-996&ch=api",
+                "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1099472%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             },
         }
 
@@ -222,3 +232,273 @@ class TestActressWithEmptyFields(ActressTestBase):
 
         assert actress.image_url.small.startswith("http://")
         assert actress.list_url.digital.startswith("https://")
+
+
+class TestActressSearchResultEmptyFields(ActressSearchResultTestBase):
+    """Test implementation for actress search result with empty fields."""
+
+    @pytest.fixture
+    def result_data(self) -> Dict[str, Any]:
+        """Mock actress search result data."""
+
+        return {
+            "status": "200",
+            "result_count": 1,
+            "total_count": "1",
+            "first_position": 1,
+            "actress": [
+                {
+                    "id": "1099472",
+                    "name": "瀬戸環奈",
+                    "ruby": "せとかんな",
+                    "bust": None,
+                    "waist": None,
+                    "hip": None,
+                    "height": None,
+                    "birthday": None,
+                    "blood_type": None,
+                    "hobby": "",
+                    "prefectures": "",
+                    "imageURL": {
+                        "small": "http://pics.dmm.co.jp/mono/actjpgs/thumbnail/seto_kanna.jpg",
+                        "large": "http://pics.dmm.co.jp/mono/actjpgs/seto_kanna.jpg",
+                    },
+                    "listURL": {
+                        "digital": "https://al.fanza.co.jp/?"
+                        "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1099472%2F&af_id=***REDACTED_AFF_ID***&ch=api",
+                        "monthly": "https://al.fanza.co.jp/?"
+                        "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1099472%2F&af_id=***REDACTED_AFF_ID***&ch=api",
+                        "mono": "https://al.fanza.co.jp/?"
+                        "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1099472%2F&af_id=***REDACTED_AFF_ID***&ch=api",
+                    },
+                }
+            ],
+        }
+
+    def test_result_basic_fields(self, result_data: Dict[str, Any]) -> None:
+        """Test basic result fields (status, counts, positions)."""
+
+        result = ActressSearchResult.from_dict(result_data)
+
+        assert result.status == 200
+        assert result.result_count == 1
+        assert result.total_count == 1
+        assert result.first_position == 1
+
+    def test_result_from_dict(self, result_data: Dict[str, Any]) -> None:
+        """Test creating result from dictionary."""
+
+        result = ActressSearchResult.from_dict(result_data)
+
+        assert isinstance(result, ActressSearchResult)
+        assert result.status == 200
+
+    def test_result_actress_list(self, result_data: Dict[str, Any]) -> None:
+        """Test actress list parsing."""
+
+        result = ActressSearchResult.from_dict(result_data)
+
+        assert len(result.actresses) == 1
+        assert result.actresses[0].id == 1099472
+
+    def test_result_nested_actresses(self, result_data: Dict[str, Any]) -> None:
+        """Test nested actress objects."""
+
+        result = ActressSearchResult.from_dict(result_data)
+
+        assert isinstance(result.actresses[0], Actress)
+        assert result.actresses[0].name == "瀬戸環奈"
+
+    def test_result_empty_actresses(self, result_data: Dict[str, Any]) -> None:
+        """Test result with empty actress list."""
+
+        empty_data = {
+            "status": "200",
+            "result_count": 0,
+            "total_count": "0",
+            "first_position": 1,
+            "actress": [],
+        }
+        result = ActressSearchResult.from_dict(empty_data)
+
+        assert len(result.actresses) == 0
+        assert result.result_count == 0
+
+    def test_result_multiple_actresses(self, result_data: Dict[str, Any]) -> None:
+        """Test result with multiple actresses."""
+
+        result = ActressSearchResult.from_dict(result_data)
+
+        assert result.result_count == 1
+        assert len(result.actresses) == 1
+
+    def test_result_status_code(self, result_data: Dict[str, Any]) -> None:
+        """Test status code validation."""
+
+        result = ActressSearchResult.from_dict(result_data)
+
+        assert result.status == 200
+        assert isinstance(result.status, int)
+
+    def test_result_count_fields(self, result_data: Dict[str, Any]) -> None:
+        """Test count fields (result_count, total_count, first_position)."""
+
+        result = ActressSearchResult.from_dict(result_data)
+
+        assert result.result_count == 1
+        assert result.total_count == 1
+        assert result.first_position == 1
+
+    def test_result_actress_type(self, result_data: Dict[str, Any]) -> None:
+        """Test actress field type is list."""
+
+        result = ActressSearchResult.from_dict(result_data)
+
+        assert isinstance(result.actresses, list)
+
+    def test_result_default_values(self, result_data: Dict[str, Any]) -> None:
+        """Test default values for missing fields."""
+
+        minimal_data = {"status": "200"}
+        result = ActressSearchResult.from_dict(minimal_data)
+
+        assert result.status == 200
+        assert result.result_count == 0
+        assert result.total_count == 0
+        assert result.first_position == 1
+
+
+class TestActressSearchResponseEmptyFields(ActressSearchResponseTestBase):
+    """Test implementation for actress search response with empty fields."""
+
+    @pytest.fixture
+    def response_data(self) -> Dict[str, Any]:
+        """Mock actress search response data."""
+
+        return {
+            "request": {
+                "parameters": {
+                    "api_id": "***REDACTED_APP_ID***",
+                    "affiliate_id": "***REDACTED_AFF_ID***",
+                    "actress_id": "1099472",
+                }
+            },
+            "result": {
+                "status": "200",
+                "result_count": 1,
+                "total_count": "1",
+                "first_position": 1,
+                "actress": [
+                    {
+                        "id": "1099472",
+                        "name": "瀬戸環奈",
+                        "ruby": "せとかんな",
+                        "bust": None,
+                        "waist": None,
+                        "hip": None,
+                        "height": None,
+                        "birthday": None,
+                        "blood_type": None,
+                        "hobby": "",
+                        "prefectures": "",
+                        "imageURL": {
+                            "small": "http://pics.dmm.co.jp/mono/actjpgs/thumbnail/seto_kanna.jpg",
+                            "large": "http://pics.dmm.co.jp/mono/actjpgs/seto_kanna.jpg",
+                        },
+                        "listURL": {
+                            "digital": "https://al.fanza.co.jp/?"
+                            "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1099472%2F&af_id=***REDACTED_AFF_ID***&ch=api",
+                            "monthly": "https://al.fanza.co.jp/?"
+                            "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1099472%2F&af_id=***REDACTED_AFF_ID***&ch=api",
+                            "mono": "https://al.fanza.co.jp/?"
+                            "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1099472%2F&af_id=***REDACTED_AFF_ID***&ch=api",
+                        },
+                    }
+                ],
+            },
+        }
+
+    def test_response_structure(self, response_data: Dict[str, Any]) -> None:
+        """Test response structure (request, result)."""
+
+        response = ActressSearchResponse.from_dict(response_data)
+
+        assert response.request is not None
+        assert response.result is not None
+
+    def test_response_from_dict(self, response_data: Dict[str, Any]) -> None:
+        """Test creating response from dictionary."""
+
+        response = ActressSearchResponse.from_dict(response_data)
+
+        assert isinstance(response, ActressSearchResponse)
+
+    def test_response_request_object(self, response_data: Dict[str, Any]) -> None:
+        """Test request object in response."""
+
+        response = ActressSearchResponse.from_dict(response_data)
+
+        assert response.request is not None
+        assert hasattr(response.request, "parameters")
+
+    def test_response_result_object(self, response_data: Dict[str, Any]) -> None:
+        """Test result object in response."""
+
+        response = ActressSearchResponse.from_dict(response_data)
+
+        assert isinstance(response.result, ActressSearchResult)
+        assert response.result.status == 200
+
+    def test_response_raw_response_property(
+        self, response_data: Dict[str, Any]
+    ) -> None:
+        """Test raw_response property access."""
+
+        response = ActressSearchResponse.from_dict(response_data)
+
+        assert response.raw_response is not None
+        assert "request" in response.raw_response
+        assert "result" in response.raw_response
+
+    def test_response_actresses_property(self, response_data: Dict[str, Any]) -> None:
+        """Test actresses property accessor."""
+
+        response = ActressSearchResponse.from_dict(response_data)
+
+        assert len(response.actresses) == 1
+        assert response.actresses[0].name == "瀬戸環奈"
+
+    def test_response_actress_count_property(
+        self, response_data: Dict[str, Any]
+    ) -> None:
+        """Test actress_count property accessor."""
+
+        response = ActressSearchResponse.from_dict(response_data)
+
+        assert response.actress_count == 1
+
+    def test_response_total_actresses_property(
+        self, response_data: Dict[str, Any]
+    ) -> None:
+        """Test total_actresses property accessor."""
+
+        response = ActressSearchResponse.from_dict(response_data)
+
+        assert response.total_actresses == 1
+
+    def test_response_status_property(self, response_data: Dict[str, Any]) -> None:
+        """Test status property accessor."""
+
+        response = ActressSearchResponse.from_dict(response_data)
+
+        assert response.status == 200
+
+    def test_response_property_consistency(self, response_data: Dict[str, Any]) -> None:
+        """Test consistency between properties and result fields."""
+
+        response = ActressSearchResponse.from_dict(response_data)
+
+        assert response.actress_count == response.result.result_count
+        assert response.total_actresses == response.result.total_count
+        assert response.status == response.result.status
+        assert response.actresses == response.result.actresses

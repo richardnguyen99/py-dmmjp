@@ -25,5 +25,8 @@ jobs:
           pip install pre-commit
 
       - name: Run pre-commit hooks
+        env:
+          AFF_ID: ${{ secrets.AFF_ID }}
+          APP_ID: ${{ secrets.APP_ID }}
         run: |
           pre-commit run --all-files

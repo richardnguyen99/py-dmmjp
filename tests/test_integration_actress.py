@@ -5,6 +5,7 @@
 
 import datetime
 from typing import List
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -299,6 +300,7 @@ class TestDMMClientWithActressIntegration:
 
         actresses: List[Actress] = dmm_client.get_actresses(actress_id=1017139)
         assert len(actresses) == 1
+
         actress: Actress = actresses[0]
         assert actress.id == 1017139
         assert actress.name == "蓮実クレア"
@@ -324,18 +326,6 @@ class TestDMMClientWithActressIntegration:
         )
 
         assert actress.list_url is not None
-        assert (
-            actress.list_url.digital == "https://al.fanza.co.jp/?"
-            "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Factress%3D1017139%2F&af_id=10278-996&ch=api"
-        )
-        assert (
-            actress.list_url.monthly == "https://al.fanza.co.jp/?"
-            "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmonthly%2Fpremium%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=10278-996&ch=api"
-        )
-        assert (
-            actress.list_url.mono == "https://al.fanza.co.jp/?"
-            "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dactress%2Fid%3D1017139%2F&af_id=10278-996&ch=api"
-        )
 
     def test_actress_measurements_data(self, dmm_client: DMMClient) -> None:
         """Test actress measurement data types."""
@@ -496,3 +486,38 @@ class TestDMMClientWithActressIntegration:
                 dmm_error.value.message
                 == "The lte_birthday field is not in the correct format."
             )
+
+    def test_error_missing_result_field(self, dmm_client: DMMClient) -> None:
+        """Test error handling when API response is missing result field."""
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = '{"status": 200, "data": []}'
+        mock_response.raise_for_status = MagicMock()
+
+        # pylint: disable=W0212
+        with patch.object(dmm_client._session, "get", return_value=mock_response):
+            with pytest.raises(DMMAPIError) as exc_info:
+                dmm_client.get_actresses(keyword="test")
+
+            assert "missing 'result' field" in str(exc_info.value)
+
+    def test_error_generic_exception_wrapped(self, dmm_client: DMMClient) -> None:
+        """Test that generic exceptions are wrapped in DMMAPIError."""
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = '{"result": {"status": 200, "actresses": []}}'
+        mock_response.raise_for_status = MagicMock()
+
+        # pylint: disable=W0212
+        with patch.object(dmm_client._session, "get", return_value=mock_response):
+            with patch(
+                "py_dmmjp.client.ActressSearchResponse.from_dict",
+                side_effect=KeyError("Missing key"),
+            ):
+                with pytest.raises(DMMAPIError) as exc_info:
+                    dmm_client.get_actresses(keyword="test")
+
+                assert "Failed to get actresses" in str(exc_info.value)
+                assert "Missing key" in str(exc_info.value)

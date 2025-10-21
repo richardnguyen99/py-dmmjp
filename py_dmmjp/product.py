@@ -201,10 +201,7 @@ class Prices:
         deliveries = []
         if "deliveries" in data and "delivery" in data["deliveries"]:
             delivery_data = data["deliveries"]["delivery"]
-            if isinstance(delivery_data, list):
-                deliveries = [Delivery.from_dict(d) for d in delivery_data]
-            else:
-                deliveries = [Delivery.from_dict(delivery_data)]
+            deliveries = [Delivery.from_dict(d) for d in delivery_data]
 
         return cls(
             price=data.get("price"),
@@ -218,6 +215,7 @@ class Prices:
 
         if self.price:
             match = re.search(r"\d+", self.price)
+
             return int(match.group()) if match else None
 
         return None
@@ -228,6 +226,7 @@ class Prices:
 
         if self.list_price:
             match = re.search(r"\d+", self.list_price)
+
             return int(match.group()) if match else None
 
         return None
@@ -295,6 +294,9 @@ class ItemDetails:
     manufacture: List[ItemInfo] = field(default_factory=list)
     "Manufacturer information for physical products (e.g., 'ソニー', 'パナソニック')"
 
+    artist: List[ItemInfo] = field(default_factory=list)
+    "Artist/composer (e.g., 'とうけんだんしふぉーめーしょんおぶみちのおくひとつはちす')"
+
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "ItemDetails":
         """Create ItemDetails from dictionary."""
@@ -302,21 +304,12 @@ class ItemDetails:
         def parse_items(key: str) -> List[ItemInfo]:
             items = data.get(key, [])
 
-            if isinstance(items, list):
-                return [ItemInfo.from_dict(item) for item in items]
-
-            if isinstance(items, dict):
-                return [ItemInfo.from_dict(items)]
-
-            return []
+            return [ItemInfo.from_dict(item) for item in items]
 
         def parse_manufacture() -> List[ItemInfo]:
             items = data.get("manufacturer", data.get("manufacture", []))
-            if isinstance(items, list):
-                return [ItemInfo.from_dict(item) for item in items]
-            if isinstance(items, dict):
-                return [ItemInfo.from_dict(items)]
-            return []
+
+            return [ItemInfo.from_dict(item) for item in items]
 
         return cls(
             genre=parse_items("genre"),
@@ -331,6 +324,7 @@ class ItemDetails:
             color=parse_items("color"),
             size=parse_items("size"),
             manufacture=parse_manufacture(),
+            artist=parse_items("artist"),
         )
 
 
@@ -494,10 +488,8 @@ class Product:
         if "date" in data and data["date"]:
             try:
                 date_str = data["date"]
-                if "/" in date_str:
-                    date = datetime.strptime(date_str, "%Y/%m/%d %H:%M")
-                else:
-                    date = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+                date = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+
             except (ValueError, TypeError):
                 date = None
 
@@ -545,11 +537,8 @@ class Product:
 
         campaign = None
         if "campaign" in data and data["campaign"]:
-            campaign_data = data["campaign"]
-            if isinstance(campaign_data, list):
-                campaign = [Campaign.from_dict(c) for c in campaign_data]
-            elif isinstance(campaign_data, dict):
-                campaign = [Campaign.from_dict(campaign_data)]
+            campaign_data = data.get("campaign", [])
+            campaign = [Campaign.from_dict(c) for c in campaign_data]
 
         volume = None
         if "volume" in data and data["volume"]:
@@ -571,11 +560,8 @@ class Product:
 
         directory = []
         if "directory" in data:
-            dir_data = data["directory"]
-            if isinstance(dir_data, list):
-                directory = [Directory.from_dict(d) for d in dir_data]
-            elif isinstance(dir_data, dict):
-                directory = [Directory.from_dict(dir_data)]
+            dir_data = data.get("directory", [])
+            directory = [Directory.from_dict(d) for d in dir_data]
 
         return cls(
             service_code=data.get("service_code", ""),
@@ -672,6 +658,12 @@ class Product:
         return self.item_info.manufacture if self.item_info else []
 
     @property
+    def artists(self) -> List[ItemInfo]:
+        """Get product artists."""
+
+        return self.item_info.artist if self.item_info else []
+
+    @property
     def makers(self) -> List[ItemInfo]:
         """Get product makers."""
 
@@ -759,16 +751,13 @@ class Product:
         """Get average review score as float."""
 
         if self.review and self.review.average:
-            try:
-                return float(self.review.average)
-            except ValueError:
-                return None
+            return float(self.review.average)
 
         return None
 
 
 @dataclass
-class ApiResult:
+class ProductApiResult:
     """Represents the result section of the API response."""
 
     status: int
@@ -787,8 +776,8 @@ class ApiResult:
     "List of product items returned by the API"
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "ApiResult":
-        """Create ApiResult from dictionary."""
+    def from_dict(cls, data: Dict[str, Any]) -> "ProductApiResult":
+        """Create ProductApiResult from dictionary."""
 
         items = [Product.from_dict(item) for item in data.get("items", [])]
 
@@ -802,23 +791,23 @@ class ApiResult:
 
 
 @dataclass
-class ApiResponse:
+class ProductApiResponse:
     """Represents the complete API response from DMM."""
 
     request: ApiRequest
     "Request information including parameters used for the API call"
 
-    result: ApiResult
+    result: ProductApiResult
     "Result data containing products and metadata"
 
     _raw_response: Optional[Dict[str, Any]] = field(default=None, repr=False)
     "Complete raw API response data (internal use, not displayed)"
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "ApiResponse":
+    def from_dict(cls, data: Dict[str, Any]) -> "ProductApiResponse":
         """
 
-        Create ApiResponse from the full API response dictionary.
+        Create ProductApiResponse from the full API response dictionary.
 
         Args:
             data: Complete API response dictionary.
@@ -829,7 +818,7 @@ class ApiResponse:
 
         return cls(
             request=ApiRequest.from_dict(data.get("request", {})),
-            result=ApiResult.from_dict(data.get("result", {})),
+            result=ProductApiResult.from_dict(data.get("result", {})),
             _raw_response=data.copy(),
         )
 
@@ -862,74 +851,3 @@ class ApiResponse:
         """Get the API response status."""
 
         return self.result.status
-
-
-@dataclass
-class SearchResult:
-    """Represents search results from the DMM API (legacy compatibility)."""
-
-    products: List[Product]
-    "List of products returned from the search"
-
-    total_count: int
-    "Total number of products matching the search criteria (e.g., 1500, 3200)"
-
-    page: int = 1
-    "Current page number in pagination (e.g., 1, 2, 3)"
-
-    page_size: int = 20
-    "Number of products per page (e.g., 20, 50, 100)"
-
-    total_pages: int = 1
-    "Total number of pages available (e.g., 75 pages for 1500 products with 20 per page)"
-
-    @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "SearchResult":
-        """
-
-        Create a SearchResult instance from a dictionary.
-
-        Args:
-            data: Dictionary containing search result data.
-
-        Returns:
-            SearchResult instance.
-        """
-
-        products = [
-            Product.from_dict(product_data) for product_data in data.get("products", [])
-        ]
-
-        return cls(
-            products=products,
-            total_count=data.get("total_count", 0),
-            page=data.get("page", 1),
-            page_size=data.get("page_size", 20),
-            total_pages=data.get("total_pages", 1),
-        )
-
-    @classmethod
-    def from_api_response(
-        cls, response: ApiResponse, page: int = 1, page_size: int = 20
-    ) -> "SearchResult":
-        """
-        Create SearchResult from ApiResponse for backward compatibility.
-
-        Args:
-            response: ApiResponse instance.
-            page: Current page number.
-            page_size: Items per page.
-
-        Returns:
-            SearchResult instance.
-        """
-
-        total_pages = (response.total_products + page_size - 1) // page_size
-
-        return cls(
-            products=response.products,
-            total_count=response.total_products,
-            page=page,
-            page_size=page_size,
-            total_pages=total_pages,
-        )

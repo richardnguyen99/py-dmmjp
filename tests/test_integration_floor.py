@@ -6,10 +6,12 @@ Integration tests for DMM floor API functionality.
 # mypy: disable-error-code=attr-defined
 
 from typing import List
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 from py_dmmjp import DMMClient
+from py_dmmjp.exceptions import DMMAPIError
 from py_dmmjp.floor import Floor, Service, Site
 
 
@@ -251,3 +253,38 @@ class TestDMMClientWithFloorIntegration:
                     assert len(floor.id) > 0
                     assert len(floor.name) > 0
                     assert len(floor.code) > 0
+
+    def test_error_missing_result_field(self, dmm_client: DMMClient) -> None:
+        """Test error handling when API response is missing result field."""
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = '{"sites": [], "services": []}'
+        mock_response.raise_for_status = MagicMock()
+
+        # pylint: disable=W0212
+        with patch.object(dmm_client._session, "get", return_value=mock_response):
+            with pytest.raises(DMMAPIError) as exc_info:
+                dmm_client.get_floors()
+
+            assert "missing 'result' field" in str(exc_info.value)
+
+    def test_error_generic_exception_wrapped(self, dmm_client: DMMClient) -> None:
+        """Test that generic exceptions are wrapped in DMMAPIError."""
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = '{"result": {"site": []}}'
+        mock_response.raise_for_status = MagicMock()
+
+        # pylint: disable=W0212
+        with patch.object(dmm_client._session, "get", return_value=mock_response):
+            with patch(
+                "py_dmmjp.client.FloorListResponse.from_dict",
+                side_effect=AttributeError("Missing attribute"),
+            ):
+                with pytest.raises(DMMAPIError) as exc_info:
+                    dmm_client.get_floors()
+
+                assert "Failed to get floors" in str(exc_info.value)
+                assert "Missing attribute" in str(exc_info.value)

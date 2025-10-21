@@ -34,7 +34,7 @@ class TestMonoAnimeProduct(ProductTestBase):
             "volume": "20",
             "review": {"count": 1, "average": "3.00"},
             "URL": "https://www.dmm.co.jp/mono/anime/-/detail/=/cid=196glod0339t/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fanime%2F-%2Fdetail%2F%3D%2Fcid%3D196glod0339t%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fanime%2F-%2Fdetail%2F%3D%2Fcid%3D196glod0339t%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/mono/movie/adult/196glod0339t/196glod0339tpt.jpg",
                 "small": "https://pics.dmm.co.jp/mono/movie/adult/196glod0339t/196glod0339tps.jpg",
@@ -66,7 +66,6 @@ class TestMonoAnimeProduct(ProductTestBase):
                     ]
                 }
             },
-            "prices": {"price": "5400"},
             "date": "2025-09-26 00:00:01",
             "iteminfo": {
                 "genre": [
@@ -122,12 +121,7 @@ class TestMonoAnimeProduct(ProductTestBase):
 
         product = Product.from_dict(product_data)
 
-        assert product.prices is not None
-        assert product.prices.price == "5400"
-        assert product.prices.list_price is None
-        assert len(product.prices.deliveries) == 0
-        assert product.current_price == 5400
-        assert product.original_price is None
+        assert product.prices is None
 
     def test_product_item_info_genres(self, product_data):
         """Test mono anime product genres."""
@@ -267,7 +261,7 @@ class TestMonoAnimeProduct(ProductTestBase):
 
         assert product.review_count == 1
         assert product.review_average == 3.0
-        assert product.current_price == 5400
+        assert product.current_price is None
         assert product.original_price is None
         assert len(product.sample_images) == 20
         assert len(product.sample_images_large) == 0
@@ -281,7 +275,6 @@ class TestMonoAnimeProduct(ProductTestBase):
         assert product.sample_image_url is not None
         assert product.sample_movie_url is None
         assert product.tachiyomi is None
-        assert product.prices is not None
         assert product.review is not None
         assert product.item_info is not None
         assert product.cdinfo is None
@@ -306,20 +299,14 @@ class TestMonoAnimeProduct(ProductTestBase):
 
         product = Product.from_dict(product_data)
 
-        assert product.prices is not None
-        assert product.prices.price == "5400"
-        assert product.prices.list_price is None
-        assert len(product.prices.deliveries) == 0
-        assert product.prices.price_int == 5400
-        assert product.prices.list_price_int is None
+        assert product.prices is None
 
     def test_delivery_options(self, product_data):
         """Test delivery options for mono anime products."""
 
         product = Product.from_dict(product_data)
 
-        assert product.prices is not None
-        assert len(product.prices.deliveries) == 0
+        assert product.prices is None
 
     def test_product_fields(self, product_data):
         """Test product fields for mono anime products."""
@@ -405,11 +392,8 @@ class TestMonoAnimeProduct(ProductTestBase):
 
         product = Product.from_dict(product_data)
 
-        assert product.prices is not None
-        assert product.prices.price == "5400"
-        assert product.prices.list_price is None
-        assert len(product.prices.deliveries) == 0
-        assert product.current_price == 5400
+        assert product.prices is None
+        assert product.current_price is None
         assert product.original_price is None
 
     def test_physical_anime_attributes(self, product_data):

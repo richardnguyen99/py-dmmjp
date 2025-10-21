@@ -25,7 +25,7 @@ class TestMakerDVD(MakerTestBase):
             "name": "108 gay studio",
             "ruby": "108げいすたじお",
             "list_url": "https://al.fanza.co.jp/?"
-            "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D45614%2F&af_id=10278-996&ch=api",
+            "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D45614%2F&af_id=***REDACTED_AFF_ID***&ch=api",
         }
 
     def test_maker_basic_fields(self, maker_data: Dict[str, Any]) -> None:
@@ -94,36 +94,36 @@ class TestMakerSearchResultDVD(MakerSearchResultTestBase):
                     "maker_id": "45614",
                     "name": "108 gay studio",
                     "ruby": "108げいすたじお",
-                    "list_url": "https://al.fanza.co.jp/?"
-                    "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D45614%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp"
+                    "%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D45614%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "maker_id": "5786",
                     "name": "1Z1",
                     "ruby": "1ぜっと1",
-                    "list_url": "https://al.fanza.co.jp/?"
-                    "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D5786%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp"
+                    "%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D5786%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "maker_id": "46167",
                     "name": "31co.",
                     "ruby": "31しーおーどっと",
-                    "list_url": "https://al.fanza.co.jp/?"
-                    "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D46167%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp"
+                    "%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D46167%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "maker_id": "4338",
                     "name": "3年2組",
                     "ruby": "3ねん2くみ",
-                    "list_url": "https://al.fanza.co.jp/?"
-                    "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D4338%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp"
+                    "%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D4338%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "maker_id": "45527",
                     "name": "4Beats",
                     "ruby": "4びーつ",
-                    "list_url": "https://al.fanza.co.jp/?"
-                    "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D45527%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp"
+                    "%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D45527%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
             ],
         }
@@ -209,8 +209,8 @@ class TestMakerSearchResponseDVD(MakerSearchResponseTestBase):
         return {
             "request": {
                 "parameters": {
-                    "api_id": "UrwskPfkqQ0DuVry2gYL",
-                    "affiliate_id": "10278-996",
+                    "api_id": "my_api_id",
+                    "affiliate_id": "my_affiliate_id",
                     "floor_id": "74",
                     "hits": "5",
                 }
@@ -232,15 +232,15 @@ class TestMakerSearchResponseDVD(MakerSearchResponseTestBase):
                         "maker_id": "45614",
                         "name": "108 gay studio",
                         "ruby": "108げいすたじお",
-                        "list_url": "https://al.fanza.co.jp/?"
-                        "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D45614%2F&af_id=10278-996&ch=api",
+                        "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2F"
+                        "www.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D45614%2F&af_id=my_affiliate_id&ch=api",
                     },
                     {
                         "maker_id": "5786",
                         "name": "1Z1",
                         "ruby": "1ぜっと1",
-                        "list_url": "https://al.fanza.co.jp/?"
-                        "lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D5786%2F&af_id=10278-996&ch=api",
+                        "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2F"
+                        "www.dmm.co.jp%2Fmono%2Fdvd%2F-%2Flist%2F%3D%2Farticle%3Dmaker%2Fid%3D5786%2F&af_id=my_affiliate_id&ch=api",
                     },
                 ],
             },

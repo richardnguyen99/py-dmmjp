@@ -25,7 +25,7 @@ class TestMakerVideoA(MakerTestBase):
             "name": "1Z1",
             "ruby": "1ぜっと1",
             "list_url": "https://al.fanza.co.jp/?"
-            "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fmaker%3D5786%2F&af_id=10278-996&ch=api",
+            "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fmaker%3D5786%2F&af_id=***REDACTED_AFF_ID***&ch=api",
         }
 
     def test_maker_basic_fields(self, maker_data: Dict[str, Any]) -> None:
@@ -94,31 +94,36 @@ class TestMakerSearchResultVideoA(MakerSearchResultTestBase):
                     "maker_id": "5786",
                     "name": "1Z1",
                     "ruby": "1ぜっと1",
-                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fmaker%3D5786%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp"
+                    "%2Fav%2Flist%2F%3Fmaker%3D5786%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "maker_id": "4338",
                     "name": "3年2組",
                     "ruby": "3ねん2くみ",
-                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fmaker%3D4338%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp"
+                    "%2Fav%2Flist%2F%3Fmaker%3D4338%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "maker_id": "1662",
                     "name": "3Point Zone",
                     "ruby": "3ぽいんとぞーん",
-                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fmaker%3D1662%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp"
+                    "%2Fav%2Flist%2F%3Fmaker%3D1662%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "maker_id": "40486",
                     "name": "あああ",
                     "ruby": "あああ",
-                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fmaker%3D40486%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp"
+                    "%2Fav%2Flist%2F%3Fmaker%3D40486%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "maker_id": "1665",
                     "name": "AiAi ESPY",
                     "ruby": "あいあいえすぴー",
-                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fmaker%3D1665%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp"
+                    "%2Fav%2Flist%2F%3Fmaker%3D1665%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
             ],
         }
@@ -204,8 +209,8 @@ class TestMakerSearchResponseVideoA(MakerSearchResponseTestBase):
         return {
             "request": {
                 "parameters": {
-                    "api_id": "UrwskPfkqQ0DuVry2gYL",
-                    "affiliate_id": "10278-996",
+                    "api_id": "my_api_id",
+                    "affiliate_id": "my_affiliate_id",
                     "floor_id": "43",
                     "hits": "5",
                 }
@@ -228,14 +233,14 @@ class TestMakerSearchResponseVideoA(MakerSearchResponseTestBase):
                         "name": "1Z1",
                         "ruby": "1ぜっと1",
                         "list_url": "https://al.fanza.co.jp/?"
-                        "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fmaker%3D5786%2F&af_id=10278-996&ch=api",
+                        "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fmaker%3D5786%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                     },
                     {
                         "maker_id": "4338",
                         "name": "3年2組",
                         "ruby": "3ねん2くみ",
                         "list_url": "https://al.fanza.co.jp/?"
-                        "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fmaker%3D4338%2F&af_id=10278-996&ch=api",
+                        "lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fmaker%3D4338%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                     },
                 ],
             },

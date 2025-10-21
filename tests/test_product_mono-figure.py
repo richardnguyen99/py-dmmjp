@@ -32,13 +32,13 @@ class TestMonoFigureProduct(ProductTestBase):
             "product_id": "fig_2510021531441",
             "title": "氷見山珖",
             "URL": "https://www.dmm.co.jp/mono/figure/-/detail/=/cid=fig_2510021531441/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Ffigure%2F-%2Fdetail%2F%3D%2Fcid%3Dfig_2510021531441%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Ffigure%2F-%2Fdetail%2F%3D%2Fcid%3Dfig_2510021531441%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/mono/figure/fig_2510021531441/fig_2510021531441pt.jpg",
                 "small": "https://pics.dmm.co.jp/mono/figure/fig_2510021531441/fig_2510021531441ps.jpg",
                 "large": "https://pics.dmm.co.jp/mono/figure/fig_2510021531441/fig_2510021531441pl.jpg",
             },
-            "prices": {"price": "29700", "list_price": "29700"},
+            "prices": {"list_price": "29700"},
             "date": "2026-05-31 10:00:00",
             "iteminfo": {
                 "genre": [{"id": 300243, "name": "フィギュア"}],
@@ -83,10 +83,10 @@ class TestMonoFigureProduct(ProductTestBase):
         product = Product.from_dict(product_data)
 
         assert product.prices is not None
-        assert product.prices.price == "29700"
+        assert product.prices.price is None
         assert product.prices.list_price == "29700"
         assert len(product.prices.deliveries) == 0
-        assert product.current_price == 29700
+        assert product.current_price is None
         assert product.original_price == 29700
 
     def test_product_item_info_genres(self, product_data):
@@ -221,7 +221,7 @@ class TestMonoFigureProduct(ProductTestBase):
         product = Product.from_dict(product_data)
 
         assert product.review_count == 0
-        assert product.current_price == 29700
+        assert product.current_price is None
         assert product.original_price == 29700
         assert len(product.sample_images) == 0
         assert len(product.sample_images_large) == 0
@@ -264,10 +264,10 @@ class TestMonoFigureProduct(ProductTestBase):
         product = Product.from_dict(product_data)
 
         assert product.prices is not None
-        assert product.prices.price == "29700"
+        assert product.prices.price is None
         assert product.prices.list_price == "29700"
         assert len(product.prices.deliveries) == 0
-        assert product.prices.price_int == 29700
+        assert product.prices.price_int is None
         assert product.prices.list_price_int == 29700
 
     def test_delivery_options(self, product_data):
@@ -351,10 +351,10 @@ class TestMonoFigureProduct(ProductTestBase):
         product = Product.from_dict(product_data)
 
         assert product.prices is not None
-        assert product.prices.price == "29700"
+        assert product.prices.price is None
         assert product.prices.list_price == "29700"
         assert len(product.prices.deliveries) == 0
-        assert product.current_price == 29700
+        assert product.current_price is None
         assert product.original_price == 29700
 
     def test_physical_figure_attributes(self, product_data):
@@ -421,8 +421,6 @@ class TestMonoFigureProduct(ProductTestBase):
         assert release_date.month == 5
         assert release_date.day == 31
 
-        assert product.current_price == product.original_price
-
     def test_scale_figure_classification(self, product_data):
         """Test scale figure classification."""
 
@@ -448,7 +446,7 @@ class TestMonoFigureProduct(ProductTestBase):
         assert product.jancode is not None
         assert product.jancode.startswith("45")
 
-        assert product.current_price == 29700
+        assert product.current_price is None
         assert product.original_price == 29700
 
         makers = product.makers

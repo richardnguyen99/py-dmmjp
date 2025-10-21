@@ -34,7 +34,7 @@ class TestEbookTLProduct(ProductTestBase):
             "volume": "30",
             "review": {"count": 1, "average": "3.00"},
             "URL": "https://book.dmm.co.jp/product/6211277/b351ammrc11056/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Fproduct%2F6211277%2Fb351ammrc11056%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Fproduct%2F6211277%2Fb351ammrc11056%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://ebook-assets.dmm.co.jp/digital/e-book/b351ammrc11056/b351ammrc11056pt.jpg",
                 "small": "https://ebook-assets.dmm.co.jp/digital/e-book/b351ammrc11056/b351ammrc11056ps.jpg",
@@ -42,7 +42,7 @@ class TestEbookTLProduct(ProductTestBase):
             },
             "tachiyomi": {
                 "URL": "https://book.dmm.co.jp/tachiyomi/?cid=FRNfXRNVFW1RAQxaAANXVgwIRFUBCFQMVE5EDl0VClQMBllNB1o*UFcKWhRHVwVfCBxZW1kEVQ__&lin=1&sd=0",
-                "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Ftachiyomi%2F%3Fcid%3DFRNfXRNVFW1RAQxaAANXVgwIRFUBCFQMVE5EDl0VClQMBllNB1o%2AUFcKWhRHVwVfCBxZW1kEVQ__%26lin%3D1%26sd%3D0&af_id=10278-996&ch=api",
+                "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Ftachiyomi%2F%3Fcid%3DFRNfXRNVFW1RAQxaAANXVgwIRFUBCFQMVE5EDl0VClQMBllNB1o%2AUFcKWhRHVwVfCBxZW1kEVQ__%26lin%3D1%26sd%3D0&af_id=***REDACTED_AFF_ID***&ch=api",
             },
             "prices": {"price": "275"},
             "date": "2025-10-03 00:00:04",

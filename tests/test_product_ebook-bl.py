@@ -34,7 +34,7 @@ class TestEbookBLProduct(ProductTestBase):
             "volume": "65",
             "review": {"count": 3, "average": "4.67"},
             "URL": "https://book.dmm.co.jp/product/6173750/k804annbn15621/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Fproduct%2F6173750%2Fk804annbn15621%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Fproduct%2F6173750%2Fk804annbn15621%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://ebook-assets.dmm.co.jp/digital/e-book/k804annbn15621/k804annbn15621pt.jpg",
                 "small": "https://ebook-assets.dmm.co.jp/digital/e-book/k804annbn15621/k804annbn15621ps.jpg",
@@ -42,7 +42,7 @@ class TestEbookBLProduct(ProductTestBase):
             },
             "tachiyomi": {
                 "URL": "https://book.dmm.co.jp/tachiyomi/?cid=FRNfXRNVFW1RAQxTCwZSVg8LVFgBDFILU05EDl0VClQMBllNB1o*UFcKWhRHVwVfCBxZW1kEVQ__&lin=1&sd=0",
-                "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Ftachiyomi%2F%3Fcid%3DFRNfXRNVFW1RAQxTCwZSVg8LVFgBDFILU05EDl0VClQMBllNB1o%2AUFcKWhRHVwVfCBxZW1kEVQ__%26lin%3D1%26sd%3D0&af_id=10278-996&ch=api",
+                "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fbook.dmm.co.jp%2Ftachiyomi%2F%3Fcid%3DFRNfXRNVFW1RAQxTCwZSVg8LVFgBDFILU05EDl0VClQMBllNB1o%2AUFcKWhRHVwVfCBxZW1kEVQ__%26lin%3D1%26sd%3D0&af_id=***REDACTED_AFF_ID***&ch=api",
             },
             "prices": {"price": "880"},
             "date": "2025-08-10 00:00:04",
@@ -55,7 +55,7 @@ class TestEbookBLProduct(ProductTestBase):
                 "manufacture": [{"id": 56231, "name": "ナンバーナイン"}],
                 "author": [{"id": 256544, "name": "名原しょうこ"}],
             },
-            "number": "1",
+            "number": "x1",
         }
 
     def test_product_basic_fields(self, product_data):
@@ -204,7 +204,7 @@ class TestEbookBLProduct(ProductTestBase):
 
         product = Product.from_dict(product_data)
 
-        assert product.number == 1
+        assert product.number == "x1"
         assert product.jancode is None
         assert product.maker_product is None
         assert product.isbn is None
@@ -298,7 +298,7 @@ class TestEbookBLProduct(ProductTestBase):
         assert product.product_id == "k804annbn15621"
         assert product.title is not None
         assert product.volume == 65
-        assert product.number == 1
+        assert product.number == "x1"
         assert product.date is not None
         assert product.url is not None
         assert product.affiliate_url is not None

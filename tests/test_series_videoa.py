@@ -27,7 +27,7 @@ class TestSeriesVideoA(SeriesTestBase):
             "series_id": "220483",
             "name": "100％女を堕とす凄テク！！",
             "ruby": "100ぱーせんとおんなをおとすすごてく",
-            "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D220483%2F&af_id=10278-996&ch=api",
+            "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D220483%2F&af_id=***REDACTED_AFF_ID***&ch=api",
         }
 
     def test_series_basic_fields(self, series_data: Dict[str, Any]) -> None:
@@ -115,31 +115,31 @@ class TestSeriesSearchResultVideoA(SeriesSearchResultTestBase):
                     "series_id": "220483",
                     "name": "100％女を堕とす凄テク！！",
                     "ruby": "100ぱーせんとおんなをおとすすごてく",
-                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D220483%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D220483%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "series_id": "215651",
                     "name": "100万の賞金を目指して街行く男子を逆ナンパしてSEXしちゃいました！！",
                     "ruby": "100まんのしょうきんめざしてまちゆくだんしをぎゃくなんぱしてせっくすしちゃいました",
-                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D215651%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D215651%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "series_id": "216262",
                     "name": "10日間オナ禁＆ハメ禁で…足腰ガクブル超絶痙攣中出しトランスFUCK",
                     "ruby": "10かかんおなきんはめきんであしこしがくぶるちょうぜつけいれんなかだしとらんすふぁっく",
-                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D216262%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D216262%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "series_id": "215693",
                     "name": "10周年記念 看護師2作品同時収録",
                     "ruby": "10しゅうねんきねんかんごし2さくひんどうじしゅうろく",
-                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D215693%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D215693%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
                 {
                     "series_id": "220915",
                     "name": "10発中出しさせてもまた勃起させちゃう制服と●cup",
                     "ruby": "10ぱつなかだしさせてもまたぼっきさせちゃうせいふくとまるかっぷ",
-                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D220915%2F&af_id=10278-996&ch=api",
+                    "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D220915%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                 },
             ],
         }
@@ -269,7 +269,7 @@ class TestSeriesSearchResponseVideoA(SeriesSearchResponseTestBase):
             "request": {
                 "parameters": {
                     "api_id": "test",
-                    "affiliate_id": "10278-996",
+                    "affiliate_id": "***REDACTED_AFF_ID***",
                     "floor_id": "43",
                     "hits": "5",
                 }
@@ -291,13 +291,13 @@ class TestSeriesSearchResponseVideoA(SeriesSearchResponseTestBase):
                         "series_id": "220483",
                         "name": "100％女を堕とす凄テク！！",
                         "ruby": "100ぱーせんとおんなをおとすすごてく",
-                        "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D220483%2F&af_id=10278-996&ch=api",
+                        "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D220483%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                     },
                     {
                         "series_id": "215651",
                         "name": "100万の賞金を目指して街行く男子を逆ナンパしてSEXしちゃいました！！",
                         "ruby": "100まんのしょうきんめざしてまちゆくだんしをぎゃくなんぱしてせっくすしちゃいました",
-                        "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D215651%2F&af_id=10278-996&ch=api",
+                        "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fseries%3D215651%2F&af_id=***REDACTED_AFF_ID***&ch=api",
                     },
                 ],
             },

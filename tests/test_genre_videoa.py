@@ -19,7 +19,8 @@ class TestGenreVideoA(GenreTestBase):
             "genre_id": "6179",
             "name": "4時間以上作品",
             "ruby": "4じかんいじょうさくひん",
-            "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fav%2Flist%2F%3Fgenre%3D6179%2F&af_id=10278-996&ch=api",
+            "list_url": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp"
+            "%2Fav%2Flist%2F%3Fgenre%3D6179%2F&af_id=***REDACTED_AFF_ID***&ch=api",
         }
 
     def test_genre_basic_fields(self, genre_data: Dict[str, Any]) -> None:

@@ -33,7 +33,7 @@ class TestPCGameDigitalProduct(ProductTestBase):
             "title": "ライムライト・レモネードジャム",
             "review": {"count": 91, "average": "4.84"},
             "URL": "https://dlsoft.dmm.co.jp/detail/yuzu_0012/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fdlsoft.dmm.co.jp%2Fdetail%2Fyuzu_0012%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fdlsoft.dmm.co.jp%2Fdetail%2Fyuzu_0012%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/digital/pcgame/yuzu_0012/yuzu_0012pt.jpg",
                 "small": "https://pics.dmm.co.jp/digital/pcgame/yuzu_0012/yuzu_0012ps.jpg",

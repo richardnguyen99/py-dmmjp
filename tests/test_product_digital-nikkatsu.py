@@ -34,7 +34,7 @@ class TestDigitalNikkatsuProduct(ProductTestBase):
             "volume": "59",
             "review": {"count": 5, "average": "4.00"},
             "URL": "https://video.dmm.co.jp/cinema/content/?id=174okura405",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fcinema%2Fcontent%2F%3Fid%3D174okura405&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fvideo.dmm.co.jp%2Fcinema%2Fcontent%2F%3Fid%3D174okura405&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/digital/video/174okura00405/174okura00405pt.jpg",
                 "small": "https://pics.dmm.co.jp/digital/video/174okura00405/174okura00405ps.jpg",

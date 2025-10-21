@@ -183,10 +183,7 @@ class ActressSearchResult:
         """Create ActressSearchResult from dictionary."""
 
         actresses_data = data.get("actress", [])
-        if isinstance(actresses_data, list):
-            actresses = [Actress.from_dict(actress) for actress in actresses_data]
-        else:
-            actresses = [Actress.from_dict(actresses_data)] if actresses_data else []
+        actresses = [Actress.from_dict(actress) for actress in actresses_data]
 
         return cls(
             status=int(data.get("status", 200)),
@@ -223,24 +220,29 @@ class ActressSearchResponse:
     @property
     def raw_response(self) -> Optional[Dict[str, Any]]:
         """Access to the complete raw API response."""
+
         return self._raw_response
 
     @property
     def actresses(self) -> List[Actress]:
         """Get all actresses from the response."""
+
         return self.result.actresses
 
     @property
     def actress_count(self) -> int:
         """Get the number of actresses returned."""
+
         return self.result.result_count
 
     @property
     def total_actresses(self) -> int:
         """Get the total number of actresses available."""
+
         return self.result.total_count
 
     @property
     def status(self) -> int:
         """Get the API response status."""
+
         return self.result.status

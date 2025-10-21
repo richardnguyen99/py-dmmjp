@@ -3,6 +3,7 @@ Integration tests for DMM author API functionality.
 """
 
 from typing import List
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -257,3 +258,38 @@ class TestDMMClientWithAuthorIntegration:
         assert isinstance(authors, list)
         for author in authors:
             assert isinstance(author.another_name, str)
+
+    def test_error_missing_result_field(self, dmm_client: DMMClient) -> None:
+        """Test error handling when API response is missing result field."""
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = '{"authors": [], "total": 0}'
+        mock_response.raise_for_status = MagicMock()
+
+        # pylint: disable=W0212
+        with patch.object(dmm_client._session, "get", return_value=mock_response):
+            with pytest.raises(DMMAPIError) as exc_info:
+                dmm_client.get_authors(floor_id=27)
+
+            assert "missing 'result' field" in str(exc_info.value)
+
+    def test_error_generic_exception_wrapped(self, dmm_client: DMMClient) -> None:
+        """Test that generic exceptions are wrapped in DMMAPIError."""
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = '{"result": {"status": 200, "author": []}}'
+        mock_response.raise_for_status = MagicMock()
+
+        # pylint: disable=W0212
+        with patch.object(dmm_client._session, "get", return_value=mock_response):
+            with patch(
+                "py_dmmjp.client.AuthorSearchResponse.from_dict",
+                side_effect=Exception("Unexpected parsing error"),
+            ):
+                with pytest.raises(DMMAPIError) as exc_info:
+                    dmm_client.get_authors(floor_id=27)
+
+                assert "Failed to get authors" in str(exc_info.value)
+                assert "Unexpected parsing error" in str(exc_info.value)

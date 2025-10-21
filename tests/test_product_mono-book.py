@@ -33,7 +33,7 @@ class TestMonoBookProduct(ProductTestBase):
             "title": "佐野ゆま写真集 うわき。",
             "review": {"count": 8, "average": "5.00"},
             "URL": "https://www.dmm.co.jp/mono/book/-/detail/=/cid=275book97848671770752024/",
-            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fbook%2F-%2Fdetail%2F%3D%2Fcid%3D275book97848671770752024%2F&af_id=10278-996&ch=api",
+            "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp%2Fmono%2Fbook%2F-%2Fdetail%2F%3D%2Fcid%3D275book97848671770752024%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/mono/comic/275book97848671770752024/275book97848671770752024pt.jpg",
                 "small": "https://pics.dmm.co.jp/mono/comic/275book97848671770752024/275book97848671770752024ps.jpg",

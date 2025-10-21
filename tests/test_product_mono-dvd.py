@@ -35,7 +35,7 @@ class TestMonoDVDProduct(ProductTestBase):
             "review": {"count": 7, "average": 5.00},
             "URL": "https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=tkmird261/",
             "affiliateURL": "https://al.fanza.co.jp/?lurl=https%3A%2F%2Fwww.dmm.co.jp"
-            + "%2Fmono%2Fdvd%2F-%2Fdetail%2F%3D%2Fcid%3Dtkmird261%2F&af_id=10278-996&ch=api",
+            + "%2Fmono%2Fdvd%2F-%2Fdetail%2F%3D%2Fcid%3Dtkmird261%2F&af_id=***REDACTED_AFF_ID***&ch=api",
             "imageURL": {
                 "list": "https://pics.dmm.co.jp/mono/movie/adult/tkmird261/tkmird261pt.jpg",
                 "small": "https://pics.dmm.co.jp/mono/movie/adult/tkmird261/tkmird261ps.jpg",

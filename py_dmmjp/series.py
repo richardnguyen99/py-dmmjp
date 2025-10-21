@@ -89,10 +89,7 @@ class SeriesSearchResult:
         """Create SeriesSearchResult from dictionary."""
 
         series_data = data.get("series", [])
-        if isinstance(series_data, list):
-            series_list = [Series.from_dict(series) for series in series_data]
-        else:
-            series_list = [Series.from_dict(series_data)] if series_data else []
+        series_list = [Series.from_dict(series) for series in series_data]
 
         return cls(
             status=int(data.get("status", 200)),

@@ -3,6 +3,7 @@ Integration tests for DMM series API functionality.
 """
 
 from typing import List
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -252,3 +253,38 @@ class TestDMMClientWithSeriesIntegration:
 
         assert isinstance(series_o, list)
         assert isinstance(series_a, list)
+
+    def test_error_missing_result_field(self, dmm_client: DMMClient) -> None:
+        """Test error handling when API response is missing result field."""
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = '{"series": [], "count": 0}'
+        mock_response.raise_for_status = MagicMock()
+
+        # pylint: disable=W0212
+        with patch.object(dmm_client._session, "get", return_value=mock_response):
+            with pytest.raises(DMMAPIError) as exc_info:
+                dmm_client.get_series(floor_id=27)
+
+            assert "missing 'result' field" in str(exc_info.value)
+
+    def test_error_generic_exception_wrapped(self, dmm_client: DMMClient) -> None:
+        """Test that generic exceptions are wrapped in DMMAPIError."""
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = '{"result": {"status": 200, "series": []}}'
+        mock_response.raise_for_status = MagicMock()
+
+        # pylint: disable=W0212
+        with patch.object(dmm_client._session, "get", return_value=mock_response):
+            with patch(
+                "py_dmmjp.client.SeriesSearchResponse.from_dict",
+                side_effect=IndexError("Index out of range"),
+            ):
+                with pytest.raises(DMMAPIError) as exc_info:
+                    dmm_client.get_series(floor_id=27)
+
+                assert "Failed to get series" in str(exc_info.value)
+                assert "Index out of range" in str(exc_info.value)
