@@ -98,7 +98,9 @@ class TestMonthlyPremiumProduct(ProductTestBase):
                     }
                 ],
                 "maker": [{"id": 2661, "name": "マドンナ"}],
-                "actress": [{"id": 1028857, "name": "大島優香", "ruby": "おおしまゆうか"}],
+                "actress": [
+                    {"id": 1028857, "name": "大島優香", "ruby": "おおしまゆうか"}
+                ],
                 "director": [{"id": 1443, "name": "朝霧浄", "ruby": "あさぎりじょう"}],
                 "label": [{"id": 2931, "name": "Madonna"}],
             },
@@ -118,7 +120,8 @@ class TestMonthlyPremiumProduct(ProductTestBase):
         assert product.content_id == "juq00978"
         assert product.product_id == "juq00978"
         assert (
-            product.title == "息子の友人ともう5年間、セフレ関係を続けています―。 年下の子と不埒な火遊び…中出し情事に溺れる私。 大島優香"
+            product.title
+            == "息子の友人ともう5年間、セフレ関係を続けています―。 年下の子と不埒な火遊び…中出し情事に溺れる私。 大島優香"
         )
         assert product.volume == 124
 

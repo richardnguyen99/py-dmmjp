@@ -98,7 +98,10 @@ class TestMonoAnimeProduct(ProductTestBase):
 
         assert product.content_id == "196glod0339t"
         assert product.product_id == "196glod0339t"
-        assert product.title == "【FANZA限定】OVAシスターブリーダー #2 セル版 オリジナルB2タペストリー付"
+        assert (
+            product.title
+            == "【FANZA限定】OVAシスターブリーダー #2 セル版 オリジナルB2タペストリー付"
+        )
         assert product.volume == 20
 
     def test_product_sample_images(self, product_data):

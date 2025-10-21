@@ -711,7 +711,10 @@ class TestDMMClientWithProductIntegration:
         assert "パイズリ" in genre_names
         assert "単体作品" in genre_names
 
-        assert product.series[0].name == "妻が帰省した一週間早熟な巨乳連れ子を絶倫チ○ポでピストン調教"
+        assert (
+            product.series[0].name
+            == "妻が帰省した一週間早熟な巨乳連れ子を絶倫チ○ポでピストン調教"
+        )
         assert product.makers[0].name == "OPPAI"
         assert product.actresses[0].name == "夕美しおん"
         assert product.actresses[0].ruby == "ゆうみしおん"
@@ -949,7 +952,10 @@ class TestDMMClientWithProductIntegration:
         assert product.content_id == "h_086keed77"
         assert product.product_id == "h_086keed77"
         assert product.title is not None
-        assert "娘が不在中、娘の彼氏に無理やり中出しされ発情した彼女の母親" in product.title
+        assert (
+            "娘が不在中、娘の彼氏に無理やり中出しされ発情した彼女の母親"
+            in product.title
+        )
         assert "君島みお" in product.title
         assert product.volume == 90
 
@@ -999,7 +1005,10 @@ class TestDMMClientWithProductIntegration:
         assert "中出し" in genre_names
         assert "単体作品" in genre_names
 
-        assert product.series[0].name == "娘が不在中、娘の彼氏に無理やり中出しされ発情した彼女の母親"
+        assert (
+            product.series[0].name
+            == "娘が不在中、娘の彼氏に無理やり中出しされ発情した彼女の母親"
+        )
         assert product.makers[0].name == "センタービレッジ"
         assert product.actresses[0].name == "君島みお"
         assert product.actresses[0].ruby == "きみじまみお"

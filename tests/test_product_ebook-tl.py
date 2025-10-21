@@ -79,7 +79,10 @@ class TestEbookTLProduct(ProductTestBase):
 
         assert product.content_id == "b351ammrc11056"
         assert product.product_id == "b351ammrc11056"
-        assert product.title == "強精入院～退院するまで100人のナースに射精管理されてます～（単話）"
+        assert (
+            product.title
+            == "強精入院～退院するまで100人のナースに射精管理されてます～（単話）"
+        )
         assert product.volume == 30
 
     def test_product_date_parsing(self, product_data):

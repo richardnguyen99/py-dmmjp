@@ -250,7 +250,9 @@ class TestDMMClientWithGenreIntegration:
         """Test genre filtering by initial character."""
 
         genres_a: List[Genre] = dmm_client.get_genres(floor_id=43, initial="あ", hits=5)
-        genres_ka: List[Genre] = dmm_client.get_genres(floor_id=43, initial="か", hits=5)
+        genres_ka: List[Genre] = dmm_client.get_genres(
+            floor_id=43, initial="か", hits=5
+        )
 
         assert isinstance(genres_a, list)
         assert isinstance(genres_ka, list)

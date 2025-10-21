@@ -248,8 +248,12 @@ class TestDMMClientWithSeriesIntegration:
     def test_get_series_initial_filtering(self, dmm_client: DMMClient) -> None:
         """Test series filtering by initial character."""
 
-        series_o: List[Series] = dmm_client.get_series(floor_id=43, initial="お", hits=5)
-        series_a: List[Series] = dmm_client.get_series(floor_id=43, initial="あ", hits=5)
+        series_o: List[Series] = dmm_client.get_series(
+            floor_id=43, initial="お", hits=5
+        )
+        series_a: List[Series] = dmm_client.get_series(
+            floor_id=43, initial="あ", hits=5
+        )
 
         assert isinstance(series_o, list)
         assert isinstance(series_a, list)

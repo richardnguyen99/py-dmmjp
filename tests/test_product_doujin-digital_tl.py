@@ -100,7 +100,10 @@ class TestDoujinDigitalTLProduct(ProductTestBase):
 
         assert product.content_id == "d_668247"
         assert product.product_id == "d_668247"
-        assert product.title == "狼に衣 ～ドジなふりした幼馴染の執着体格差えっちに抗えない～"
+        assert (
+            product.title
+            == "狼に衣 ～ドジなふりした幼馴染の執着体格差えっちに抗えない～"
+        )
         assert product.volume == 69
 
     def test_product_sample_images(self, product_data):

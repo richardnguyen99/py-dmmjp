@@ -51,7 +51,9 @@ class TestEbookBLProduct(ProductTestBase):
                     {"id": 17, "name": "ファンタジー"},
                     {"id": 54, "name": "単行本"},
                 ],
-                "series": [{"id": 6173750, "name": "ツンデレ王子のハメ探し【棒消し修正版】"}],
+                "series": [
+                    {"id": 6173750, "name": "ツンデレ王子のハメ探し【棒消し修正版】"}
+                ],
                 "manufacture": [{"id": 56231, "name": "ナンバーナイン"}],
                 "author": [{"id": 256544, "name": "名原しょうこ"}],
             },

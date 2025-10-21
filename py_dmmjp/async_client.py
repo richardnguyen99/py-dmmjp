@@ -65,7 +65,7 @@ class AsyncDMMClient:
         self._api_key = api_key
         self._affiliate_id = affiliate_id
         self._base_url = "https://api.dmm.com/affiliate/v3"
-        self._timeout = ClientTimeout(total=timeout)
+        self._timeout = timeout
         self._headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/",
             "Accept": "application/json",
@@ -82,9 +82,11 @@ class AsyncDMMClient:
         """
 
         if self._session is None or self._session.closed:
+            timeout = ClientTimeout(total=self._timeout)
             self._session = aiohttp.ClientSession(
-                headers=self._headers, timeout=self._timeout
+                headers=self._headers, timeout=timeout
             )
+
         return self._session
 
     def _prepare_params(

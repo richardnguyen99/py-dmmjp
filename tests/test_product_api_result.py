@@ -129,8 +129,12 @@ class TestProductApiResult:
                             }
                         ],
                         "maker": [{"id": 1509, "name": "ムーディーズ"}],
-                        "actress": [{"id": 1042129, "name": "七沢みあ", "ruby": "ななさわみあ"}],
-                        "director": [{"id": 101796, "name": "五右衛門", "ruby": "ごえもん"}],
+                        "actress": [
+                            {"id": 1042129, "name": "七沢みあ", "ruby": "ななさわみあ"}
+                        ],
+                        "director": [
+                            {"id": 101796, "name": "五右衛門", "ruby": "ごえもん"}
+                        ],
                         "label": [{"id": 4325, "name": "MOODYZ DIVA"}],
                     },
                     "campaign": [
