@@ -45,7 +45,12 @@ jobs:
 
       - name: Run type checking with mypy
         run: |
-          mypy py_dmmjp
+          if [ "${{ matrix.python-version }}" == "3.8" ]; then
+            mypy py_dmmjp --exclude '/.*async.*\.py$'
+          else
+            mypy py_dmmjp
+          fi
+        shell: bash
 
       - name: Run linting with pylint
         run: |
@@ -89,7 +94,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
         run: |
