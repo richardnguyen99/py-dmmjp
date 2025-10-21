@@ -84,7 +84,7 @@ jobs:
           if [ "${{ matrix.python-version }}" == "3.8" ]; then
             pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch --ignore-glob='*async*'
           else
-            pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch
+            pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch -o asyncio_mode=auto -o assyncio_default_fixture_loop_scope=session
           fi
         shell: bash
 
@@ -113,7 +113,7 @@ jobs:
 
       - name: Run security scan with bandit
         run: |
-          bandit -r py_dmmjp -f json -o bandit-report.json
+          bandit -r py_dmmjp -f json -o bandit-report.json --verbose
 
       - name: Run Safety CLI to check for vulnerabilities
         uses: pyupio/safety-action@v1

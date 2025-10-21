@@ -63,7 +63,7 @@ Documentation = "https://py-dmm.readthedocs.io/"
 Repository = "https://github.com/richardnguyen99/py-dmm.git"
 
 [tool.setuptools.packages.find]
-include = ["py_dmm*"]
+include = ["py_dmmjp*"]
 exclude = ["tests*"]
 
 [tool.setuptools.package-data]
@@ -122,10 +122,8 @@ ignore_missing_imports = true
 
 # pytest configuration
 [tool.pytest.ini_options]
-asyncio_default_fixture_loop_scope = "session"
 minversion = "7.0"
 addopts = "-ra -q --strict-markers --strict-config"
-asyncio_mode = "auto"
 testpaths = ["tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
