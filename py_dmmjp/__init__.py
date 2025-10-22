@@ -48,7 +48,7 @@ from .series import Series, SeriesSearchResponse, SeriesSearchResult
 
 if sys.version_info >= (3, 9):
     from .async_client import AsyncDMMClient
-else:
+else:  # pragma: no cover
     AsyncDMMClient = None  # type: ignore
 
 __all__ = [

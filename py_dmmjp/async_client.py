@@ -7,7 +7,7 @@ import json
 import sys
 from typing import Any, Dict, List, Literal, Optional, cast
 
-if sys.version_info < (3, 9):
+if sys.version_info < (3, 9):  # pragma: no cover
     raise ImportError(
         f"AsyncDMMClient requires Python 3.9 or above. "
         f"Your current Python version is {sys.version_info[0]}.{sys.version_info[1]}.{sys.version_info[2]}."
@@ -152,6 +152,7 @@ class AsyncDMMClient:
 
         try:
             async with session.get(url, params=prep_params) as response:
+                print(await response.text())
                 response_text = await response.text()
 
                 if response.status == 401:
@@ -322,10 +323,8 @@ class AsyncDMMClient:
             DMMAuthError: If authentication fails or API key is invalid.
         """
 
-        params: Dict[str, Any] = {}
-
         try:
-            response_data = await self._make_request("/FloorList", params)
+            response_data = await self._make_request("/FloorList")
 
             if "result" not in response_data:
                 raise DMMAPIError("Invalid API response: missing 'result' field")
@@ -579,15 +578,16 @@ class AsyncDMMClient:
         Destructor to clean up session if not properly closed.
         """
 
-        if self._session and not self._session.closed:
+        if hasattr(self, "_session") and self._session and not self._session.closed:
             try:
                 loop = asyncio.get_event_loop()
+
                 if loop.is_running():
                     loop.create_task(self._session.close())
                 else:
                     loop.run_until_complete(self._session.close())
-            except Exception:
-                pass
+            except Exception as e:
+                raise DMMAPIError("Error occurred while closing the session") from e
 
     async def __aenter__(self) -> "AsyncDMMClient":
         """

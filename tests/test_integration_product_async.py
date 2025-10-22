@@ -2,7 +2,7 @@
 Integration tests for AsyncDMMClient with real API requests for product-related functionality.
 """
 
-# pylint: disable=R0904,W0212,R0915
+# pylint: disable=R0904,W0212,R0915,W0613
 
 import sys
 
@@ -12,6 +12,7 @@ if sys.version_info < (3, 9):
     pytest.skip("AsyncDMMClient requires Python 3.9+", allow_module_level=True)
 
 import asyncio
+from unittest.mock import AsyncMock, patch
 
 import pytest_asyncio
 
@@ -517,6 +518,312 @@ class TestAsyncDMMClientWithProductIntegration:
         assert len(product.actresses) == 1
         assert product.actresses[0].name == "AIKA"
 
+    async def test_product_by_product_id_with_empty_maker_product(
+        self, async_dmm_client: AsyncDMMClient
+    ) -> None:
+        """Test retrieving a product with empty maker_product returns None."""
+
+        mock_response = AsyncMock()
+        mock_response.status = 200
+        mock_response.text = AsyncMock(
+            return_value="""
+{
+  "request": {
+    "parameters": {
+      "api_id": "my_app_id",
+      "affiliate_id": "my_affiliate_id",
+      "site": "FANZA",
+      "keyword": "MIDE",
+      "hits": "1"
+    }
+  },
+  "result": {
+    "status": 200,
+    "result_count": 1,
+    "total_count": 5477,
+    "first_position": 1,
+    "items": [
+      {
+        "service_code": "digital",
+        "service_name": "動画",
+        "floor_code": "videoa",
+        "floor_name": "ビデオ",
+        "category_name": "ビデオ (動画)",
+        "content_id": "mide00872",
+        "product_id": "mide00872",
+        "title": "妻が帰省した3日間発育しきって喰い頃な巨乳連れ子を一生分ヤリ貯めした。 水卜さくら",
+        "volume": "118",
+        "review": {
+          "count": 83,
+          "average": "4.69"
+        },
+        "URL": "https://video.dmm.co.jp/av/content/?id=mide00872",
+        "sampleImageURL": {
+          "sample_s": {
+            "image": [
+              "https://pics.dmm.co.jp/digital/video/mide00872/mide00872-1.jpg",
+              "https://pics.dmm.co.jp/digital/video/mide00872/mide00872-2.jpg"
+            ]
+          },
+          "sample_l": {
+            "image": [
+              "https://pics.dmm.co.jp/digital/video/mide00872/mide00872jp-1.jpg",
+              "https://pics.dmm.co.jp/digital/video/mide00872/mide00872jp-2.jpg"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
+        """
+        )
+        mock_response.__aenter__ = AsyncMock(return_value=mock_response)
+        mock_response.__aexit__ = AsyncMock(return_value=None)
+
+        session = await async_dmm_client._ensure_session()
+
+        with patch.object(session, "get", return_value=mock_response):
+            product = await async_dmm_client.get_product_by_product_id(
+                "MIDE-872",
+                site="FANZA",
+            )
+
+        assert product is None
+
+    async def test_product_by_product_id_with_predicate(
+        self, async_dmm_client: AsyncDMMClient
+    ) -> None:
+        """Test retrieving a single product by product ID with a predicate function."""
+
+        mock_response = AsyncMock()
+        mock_response.status = 200
+        mock_response.text = AsyncMock(
+            return_value="""
+{
+  "request": {
+    "parameters": {
+      "api_id": "my_app_id",
+      "affiliate_id": "my_affiliate_id",
+      "site": "FANZA",
+      "keyword": "KEED-077"
+    }
+  },
+  "result": {
+    "status": 200,
+    "result_count": 1,
+    "total_count": 1,
+    "first_position": 1,
+    "items": [
+      {
+        "service_code": "mono",
+        "service_name": "通販",
+        "floor_code": "dvd",
+        "floor_name": "DVD",
+        "category_name": "DVD通販",
+        "content_id": "h_086keed77",
+        "product_id": "h_086keed77",
+        "title": "娘が不在中、娘の彼氏に無理やり中出しされ発情した彼女の母親 君島みお",
+        "volume": "90",
+        "review": {
+          "count": 4,
+          "average": "3.75"
+        },
+        "URL": "https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=h_086keed77/",
+        "sampleImageURL": {
+          "sample_s": {
+            "image": [
+              "https://pics.dmm.co.jp/digital/video/h_086keed77/h_086keed77-1.jpg"
+            ]
+          }
+        },
+        "jancode": "4573228571981",
+        "maker_product": "KEED-77",
+        "stock": "empty"
+      }
+    ]
+  }
+}
+"""
+        )
+        mock_response.__aenter__ = AsyncMock(return_value=mock_response)
+        mock_response.__aexit__ = AsyncMock(return_value=None)
+
+        session = await async_dmm_client._ensure_session()
+
+        with patch.object(session, "get", return_value=mock_response):
+            product = await async_dmm_client.get_product_by_product_id(
+                "KEED-077",
+                site="FANZA",
+            )
+
+        assert product is not None
+        assert isinstance(product, Product)
+        assert product.maker_product == "KEED-77"
+
+    async def test_product_by_product_id_with_no_dash(
+        self, async_dmm_client: AsyncDMMClient
+    ) -> None:
+        """Test retrieving products by product ID with no dash."""
+
+        mock_response = AsyncMock()
+        mock_response.status = 200
+        mock_response.text = AsyncMock(
+            return_value="""
+{
+  "request": {
+    "parameters": {
+      "api_id": "my_app_id",
+      "affiliate_id": "my_affiliate_id",
+      "site": "FANZA",
+      "keyword": "SNIS"
+    }
+  },
+  "result": {
+    "status": 200,
+    "result_count": 2,
+    "total_count": 2,
+    "first_position": 2,
+    "items": [
+      {
+        "service_code": "mono",
+        "service_name": "通販",
+        "floor_code": "dvd",
+        "floor_name": "DVD",
+        "category_name": "DVD通販",
+        "content_id": "snis777",
+        "product_id": "snis777",
+        "title": "Some Other Product",
+        "jancode": "4573228571981",
+        "maker_product": "snis777",
+        "stock": "empty"
+      },
+      {
+        "service_code": "mono",
+        "service_name": "通販",
+        "floor_code": "dvd",
+        "floor_name": "DVD",
+        "category_name": "DVD通販",
+        "content_id": "snis777dd",
+        "product_id": "snis777dd",
+        "title": "Some Other Product",
+        "jancode": "4573228571981",
+        "maker_product": "snis-00777",
+        "stock": "empty"
+      }
+    ]
+  }
+}
+"""
+        )
+        mock_response.__aenter__ = AsyncMock(return_value=mock_response)
+        mock_response.__aexit__ = AsyncMock(return_value=None)
+
+        session = await async_dmm_client._ensure_session()
+
+        with patch.object(session, "get", return_value=mock_response):
+            product = await async_dmm_client.get_product_by_product_id(
+                "SNIS-777",
+                site="FANZA",
+            )
+
+        assert product is None
+
+    async def test_product_by_product_id_with_zero_padding(
+        self, async_dmm_client: AsyncDMMClient
+    ):
+        """Test retrieving a single product by product ID that requires zero padding."""
+
+        product_id = "KEED-077"
+        product = await async_dmm_client.get_product_by_product_id(
+            product_id, site="FANZA"
+        )
+
+        assert product is not None
+        assert isinstance(product, Product)
+
+        assert product.service_code == "mono"
+        assert product.service_name == "通販"
+        assert product.floor_code == "dvd"
+        assert product.floor_name == "DVD"
+        assert product.category_name == "DVD通販"
+        assert product.content_id == "h_086keed77"
+        assert product.product_id == "h_086keed77"
+        assert product.title is not None
+        assert (
+            "娘が不在中、娘の彼氏に無理やり中出しされ発情した彼女の母親"
+            in product.title
+        )
+        assert "君島みお" in product.title
+        assert product.volume == 90
+
+        assert product.review is not None
+        assert product.review.count == 4
+        assert product.review.average == 3.75
+        assert product.review_count == 4
+        assert product.review_average == 3.75
+
+        assert product.url is not None
+        assert product.affiliate_url is not None
+        assert "h_086keed77" in product.url
+
+        assert product.image_url is not None
+        assert product.image_url.list is not None
+        assert product.image_url.small is not None
+        assert product.image_url.large is not None
+        assert "h_086keed77pt.jpg" in product.image_url.list
+
+        assert product.sample_image_url is not None
+        assert len(product.sample_images) == 10
+        assert all("h_086keed77-" in img for img in product.sample_images)
+
+        assert product.prices is not None
+        assert product.prices.price == "2967"
+        assert product.prices.list_price == "4180"
+        assert product.current_price == 2967
+        assert product.original_price == 4180
+
+        assert product.date is not None
+        assert product.date.year == 2022
+        assert product.date.month == 9
+        assert product.date.day == 29
+
+        assert product.item_info is not None
+        assert len(product.genres) == 6
+        assert len(product.series) == 1
+        assert len(product.makers) == 1
+        assert len(product.actresses) == 1
+        assert len(product.directors) == 1
+        assert len(product.labels) == 1
+
+        genre_names = [g.name for g in product.genres]
+        assert "寝取り・寝取られ・NTR" in genre_names
+        assert "人妻・主婦" in genre_names
+        assert "熟女" in genre_names
+        assert "中出し" in genre_names
+        assert "単体作品" in genre_names
+
+        assert (
+            product.series[0].name
+            == "娘が不在中、娘の彼氏に無理やり中出しされ発情した彼女の母親"
+        )
+        assert product.makers[0].name == "センタービレッジ"
+        assert product.actresses[0].name == "君島みお"
+        assert product.actresses[0].ruby == "きみじまみお"
+        assert product.directors[0].name == "湊谷"
+        assert product.directors[0].ruby == "みなとや"
+        assert product.labels[0].name == "花園（センタービレッジ）"
+
+        assert product.jancode == "4573228571981"
+        assert product.maker_product == "KEED-77"
+        assert product.stock == "empty"
+
+        assert len(product.directory) == 1
+        assert product.directory[0].name == "DVD"
+
+        assert product.raw_data is not None
+        assert product.raw_data["content_id"] == "h_086keed77"
+
     async def test_product_by_product_id_nonexistent(self, async_dmm_client):
         """Test retrieving a product with non-existent product ID."""
 
@@ -561,3 +868,52 @@ class TestAsyncDMMClientWithProductIntegration:
         assert len(products2) >= 0
         assert async_dmm_client._session is not None
         assert not async_dmm_client._session.closed
+
+    async def test_error_missing_result_field(
+        self, async_dmm_client: AsyncDMMClient
+    ) -> None:
+        """Test error handling when API response is missing result field."""
+
+        mock_response = AsyncMock()
+        mock_response.status = 200
+        mock_response.text = AsyncMock(return_value='{"status": 200, "data": []}')
+        mock_response.__aenter__ = AsyncMock(return_value=mock_response)
+        mock_response.__aexit__ = AsyncMock(return_value=None)
+
+        session = await async_dmm_client._ensure_session()
+
+        with patch.object(session, "get", return_value=mock_response):
+            with pytest.raises(DMMAPIError) as exc_info:
+                await async_dmm_client.get_products(
+                    site="FANZA", service="digital", floor="videoa"
+                )
+
+            assert "missing 'result' field" in str(exc_info.value)
+
+    async def test_error_generic_exception_wrapped(
+        self, async_dmm_client: AsyncDMMClient
+    ) -> None:
+        """Test that generic exceptions are wrapped in DMMAPIError."""
+
+        mock_response = AsyncMock()
+        mock_response.status = 200
+        mock_response.text = AsyncMock(
+            return_value='{"result": {"status": 200, "items": []}}'
+        )
+        mock_response.__aenter__ = AsyncMock(return_value=mock_response)
+        mock_response.__aexit__ = AsyncMock(return_value=None)
+
+        session = await async_dmm_client._ensure_session()
+
+        with patch.object(session, "get", return_value=mock_response):
+            with patch(
+                "py_dmmjp.async_client.AsyncDMMClient._make_request",
+                side_effect=ValueError("Unexpected error"),
+            ):
+                with pytest.raises(DMMAPIError) as exc_info:
+                    await async_dmm_client.get_products(
+                        site="FANZA", service="digital", floor="videoa"
+                    )
+
+                assert "Failed to get products" in str(exc_info.value)
+                assert "Unexpected error" in str(exc_info.value)

@@ -5,6 +5,7 @@ Integration tests for AsyncDMMClient with real API requests for floor-related fu
 # pylint: disable=R0904,W0212,R0915
 
 import sys
+from unittest.mock import AsyncMock, patch
 
 import pytest
 
@@ -15,8 +16,7 @@ import asyncio
 
 import pytest_asyncio
 
-from py_dmmjp.async_client import AsyncDMMClient
-from py_dmmjp.floor import Floor, Service, Site
+from py_dmmjp import AsyncDMMClient, DMMAPIError, Floor, Service, Site
 
 
 @pytest.mark.integration
@@ -484,3 +484,48 @@ class TestAsyncDMMClientWithFloorIntegration:
             assert site1.code == site2.code
             assert site1.name == site2.name
             assert len(site1.services) == len(site2.services)
+
+    async def test_error_missing_result_field(
+        self, async_dmm_client: AsyncDMMClient
+    ) -> None:
+        """Test error handling when API response is missing result field."""
+
+        mock_response = AsyncMock()
+        mock_response.status = 200
+        mock_response.text = AsyncMock(return_value='{"status": 200, "data": []}')
+        mock_response.__aenter__ = AsyncMock(return_value=mock_response)
+        mock_response.__aexit__ = AsyncMock(return_value=None)
+
+        session = await async_dmm_client._ensure_session()
+
+        with patch.object(session, "get", return_value=mock_response):
+            with pytest.raises(DMMAPIError) as exc_info:
+                await async_dmm_client.get_floors()
+
+            assert "missing 'result' field" in str(exc_info.value)
+
+    async def test_error_generic_exception_wrapped(
+        self, async_dmm_client: AsyncDMMClient
+    ) -> None:
+        """Test that generic exceptions are wrapped in DMMAPIError."""
+
+        mock_response = AsyncMock()
+        mock_response.status = 200
+        mock_response.text = AsyncMock(
+            return_value='{"result": {"status": 200, "items": []}}'
+        )
+        mock_response.__aenter__ = AsyncMock(return_value=mock_response)
+        mock_response.__aexit__ = AsyncMock(return_value=None)
+
+        session = await async_dmm_client._ensure_session()
+
+        with patch.object(session, "get", return_value=mock_response):
+            with patch(
+                "py_dmmjp.async_client.AsyncDMMClient._make_request",
+                side_effect=ValueError("Unexpected error"),
+            ):
+                with pytest.raises(DMMAPIError) as exc_info:
+                    await async_dmm_client.get_floors()
+
+                assert "Failed to get floors" in str(exc_info.value)
+                assert "Unexpected error" in str(exc_info.value)
