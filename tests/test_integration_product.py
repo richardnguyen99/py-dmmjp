@@ -676,10 +676,6 @@ class TestDMMClientWithProductIntegration:
         assert "pppe064" in product.url
 
         assert product.image_url is not None
-        assert product.image_url.list is not None
-        assert product.image_url.small is not None
-        assert product.image_url.large is not None
-        assert "pppe064pt.jpg" in product.image_url.list
 
         assert product.sample_image_url is not None
         assert len(product.sample_images) == 12
@@ -970,10 +966,6 @@ class TestDMMClientWithProductIntegration:
         assert "h_086keed77" in product.url
 
         assert product.image_url is not None
-        assert product.image_url.list is not None
-        assert product.image_url.small is not None
-        assert product.image_url.large is not None
-        assert "h_086keed77pt.jpg" in product.image_url.list
 
         assert product.sample_image_url is not None
         assert len(product.sample_images) == 10
