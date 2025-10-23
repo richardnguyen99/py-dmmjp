@@ -76,7 +76,10 @@ class TestEbookPhotoProduct(ProductTestBase):
 
         assert product.content_id == "b600esgk33507"
         assert product.product_id == "b600esgk33507"
-        assert product.title == "【デジタル限定豪華特典28ページ増】世良ののか1st写真集 ののかっぷ。"
+        assert (
+            product.title
+            == "【デジタル限定豪華特典28ページ増】世良ののか1st写真集 ののかっぷ。"
+        )
         assert product.volume == 146
 
     def test_product_date_parsing(self, product_data):

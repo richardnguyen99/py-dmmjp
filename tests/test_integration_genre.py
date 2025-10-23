@@ -2,6 +2,8 @@
 Integration tests for DMM genre API functionality.
 """
 
+# pylint: disable=R0914,W0612,W0212
+
 from typing import List
 from unittest.mock import MagicMock, patch
 
@@ -250,7 +252,9 @@ class TestDMMClientWithGenreIntegration:
         """Test genre filtering by initial character."""
 
         genres_a: List[Genre] = dmm_client.get_genres(floor_id=43, initial="あ", hits=5)
-        genres_ka: List[Genre] = dmm_client.get_genres(floor_id=43, initial="か", hits=5)
+        genres_ka: List[Genre] = dmm_client.get_genres(
+            floor_id=43, initial="か", hits=5
+        )
 
         assert isinstance(genres_a, list)
         assert isinstance(genres_ka, list)
@@ -263,7 +267,6 @@ class TestDMMClientWithGenreIntegration:
         mock_response.text = '{"genres": [], "count": 0}'
         mock_response.raise_for_status = MagicMock()
 
-        # pylint: disable=W0212
         with patch.object(dmm_client._session, "get", return_value=mock_response):
             with pytest.raises(DMMAPIError) as exc_info:
                 dmm_client.get_genres(floor_id=43)

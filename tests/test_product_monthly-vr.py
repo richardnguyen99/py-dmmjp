@@ -104,8 +104,12 @@ class TestMonthlyVRProduct(ProductTestBase):
                     }
                 ],
                 "maker": [{"id": 40071, "name": "ケイ・エム・プロデュース"}],
-                "actress": [{"id": 1075066, "name": "胡桃さくら", "ruby": "くるみさくら"}],
-                "director": [{"id": 114997, "name": "ウィルチンチン", "ruby": "うぃるちんちん"}],
+                "actress": [
+                    {"id": 1075066, "name": "胡桃さくら", "ruby": "くるみさくら"}
+                ],
+                "director": [
+                    {"id": 114997, "name": "ウィルチンチン", "ruby": "うぃるちんちん"}
+                ],
                 "label": [{"id": 25637, "name": "KMPVR"}],
             },
         }
@@ -123,7 +127,10 @@ class TestMonthlyVRProduct(ProductTestBase):
 
         assert product.content_id == "vrkm01415"
         assert product.product_id == "vrkm01415"
-        assert product.title == "【VR】圧倒的美貌と性欲魔力に弄ばれる保護者不倫～息子の教師との踏み入れてはいけない関係～ 胡桃さくら"
+        assert (
+            product.title
+            == "【VR】圧倒的美貌と性欲魔力に弄ばれる保護者不倫～息子の教師との踏み入れてはいけない関係～ 胡桃さくら"
+        )
         assert product.volume == 80
 
     def test_product_sample_images(self, product_data):

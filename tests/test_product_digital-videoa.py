@@ -93,7 +93,9 @@ class TestDigitalVideoProduct(ProductTestBase):
                     {"id": 6968, "name": "アクメ・オーガズム"},
                 ],
                 "maker": [{"id": 3152, "name": "エスワン ナンバーワンスタイル"}],
-                "actress": [{"id": 1085934, "name": "村上悠華", "ruby": "むらかみゆか"}],
+                "actress": [
+                    {"id": 1085934, "name": "村上悠華", "ruby": "むらかみゆか"}
+                ],
                 "director": [{"id": 101625, "name": "苺原", "ruby": "いちごはら"}],
                 "label": [{"id": 3474, "name": "S1 NO.1 STYLE"}],
             },
@@ -112,7 +114,10 @@ class TestDigitalVideoProduct(ProductTestBase):
 
         assert product.content_id == "sone00708"
         assert product.product_id == "sone00708"
-        assert product.title == "村上悠華を【強力媚薬】でぶっ壊したい。この肉体がイキ跳ねて大痙攣するエビ反り超媚薬漬けアクメ"
+        assert (
+            product.title
+            == "村上悠華を【強力媚薬】でぶっ壊したい。この肉体がイキ跳ねて大痙攣するエビ反り超媚薬漬けアクメ"
+        )
         assert product.volume == 120
 
     def test_product_sample_images(self, product_data):

@@ -34,8 +34,14 @@ class TestSeriesDVD(SeriesTestBase):
         series = Series.from_dict(series_data)
 
         assert series.series_id == "215651"
-        assert series.name == "100万の賞金を目指して街行く男子を逆ナンパしてSEXしちゃいました！！"
-        assert series.ruby == "100まんのしょうきんめざしてまちゆくだんしをぎゃくなんぱしてせっくすしちゃいました"
+        assert (
+            series.name
+            == "100万の賞金を目指して街行く男子を逆ナンパしてSEXしちゃいました！！"
+        )
+        assert (
+            series.ruby
+            == "100まんのしょうきんめざしてまちゆくだんしをぎゃくなんぱしてせっくすしちゃいました"
+        )
         assert "fanza.co.jp" in series.list_url
 
     def test_series_from_dict(self, series_data: Dict[str, Any]) -> None:

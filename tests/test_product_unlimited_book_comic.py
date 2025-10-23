@@ -54,7 +54,9 @@ class TestUnlimitedBookComicProduct(ProductTestBase):
                     {"id": 1034, "name": "ギャル"},
                     {"id": 5022, "name": "3P・4P"},
                 ],
-                "series": [{"id": 504686, "name": "貼ったらヤレちゃう！？えろシール（単話）"}],
+                "series": [
+                    {"id": 504686, "name": "貼ったらヤレちゃう！？えろシール（単話）"}
+                ],
                 "manufacture": [{"id": 301707, "name": "大洋図書"}],
                 "author": [{"id": 243015, "name": "丸居まる"}],
             },

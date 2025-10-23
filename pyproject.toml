@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py-dmmjp"
-version = "0.0.11"
+version = "0.0.12"
 description = "A Python client library for the DMM API"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -27,16 +27,30 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
-keywords = ["dmm", "api", "client", "digital", "media", "affiliate"]
+keywords = [
+    "dmm",
+    "api",
+    "client",
+    "digital",
+    "media",
+    "affiliate",
+    "mypy",
+    "pytest",
+    "asyncio",
+    "http",
+    "requests",
+    "aiohttp",
+]
 requires-python = ">=3.8"
 dependencies = [
     "requests>=2.25.0",
+    "aiohttp>=3.8.0;python_version>='3.9'",
     "typing-extensions>=4.0.0;python_version<'3.10'",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "black>=22.0.0",
+    "black>=25.0.0",
     "mypy>=0.991",
     "pylint>=2.15.0",
     "pytest>=7.0.0",
@@ -52,25 +66,26 @@ test = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
     "pytest-mock>=3.8.0",
+    "pytest-asyncio>=1.2.0;python_version>='3.9'",
     "responses>=0.22.0",
 ]
 
 [project.urls]
-Homepage = "https://github.com/richardnguyen99/py-dmm"
-Documentation = "https://py-dmm.readthedocs.io/"
-Repository = "https://github.com/richardnguyen99/py-dmm.git"
+Homepage = "https://github.com/richardnguyen99/py-dmmjp"
+Documentation = "https://py-dmmjp.readthedocs.io/"
+Repository = "https://github.com/richardnguyen99/py-dmmjp.git"
 
 [tool.setuptools.packages.find]
-include = ["py_dmm*"]
+include = ["py_dmmjp*"]
 exclude = ["tests*"]
 
 [tool.setuptools.package-data]
-py_dmm = ["py.typed"]
+py_dmmjp = ["py.typed"]
 
 # Black configuration
 [tool.black]
 line-length = 88
-target-version = ['py38', 'py39', 'py310', 'py311']
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312', 'py313']
 include = '\.pyi?$'
 extend-exclude = '''
 /(
@@ -120,6 +135,7 @@ ignore_missing_imports = true
 
 # pytest configuration
 [tool.pytest.ini_options]
+filterwarnings = ["ignore::pytest.PytestUnraisableExceptionWarning"]
 minversion = "7.0"
 addopts = "-ra -q --strict-markers --strict-config"
 testpaths = ["tests"]
@@ -134,7 +150,7 @@ markers = [
 
 # coverage configuration
 [tool.coverage.run]
-source = ["py_dmm"]
+source = ["py_dmmjp"]
 omit = ["*/tests/*", "*/test_*", "setup.py"]
 
 [tool.coverage.report]

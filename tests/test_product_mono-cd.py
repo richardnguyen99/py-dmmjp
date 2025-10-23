@@ -336,7 +336,10 @@ class TestMonoCDProduct(ProductTestBase):
         assert len(artists) == 1
         assert artists[0].id == 219614
         assert artists[0].name == "刀剣男士 formation of 陸奥一蓮"
-        assert artists[0].ruby == "とうけんだんしふぉーめーしょんおぶみちのおくひとつはちす"
+        assert (
+            artists[0].ruby
+            == "とうけんだんしふぉーめーしょんおぶみちのおくひとつはちす"
+        )
 
         series = product.series
         assert len(series) == 1

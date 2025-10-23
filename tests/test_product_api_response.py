@@ -332,7 +332,10 @@ class TestProductApiResponse:
 
         response = ProductApiResponse.from_dict(response_data)
         product = response.products[0]
-        assert product.title == "友達の妹が常にノーブラぽろり！！可愛すぎるビンビン乳首をこねくりたい 七沢みあ"
+        assert (
+            product.title
+            == "友達の妹が常にノーブラぽろり！！可愛すぎるビンビン乳首をこねくりたい 七沢みあ"
+        )
         assert product.service_code == "digital"
         assert product.floor_code == "videoa"
         assert product.review is not None

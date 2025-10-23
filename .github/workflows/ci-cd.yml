@@ -45,11 +45,21 @@ jobs:
 
       - name: Run type checking with mypy
         run: |
-          mypy py_dmmjp
+          if [ "${{ matrix.python-version }}" == "3.8" ]; then
+            mypy py_dmmjp --exclude '/.*async.*\.py$'
+          else
+            mypy py_dmmjp
+          fi
+        shell: bash
 
       - name: Run linting with pylint
         run: |
-          pylint py_dmmjp
+          if [ "${{ matrix.python-version }}" == "3.8" ]; then
+            pylint py_dmmjp --ignore-patterns='.*async.*\.py'
+          else
+            pylint py_dmmjp
+          fi
+        shell: bash
 
       - name: Check code formatting with black
         run: |
@@ -71,7 +81,15 @@ jobs:
           APP_ID: ${{ secrets.APP_ID }}
           AFF_ID: ${{ secrets.AFF_ID }}
         run: |
-          pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch
+          if [ "${{ matrix.python-version }}" == "3.8" ]; then
+            touch .coveragerc
+            echo "[run]" >> .coveragerc
+            echo "omit = py_dmmjp/async_*.py" >> .coveragerc
+            pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch --ignore-glob='*async*' --cov-config=.coveragerc
+          else
+            pytest tests/ -v --cov=py_dmmjp --cov-report=xml --cov-report=html --cov-fail-under=90 --cov-branch --asyncio-mode=auto -o assyncio_default_fixture_loop_scope=session
+          fi
+        shell: bash
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
@@ -98,7 +116,7 @@ jobs:
 
       - name: Run security scan with bandit
         run: |
-          bandit -r py_dmmjp -f json -o bandit-report.json
+          bandit -r py_dmmjp -f json -o bandit-report.json --verbose
 
       - name: Run Safety CLI to check for vulnerabilities
         uses: pyupio/safety-action@v1
@@ -117,7 +135,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version: "3.12"
 
       - name: Install build dependencies
         run: |
