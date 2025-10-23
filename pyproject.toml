@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py-dmmjp"
-version = "0.0.11"
+version = "0.0.12"
 description = "A Python client library for the DMM API"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -27,7 +27,20 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
-keywords = ["dmm", "api", "client", "digital", "media", "affiliate"]
+keywords = [
+    "dmm",
+    "api",
+    "client",
+    "digital",
+    "media",
+    "affiliate",
+    "mypy",
+    "pytest",
+    "asyncio",
+    "http",
+    "requests",
+    "aiohttp",
+]
 requires-python = ">=3.8"
 dependencies = [
     "requests>=2.25.0",
@@ -58,16 +71,16 @@ test = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/richardnguyen99/py-dmm"
-Documentation = "https://py-dmm.readthedocs.io/"
-Repository = "https://github.com/richardnguyen99/py-dmm.git"
+Homepage = "https://github.com/richardnguyen99/py-dmmjp"
+Documentation = "https://py-dmmjp.readthedocs.io/"
+Repository = "https://github.com/richardnguyen99/py-dmmjp.git"
 
 [tool.setuptools.packages.find]
 include = ["py_dmmjp*"]
 exclude = ["tests*"]
 
 [tool.setuptools.package-data]
-py_dmm = ["py.typed"]
+py_dmmjp = ["py.typed"]
 
 # Black configuration
 [tool.black]
@@ -137,7 +150,7 @@ markers = [
 
 # coverage configuration
 [tool.coverage.run]
-source = ["py_dmm"]
+source = ["py_dmmjp"]
 omit = ["*/tests/*", "*/test_*", "setup.py"]
 
 [tool.coverage.report]
